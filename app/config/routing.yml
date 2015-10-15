@@ -1,0 +1,4 @@
+nfq_home:
+    resource: "@NFQHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
