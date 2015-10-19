@@ -2,12 +2,24 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>Padedam.lt{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+
+            {% stylesheets '@NFQFrontendBundle/Resources/public/css/*' %}
+            <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
+            {% endstylesheets %}
+
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+
+            {% javascripts '@NFQFrontendBundle/Resources/public/js/*' %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+        {% endblock %}
     </body>
 </html>
