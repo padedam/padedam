@@ -16,7 +16,10 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
 
-            {% javascripts '@NFQFrontendBundle/Resources/public/js/*' %}
+            {% javascripts
+            '@NFQFrontendBundle/Resources/public/js/jquery-2.1.4.js'
+            '@NFQFrontendBundle/Resources/public/js/bootstrap.js'
+            '@NFQFrontendBundle/Resources/public/js/script.js' %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
