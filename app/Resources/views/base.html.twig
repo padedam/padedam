@@ -15,6 +15,9 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    <header>
+        {% include 'navigacija.html.twig' %}
+    </header>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
