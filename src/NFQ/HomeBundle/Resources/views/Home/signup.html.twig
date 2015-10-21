@@ -4,7 +4,79 @@
 
 {% block body %}
 
+<h1 class="text-center">Registruokitės</h1>
 
-<h1 class="center-block text-center">Registruokitės</h1>
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="well bs-component">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend>Vartotojo registracija</legend>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputName">Vardas</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="inputName" placeholder="Jūsų vardas" id="inputName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputSurname">Pavardė</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="inputSurname" placeholder="Jūsų pavardė" id="inputSurname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPhone">Telefonas</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="inputPhone" placeholder="Jūsų telefono numeris" id="inputPhone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputEmail">El paštas</label>
+                        <div class="col-lg-9">
+                            <input type="email" name="inputEmail" placeholder="Jūsų el. pašto adresas" id="inputEmail" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputPassword">Slaptažodis</label>
+                        <div class="col-lg-9">
+                            <input type="password" name="inputPassword" placeholder="Pakeisti slaptažodį nauju" id="inputPassword" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputYear">Gimimo metai</label>
+                        <div class="col-lg-3">
+                            <select id="inputYear" class="form-control">
+                                <option value="1981">1981</option>
+                                <option value="1982">1982</option>
+                                <option value="1983">1983</option>
+                                <option value="1984">1984</option>
+                                <option value="1985">1985</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputAbout">Apie mane</label>
+                        <div class="col-lg-9">
+                            <textarea id="inputAbout" rows="3" class="form-control"></textarea>
+                            <span class="help-block">Trumpas aprašas apie jus (pavyzdžiui: 22 metų studentas, komunikabilus, darbštus, mėgstu krepšinį, savaitgaliais groju vestuvėse)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="sutinku"> Sutinku padėti artimui
+                                </label>
+                            </div>
+                            <br />
+                            <button class="btn btn-primary" type="submit">Išsaugoti</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div></div>
+    </div>
+
 
 {% endblock %}
