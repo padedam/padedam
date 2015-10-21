@@ -9,3 +9,7 @@ signup:
 profile:
     path:     /profile
     defaults: { _controller: NFQHomeBundle:Home:profile }
+
+login:
+    path:     /login
+    defaults: { _controller: NFQHomeBundle:Home:login }

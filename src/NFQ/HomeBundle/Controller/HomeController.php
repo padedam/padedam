@@ -27,4 +27,11 @@ class HomeController extends Controller
             ));
     }
 
+    public function loginAction()
+    {
+        return $this->render('NFQHomeBundle:Home:login.html.twig', array(
+                // ...
+            ));
+    }
+
 }
