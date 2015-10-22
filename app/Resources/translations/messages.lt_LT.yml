@@ -9,6 +9,8 @@ generic.please_login: Prisijunkite
 nav.toggle_nav: Toggle navigation
 generic.website_name: Padedam.lt
 generic.registration: Registracija
+generic.user_registration: Vartotojo registracija
+generic.register: Registruokitės
 generic.profile: Profilis
 generic.submit: Pateikti
 user.wellcome: Sveiki atvykę
@@ -37,3 +39,4 @@ help.choose_or: Pasirinkite tinkamus arba
 help.create_new: sukurkite naują
 help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
+help.start_writeing: Pradėkite rašyti
