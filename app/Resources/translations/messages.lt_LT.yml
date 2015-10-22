@@ -1,0 +1,39 @@
+generic.email: El paštas
+generic.label.email: Jūsų el. pašto adresas
+generic.password: Slaptažodis
+generic.label.password: Jūsų slaptažodis
+generic.forgot_password: Pamiršau slaptažodį
+generic.close: Uždaryti
+generic.login: Prisijungti
+generic.please_login: Prisijunkite
+nav.toggle_nav: Toggle navigation
+generic.website_name: Padedam.lt
+generic.registration: Registracija
+generic.profile: Profilis
+generic.submit: Pateikti
+user.wellcome: Sveiki atvykę
+user.my_profile: Mano profilis
+user.user_profile: Vartotojo profilis
+user.name: Vardas
+user.label_name: Jūsų vardas
+user.surname: Pavardė
+user.label_surname: Jūsų pavardė
+user.phone: Telefonas
+user.label.phone: Jūsų telefono numeris
+user.birth_year: Gimimo metai
+user.new_password: Pakeisti slaptažodį nauju
+user.about_me: Apie mane
+user.short_about_me_desc: Trumpas aprašas apie jus (pavyzdžiui: 22 metų studentas, komunikabilus, darbštus, mėgstu krepšinį, savaitgaliais groju vestuvėse)
+user.how_can_i_help: Kaip padėsiu
+help.advice: Patarimu
+help.work: Darbu
+help.heavy: Galiu kelti sunkius daiktus
+help_frequency: Kaip dažnai galėsiu padėti
+help_hour_per_month: "{1} %count% valandą per mėnesį | ]1,Inf] %count% valandas per mėnesį"
+help.no_limit: Neribosiu savęs!
+help.what_cn_i_do: Ką galiu daryti
+help.im_able: Ką moku
+help.choose_or: Pasirinkite tinkamus arba
+help.create_new: sukurkite naują
+help.i_agree_to_help: Sutinku padėti artimui
+generic.save: Išsaugoti

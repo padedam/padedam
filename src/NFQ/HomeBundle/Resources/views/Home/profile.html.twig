@@ -1,47 +1,47 @@
 {% extends "::base.html.twig" %}
 
-{% block title %} Mano profilis {% endblock %}
+{% block title %} {{ 'user.my_profile'|trans }} {% endblock %}
 
 {% block body %}
-<h1 class="text-center">Mano profilis</h1>
+<h1 class="text-center">{{ 'user.my_profile'|trans }}</h1>
     <div class="col-lg-6 col-lg-offset-3">
         <div class="well bs-component">
           <form class="form-horizontal">
             <fieldset>
-              <legend>Vartotojo profilis</legend>
+              <legend>{{ 'user.user_profile'|trans }}</legend>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputName">Vardas</label>
+                <label class="col-lg-3 control-label" for="inputName">{{ 'user.name'|trans }}</label>
                 <div class="col-lg-9">
-                  <input type="text" name="inputName" placeholder="Jūsų vardas" id="inputName" class="form-control">
+                  <input type="text" name="inputName" placeholder="{{ 'user.label_name'|trans }}" id="inputName" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputSurname">Pavardė</label>
+                <label class="col-lg-3 control-label" for="inputSurname">{{ 'user.surname'|trans }}</label>
                 <div class="col-lg-9">
-                  <input type="text" name="inputSurname" placeholder="Jūsų pavardė" id="inputSurname" class="form-control">
+                  <input type="text" name="inputSurname" placeholder="{{ 'user.label_surname'|trans }}" id="inputSurname" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputPhone">Telefonas</label>
+                <label class="col-lg-3 control-label" for="inputPhone">{{ 'user.phone'|trans }}</label>
                 <div class="col-lg-9">
-                  <input type="text" name="inputPhone" placeholder="Jūsų telefono numeris" id="inputPhone" class="form-control">
+                  <input type="text" name="inputPhone" placeholder="{{ 'user.label.phone'|trans }}" id="inputPhone" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputEmail">El paštas</label>
+                <label class="col-lg-3 control-label" for="inputEmail">{{ 'generic.email'|trans }}</label>
                 <div class="col-lg-9">
-                  <input type="email" name="inputEmail" placeholder="Jūsų el. pašto adresas" id="inputEmail" class="form-control">
+                  <input type="email" name="inputEmail" placeholder="{{ 'generic.label.email'|trans }}" id="inputEmail" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputPassword">Slaptažodis</label>
+                <label class="col-lg-3 control-label" for="inputPassword">{{ 'generic.password'|trans }}</label>
                 <div class="col-lg-9">
-                  <input type="password" name="inputPassword" placeholder="Pakeisti slaptažodį nauju" id="inputPassword" class="form-control">
+                  <input type="password" name="inputPassword" placeholder="{{ 'user.new_password'|trans }}" id="inputPassword" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputYear">Gimimo metai</label>
+                <label class="col-lg-3 control-label" for="inputYear">{{ 'user.birth_year'|trans }}</label>
                 <div class="col-lg-3">
                   <select id="inputYear" class="form-control">
                     <option value="1981">1981</option>
@@ -53,70 +53,70 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputAbout">Apie mane</label>
+                <label class="col-lg-3 control-label" for="inputAbout">{{ 'user.about_me'|trans }}</label>
                 <div class="col-lg-9">
                   <textarea id="inputAbout" rows="3" class="form-control"></textarea>
-                  <span class="help-block">Trumpas aprašas apie jus (pavyzdžiui: 22 metų studentas, komunikabilus, darbštus, mėgstu krepšinį, savaitgaliais groju vestuvėse)</span>
+                  <span class="help-block">{{ 'user.short_about_me_desc'|trans }}</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label">Kaip padėsiu</label>
+                <label class="col-lg-3 control-label">{{ 'user.how_can_i_help'|trans }}</label>
                 <div class="col-lg-9">
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" value="1" name="kuopadesiu">
-                      Patarimu
+                      {{ 'help.advice'|trans }}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" value="2" name="kuopadesiu">
-                      Darbu
+                      {{ 'help.work'|trans }}
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" value="3" name="kuopadesiu">
-                      Galiu kelti sunkius daiktus
+                      {{ 'help.heavy'|trans }}
                     </label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputTiming">Kaip dažnai galėsiu padėti</label>
+                <label class="col-lg-3 control-label" for="inputTiming">{{ 'help_frequency'|trans }}</label>
                 <div class="col-lg-5">
                   <select id="inputTiming" name="inputTiming" class="form-control">
-                    <option value="1">1 valandą per mėnesį</option>
-                    <option value="2">2 valandas per mėnesį</option>
-                    <option value="3">3 valandas per mėnesį</option>
-                    <option value="4">4 valandas per mėnesį</option>
-                    <option value="5">Neribosiu savęs!</option>
+                    <option value="1">{{ 'help_hour_per_month'|transchoice(1) }}</option>
+                    <option value="2">{{ 'help_hour_per_month'|transchoice(2) }}</option>
+                    <option value="3">{{ 'help_hour_per_month'|transchoice(3) }}</option>
+                    <option value="4">{{ 'help_hour_per_month'|transchoice(4) }}</option>
+                    <option value="5">{{ 'help.no_limit'|trans }}</option>
                   </select>
                 </div>
               </div>
-              <legend>Ką galiu daryti</legend>
+              <legend>{{ 'help.what_cn_i_do'|trans }}</legend>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="inputMoku">Ką moku</label>
+                <label class="col-lg-3 control-label" for="inputMoku">{{ 'help.im_able'|trans }}</label>
                 <div class="col-lg-9">
                   <input type="text" placeholder="Pradėkite rašyti" val="tvo" id="inputMoku" class="form-control">
-                  <span class="help-block">Pasirinkite tinkamus arba <a id="addnew">sukurkite naują</a></span>
+                  <span class="help-block">{{ 'help.choose_or'|trans }} <a id="addnew">{{ 'help.create_new'|trans }}</a></span>
                   <div class="col-lg-9">
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" value="1" name="kuopadesiu">
-                        Dažyti tvorą
+                        {{ 'user.name'|trans }}Dažyti tvorą
                       </label>
                     </div>
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" value="2" name="kuopadesiu">
-                        Taisyti tvorą
+                        {{ 'user.name'|trans }}Taisyti tvorą
                       </label>
                     </div>
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" value="3" name="kuopadesiu">
-                        Gaminti tvorą
+                        {{ 'user.name'|trans }}Gaminti tvorą
                       </label>
                     </div>
                   </div>
@@ -135,11 +135,11 @@
                 <div class="col-lg-10 col-lg-offset-3">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" name="sutinku"> Sutinku padėti artimui
+                      <input type="checkbox" name="sutinku"> {{ 'help.i_agree_to_help'|trans }}
                     </label>
                   </div>
                   <br />
-                  <button class="btn btn-primary" type="submit">Išsaugoti</button>
+                  <button class="btn btn-primary" type="submit">{{ 'generic.save'|trans }}</button>
                 </div>
               </div>
             </fieldset>
