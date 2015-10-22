@@ -2,12 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Padedam.lt{% block title %}{% endblock %}</title>
+        <title>Padedam.lt - {% block title %}{% endblock %}</title>
         {% block stylesheets %}
 
             {% stylesheets
-            '@NFQFrontendBundle/Resources/public/css/bootstrap.css'
-            '@NFQFrontendBundle/Resources/public/css/bootstrap-theme.css'
+            '@NFQFrontendBundle/Resources/public/css/bootstrap_simplex.min.css'
             '@NFQFrontendBundle/Resources/public/css/style.css' %}
             <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
             {% endstylesheets %}
@@ -15,6 +14,9 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    <header>
+        {% include 'navigation.html.twig' %}
+    </header>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}

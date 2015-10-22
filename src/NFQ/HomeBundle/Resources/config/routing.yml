@@ -1,4 +1,15 @@
-
 home:
     path:     /
     defaults: { _controller: NFQHomeBundle:Home:home }
+
+signup:
+    path:     /signup
+    defaults: { _controller: NFQHomeBundle:Home:signup }
+
+profile:
+    path:     /profile
+    defaults: { _controller: NFQHomeBundle:Home:profile }
+
+login:
+    path:     /login
+    defaults: { _controller: NFQHomeBundle:Home:login }
