@@ -15,8 +15,6 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
     locale : lt_LT
-framework:
-    default_locale: lt_LT
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
