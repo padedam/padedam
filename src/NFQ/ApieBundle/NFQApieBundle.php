@@ -1,9 +1,9 @@
 <?php
 
-namespace NFQ\HomeBundle;
+namespace NFQ\ApieBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class NFQHomeBundle extends Bundle
+class NFQApieBundle extends Bundle
 {
 }

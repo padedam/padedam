@@ -1,7 +1,32 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}NFQHomeBundle:Home:home{% endblock %}
+{% block title %}{{ 'user.wellcome'|trans }}!{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Home:home page</h1>
+<h1 class="text-center">Pagalba Kauniečiui</h1>
+<br>
+    <div class="container-fluid">
+        <div class="row row-centered"">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="col-sm-4">
+                    <h4 class="text-capitalize">pirmas argumentas</h4>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <h4 class="text-capitalize">antras argumentas</h4>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <h4 class="text-capitalize">trečias argumentas</h4>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
+                </div>
+
+<br />
+                <div class="col-sm-12">PAVEIKSLELIS</div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
