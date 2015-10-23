@@ -1,3 +1,0 @@
-nfq_apie_homepage:
-    path:     /
-    defaults: { _controller: NFQApieBundle:Apie:apie }

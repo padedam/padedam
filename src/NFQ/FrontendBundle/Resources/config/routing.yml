@@ -1,3 +1,0 @@
-nfq_frontend_homepage:
-    path:     /
-    defaults: { _controller: NFQFrontendBundle:Default:index }
