@@ -1,11 +1,4 @@
 nfq_home:
-    resource:   "@NFQHomeBundle/Resources/config/routing.yml"
-    prefix:     /
+    resource: "@NFQHomeBundle/Resources/config/routing.yml"
+    prefix:   /
 
-nfq_frontend:
-    resource: "@NFQFrontendBundle/Resources/config/routing.yml"
-    prefix:   /front
-
-nfq_apie:
-    resource: "@NFQApieBundle/Resources/config/routing.yml"
-    prefix:   /apie
