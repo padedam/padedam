@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'generic.ask_assistance'|trans }}</h1>
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="well bs-component">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                    <legend>{{ 'generic.ask_assistance_form'|trans }}</legend>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputShortDescription">{{ 'assistance.short_description'|trans }}</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="inputShortDescription" placeholder="{{ 'assistance.label_short_description'|trans }}" id="inputShortDescription" class="form-control" maxlength="200">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputField">{{ 'assistance.field'|trans }}</label>
+                        <div class="col-lg-3">
+                            <select id="inputField" class="form-control">
+                                <option value="it">IT</option>
+                                <option value="dujotiekis">Dujotiekis</option>
+                                <option value="aplinka">Aplinka</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="inputLongDescription">{{ 'assistance.long_description'|trans }}</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="inputLongDescription" placeholder="{{ 'assistance.label_long_description'|trans }}" id="inputLongDescription" class="form-control" maxlength="4000">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="btn btn-primary" id="source-button">{{ 'assistance.submit_button'|trans }}</div>
+        </div>
+    </div>
+
+{% endblock %}
