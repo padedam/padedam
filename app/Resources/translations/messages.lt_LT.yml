@@ -40,3 +40,13 @@ help.create_new: sukurkite naują
 help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
 help.start_writeing: Pradėkite rašyti
+
+#Assistance form
+generic.ask_assistance: Pagalbos prašymas
+generic.ask_assistance_form: Pagalbos prašymo forma
+assistance.short_description: Trumpas apibūdinimas
+assistance.label_short_description: Trumpas reikalingos pagalbos aprašymas
+assistance.field: Pagalbos sritis
+assistance.long_description: Platus aprašymas
+assistance.label_long_description: Platus reikalingos pagalbos aprašymas
+assistance.submit_button: Pateikti prašymą

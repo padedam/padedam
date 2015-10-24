@@ -1,3 +1,7 @@
+nfq_assistance:
+    resource: "@NFQAssistanceBundle/Resources/config/routing.yml"
+    prefix:   /assistance
+
 nfq_home:
     resource:   "@NFQHomeBundle/Resources/config/routing.yml"
     prefix:     /
