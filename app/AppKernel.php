@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new NFQ\HomeBundle\NFQHomeBundle(),
-            new NFQ\ApieBundle\NFQApieBundle(),
             new NFQ\FrontendBundle\NFQFrontendBundle(),
             new NFQ\AssistanceBundle\NFQAssistanceBundle(),
             );
