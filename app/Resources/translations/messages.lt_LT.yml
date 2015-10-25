@@ -5,6 +5,7 @@ generic.label.password: Jūsų slaptažodis
 generic.forgot_password: Pamiršau slaptažodį
 generic.close: Uždaryti
 generic.login: Prisijungti
+generic.logout: Atsijungti
 generic.please_login: Prisijunkite
 nav.toggle_nav: Toggle navigation
 generic.website_name: Padedam.lt

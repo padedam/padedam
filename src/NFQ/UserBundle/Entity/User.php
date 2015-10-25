@@ -35,9 +35,9 @@ class User extends BaseUser
      */
     protected $phone = "";
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="date")
      */
-    protected $birthday="";
+    protected $birthday;
     /**
      * @ORM\Column(type="text")
      */
@@ -166,6 +166,15 @@ class User extends BaseUser
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function setEmail($email)
+    {
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
+
+        return $this;
     }
 
     public function __construct()

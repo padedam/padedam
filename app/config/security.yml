@@ -10,7 +10,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
             fos_userbundle:
-                id: fos_user.user_provider.username
+                id: fos_user.user_provider.username_email
 
     firewalls:
         dev:
@@ -19,13 +19,20 @@ security:
         main:
             pattern: ^/
             form_login:
+                login_path: fos_user_security_login
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-            logout:       true
+                check_path: fos_user_security_check
+            logout:
+                path: fos_user_security_logout
+
+
+
+
             anonymous:    true
 
     access_control:
-       - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-       - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-       - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
        - { path: ^/admin/, role: ROLE_ADMIN }

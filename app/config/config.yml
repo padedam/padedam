@@ -78,6 +78,24 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
+    from_email:
+            address:        info@padedam.lt
+            sender_name:    Padedam.lt administracija
+    service:
+            mailer: fos_user.mailer.twig_swift
     db_driver: orm
     firewall_name: main
     user_class: NFQ\UserBundle\Entity\User
+    registration:
+            form:
+                type: nfq_user_registration
+                validation_groups: [NFQRegistration]
+    resetting:
+            email:
+                from_email:
+                    address:        info@padedam.lt
+                    sender_name:    Padedam.lt administracija
+    profile:
+            form:
+                type: nfq_user_profile
+                validation_groups: [NFQProfile]
