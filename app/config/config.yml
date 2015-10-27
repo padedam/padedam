@@ -90,14 +90,11 @@ fos_user:
     firewall_name: main
     user_class: NFQ\UserBundle\Entity\User
     registration:
+            confirmation:
+                enabled: true
             form:
                 type: nfq_user_registration
                 validation_groups: [NFQRegistration]
-    resetting:
-            email:
-                from_email:
-                    address:        info@padedam.lt
-                    sender_name:    Padedam.lt administracija
     profile:
             form:
                 type: nfq_user_profile
