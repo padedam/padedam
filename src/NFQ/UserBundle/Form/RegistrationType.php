@@ -13,11 +13,37 @@ class RegistrationType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->remove('username');
-        $builder->add('first_name');
-        $builder->add('last_name');
-        $builder->add('phone');
-        $builder->add('birthday');
-        $builder->add('description');
+        $builder->add('first_name', 'text',
+            array(
+                "label"=>"user.label_name",
+                "required"=>true,
+            )
+        );
+        $builder->add('last_name', 'text',
+            array(
+                "label"=>"user.label_surname",
+                "required"=>true,
+            )
+        );
+        $builder->add('phone', 'text',
+            array(
+                "label"=>"user.label.phone",
+                "required"=>true,
+            )
+        );
+        $builder->add('birthday', 'date',
+            array(
+                "label"=>"user.birth_year",
+                "required"=>true,
+            )
+        );
+        $builder->add('description', 'textarea',
+            array(
+                "label"=>"user.about_me",
+                "required"=>true,
+            )
+        );
+        //$builder->add('myFieldName', 'text', array('label_format' => 'My Help Message'));
     }
 
     public function getParent()

@@ -13,3 +13,7 @@ nfq_frontend:
 nfq_apie:
     resource: "@NFQApieBundle/Resources/config/routing.yml"
     prefix:   /apie
+
+home:
+    path:     /
+    defaults: { _controller: NFQHomeBundle:Home:home }
