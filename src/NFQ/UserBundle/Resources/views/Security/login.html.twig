@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="row">
+    <span class="col-sm-4"></span>
+    <div class="col-sm-4">
+        {% if error %}
+            <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
+
+        <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <h2 class="form-signin-heading">Prašome prisijungti</h2>
+            <input type="email" id="username" name="_username" value="{{ last_username }}" required="required"  class="form-control" placeholder="{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}" />
+            <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" />
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+
+            <input class = "btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+        </form>
+        <a href="{{ path("fos_user_resetting_request") }}">{{ 'generic.forgot_password'|trans }}</a>
+    </div>
+    <span class="col-sm-4"></span>
+</div>
+{% endblock body %}

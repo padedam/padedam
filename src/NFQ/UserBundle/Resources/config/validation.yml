@@ -1,0 +1,119 @@
+NFQ\UserBundle\Entity\User:
+    properties:
+    # Your custom fields in your user entity, here is an example with FirstName
+        first_name:
+            - NotBlank:
+                message: nfq_user.first_name.blank
+                groups: [ "NFQProfile" ]
+            - Length:
+                min: 2
+                minMessage: nfq_user.first_name.short
+                max: 255
+                maxMessage: nfq_user.first_name.long
+                groups: [ "NFQProfile" ]
+        last_name:
+            - NotBlank:
+                message: nfq_user.last_name.blank
+                groups: [ "NFQProfile" ]
+            - Length:
+                min: 2
+                minMessage: nfq_user.last_name.short
+                max: 255
+                maxMessage: nfq_user.last_name.long
+                groups: [ "NFQProfile" ]
+        phone:
+            - NotBlank:
+                message: nfq_user.last_name.blank
+                groups: [ "NFQProfile" ]
+
+
+
+# Note: We still want to validate the email
+# See FOSUserBundle/Resources/config/validation/orm.xml to understand
+# the UniqueEntity constraint that was originally applied to both
+# username and email fields
+#
+# As you can see, we are only applying the UniqueEntity constraint to 
+# the email field and not the username field.
+FOS\UserBundle\Model\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+             fields: email
+             errorPath: email 
+             message: fos_user.email.already_used
+             groups: [ "NFQRegistration", "NFQProfile" ]
+
+    properties:
+        email:
+            - NotBlank:
+                message: fos_user.email.blank
+                groups: [ "NFQRegistration", "NFQProfile" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 255
+                maxMessage: fos_user.email.long
+                groups: [ "NFQRegistration", "ResetPassword" ]
+            - Email:
+                message: fos_user.email.invalid
+                groups: [ "NFQRegistration", "NFQProfile" ]
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [ "NFQRegistration", "ResetPassword", "ChangePassword" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.password.blank
+                groups: [ "NFQRegistration", "NFQProfile", "ResetPassword", "ChangePassword"]
+
+FOS\UserBundle\Model\Group:
+    properties:
+        name:
+            - NotBlank:
+                message: fos_user.group.blank
+                groups: [ "NFQRegistration" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.group.short
+                max: 255
+                maxMessage: fos_user.group.long
+                groups: [ "NFQRegistration" ]
+
+FOS\UserBundle\Propel\User:
+    properties:
+        email:
+            - NotBlank:
+                message: fos_user.email.blank
+                groups: [ "NFQRegistration", "NFQProfile" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 255
+                maxMessage: fos_user.email.long
+                groups: [ "NFQRegistration", "ResetPassword" ]
+            - Email:
+                message: fos_user.email.invalid
+                groups: [ "NFQRegistration", "NFQProfile" ]
+
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [ "NFQRegistration", "ResetPassword", "ChangePassword" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.password.blank
+                groups: [ "NFQRegistration", "NFQProfile", "ResetPassword", "ChangePassword"]
+
+
+FOS\UserBundle\Propel\Group:
+    properties:
+        name:
+            - NotBlank:
+                message: fos_user.group.blank
+                groups: [ "NFQRegistration" ]
+            - Length:
+                min: 2
+                minMessage: fos_user.group.short
+                max: 255
+                maxMessage: fos_user.group.long
+                groups: [ "NFQRegistration" ]
