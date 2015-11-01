@@ -8,7 +8,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator: { fallbacks: [ en ] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -99,3 +99,17 @@ fos_user:
             form:
                 type: nfq_user_profile
                 validation_groups: [NFQProfile]
+easy_admin:
+    site_name: 'Padedam.lt'
+    entities:
+      Users:
+        class: NFQ\UserBundle\Entity\User
+        label: Users
+        list:
+          fields: ['id', 'First name', 'Last name', 'email', 'enabled', 'locked', 'lastLogin']
+        show:
+          fields: ['First name', 'Last name', 'email', 'phone', 'birthday','description', 'enabled', 'locked', 'lastLogin']
+        edit:
+          fields: [{property: 'first_name', label:'First Name' }, {property: 'last_name', label:'Last Name' }, 'email', 'phone', {property: 'birthday', label:'Birthday', type: 'birthday' },'description', 'enabled', 'locked']
+        disabled_actions: ['new']
+

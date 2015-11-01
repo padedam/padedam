@@ -17,11 +17,12 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new NFQ\HomeBundle\NFQHomeBundle(),
-            new NFQ\ApieBundle\NFQApieBundle(),
             new NFQ\FrontendBundle\NFQFrontendBundle(),
             new NFQ\UserBundle\NFQUserBundle(),
+            new NFQ\AdminBundle\NFQAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

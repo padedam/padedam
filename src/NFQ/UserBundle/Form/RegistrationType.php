@@ -33,7 +33,7 @@ class RegistrationType extends AbstractType
                 "required" => true,
             )
         );
-        $builder->add('birthday', 'date',
+        $builder->add('birthday', 'birthday',
             array(
                 "label" => "user.birth_year",
                 "required" => true,

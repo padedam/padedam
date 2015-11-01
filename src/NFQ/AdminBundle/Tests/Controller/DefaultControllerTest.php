@@ -1,6 +1,6 @@
 <?php
 
-namespace NFQ\ApieBundle\Tests\Controller;
+namespace NFQ\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

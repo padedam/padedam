@@ -1,3 +1,8 @@
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 nfq_user:
     resource: "@NFQUserBundle/Resources/config/routing.yml"
     prefix:   /user
@@ -9,10 +14,6 @@ nfq_home:
 nfq_frontend:
     resource: "@NFQFrontendBundle/Resources/config/routing.yml"
     prefix:   /front
-
-nfq_apie:
-    resource: "@NFQApieBundle/Resources/config/routing.yml"
-    prefix:   /apie
 
 home:
     path:     /

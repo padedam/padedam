@@ -1,6 +1,6 @@
 <?php
 
-namespace NFQ\ApieBundle\DependencyInjection;
+namespace NFQ\AdminBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class NFQApieExtension extends Extension
+class NFQAdminExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -24,5 +24,6 @@ class NFQApieExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        //$loader->load('config.yml');
     }
 }
