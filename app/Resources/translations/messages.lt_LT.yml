@@ -44,6 +44,7 @@ help.start_writeing: Pradėkite rašyti
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
 generic.ask_assistance_form: Pagalbos prašymo forma
+generic.ask_assistance_navbar: Prašyti pagalbos
 assistance.label_short_description: Trumpas aprašymas (100 simbolių)
 assistance.short_description_placeholder: Trumpas reikalingos pagalbos aprašymas
 assistance.field: Pagalbos sritis
