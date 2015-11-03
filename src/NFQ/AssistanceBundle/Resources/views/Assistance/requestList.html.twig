@@ -1,3 +1,31 @@
+{%- macro stringMaxLength(str, maxLength, id) -%}
+    {%- if str | length < maxLength -%}
+        <p>{{ str }}</p>
+    {%- else -%}
+        <p class="btn-link" data-target="#m{{ id }}" data-toggle="modal">{{ str|slice(0, maxLength) }}...</p>
+        <div class="bs-component">
+            <div id="m{{ id }}" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <fieldset>
+                                {{ str }}
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <h4 class="text-left">{{ 'user.name'|trans }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div></div>
+    {%- endif -%}
+{%- endmacro -%}
+
 {% extends "::base.html.twig" %}
 
 {% block body %}
@@ -22,7 +50,9 @@
         <tr>
             <td>{{ row.id }}</td>
             <td>{{ row.shortDescription }}</td>
-            <td>{{ row.longDescription }}</td>
+            <td>
+                {{ _self.stringMaxLength(row.longDescription, 50, row.id) }}
+            </td>
             <td>{{ row.date|date('Y-m-d') }}</td>
         </tr>
     {% endfor %}
