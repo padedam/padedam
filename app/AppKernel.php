@@ -17,9 +17,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new NFQ\HomeBundle\NFQHomeBundle(),
-            new NFQ\ApieBundle\NFQApieBundle(),
-            new NFQ\FrontendBundle\NFQFrontendBundle()
-        );
+            new NFQ\FrontendBundle\NFQFrontendBundle(),
+            new NFQ\AssistanceBundle\NFQAssistanceBundle(),
+            );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
