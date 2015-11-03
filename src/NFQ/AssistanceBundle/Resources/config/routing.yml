@@ -1,0 +1,7 @@
+nfq_assistance_request_form:
+    path:     /requestForm
+    defaults: { _controller: NFQAssistanceBundle:Assistance:requestForm }
+
+nfq_assistance_request_submitted:
+    path:     /sucessfullySubmitted
+    defaults: { _controller: NFQAssistanceBundle:Assistance:requestSubmitted }

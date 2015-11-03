@@ -5,8 +5,8 @@ generic.label.password: Jūsų slaptažodis
 generic.forgot_password: Pamiršau slaptažodį
 generic.close: Uždaryti
 generic.login: Prisijungti
-generic.logout: Atsijungti
 generic.please_login: Prisijunkite
+generic.logout: Atsijungti
 nav.toggle_nav: Toggle navigation
 generic.website_name: Padedam.lt
 generic.registration: Registracija
@@ -41,4 +41,14 @@ help.create_new: sukurkite naują
 help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
 help.start_writeing: Pradėkite rašyti
-user.remind_pass: Slaptažodžio priminimas
+#Assistance form
+generic.ask_assistance: Pagalbos prašymas
+generic.ask_assistance_form: Pagalbos prašymo forma
+generic.ask_assistance_navbar: Prašyti pagalbos
+assistance.label_short_description: Trumpas aprašymas (100 simbolių)
+assistance.short_description_placeholder: Trumpas reikalingos pagalbos aprašymas
+assistance.field: Pagalbos sritis
+assistance.label_long_description: Išsamus aprašymas
+assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
+assistance.submit_button: Pateikti prašymą
+assistance.successful_request: Jūsų prašymas priimtas

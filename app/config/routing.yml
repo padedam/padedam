@@ -18,3 +18,7 @@ nfq_frontend:
 home:
     path:     /
     defaults: { _controller: NFQHomeBundle:Home:home }
+    
+nfq_assistance:
+    resource: "@NFQAssistanceBundle/Resources/config/routing.yml"
+    prefix:   /assistance

@@ -14,6 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span class="sr-only">(current)</span></a></li>
                 <li><a href="{{ path('fos_user_profile_show') }}">{{ 'generic.profile'|trans }}</a></li>
+                <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
@@ -33,15 +34,9 @@
                 </div>
                 <button class="btn btn-default" type="submit">{{ 'generic.submit'|trans }}</button>
             </form>
-            {% if not app.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
             </ul>
-            {% else %}
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p>{{ app.user.username  }}</p><a href="{{ path('fos_user_security_logout') }}">{{ 'generic.logout'|trans }}</a></li>
-                </ul>
-            {% endif %}
         </div>
     </div>
 </nav>

@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="control-group">
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'generic.ask_assistance'|trans }}</h1>
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="well bs-component">
+            <legend>{{ 'generic.ask_assistance_form'|trans }}</legend>
+            <fieldset>
+                {{ form_start(form) }}
+                    {{ form_row(form.assistanceField, {'attr': {'class': 'form-control'}}) }}
+                    <br>
+                    {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'100' }}) }}
+                    <br>
+                    {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
+                        'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
+                    <br>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+            </fieldset>
+        </div>
+    </div>
+{% endblock %}
