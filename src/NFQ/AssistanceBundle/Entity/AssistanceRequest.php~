@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AssistanceRequestForm
+ * AssistanceRequest
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -21,15 +21,6 @@ class AssistanceRequest
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="assistanceField", type="integer")
-     *
-     * @Assert\NotBlank()
-     */
-    private $assistanceField;
 
     /**
      * @var string

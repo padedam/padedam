@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * AssistanceRequest
  *
- * @ORM\Table()
+ * @ORM\Table(name="assistance_request")
  * @ORM\Entity
  */
 class AssistanceRequest
@@ -21,15 +21,6 @@ class AssistanceRequest
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="assistanceField", type="integer")
-     *
-     * @Assert\NotBlank()
-     */
-    private $assistanceField;
 
     /**
      * @var string
@@ -66,29 +57,6 @@ class AssistanceRequest
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set assistanceField
-     *
-     * @param integer $assistanceField
-     * @return AssistanceRequest
-     */
-    public function setAssistanceField($assistanceField)
-    {
-        $this->assistanceField = $assistanceField;
-
-        return $this;
-    }
-
-    /**
-     * Get assistanceField
-     *
-     * @return string 
-     */
-    public function getAssistanceField()
-    {
-        return $this->assistanceField;
     }
 
     /**
