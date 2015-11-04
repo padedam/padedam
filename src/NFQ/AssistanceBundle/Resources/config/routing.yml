@@ -5,3 +5,7 @@ nfq_assistance_request_form:
 nfq_assistance_request_submitted:
     path:     /sucessfullySubmitted
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestSubmitted }
+
+nfq_assistance_request_list:
+    path:     /request-list
+    defaults: { _controller: NFQAssistanceBundle:Assistance:requestList }
