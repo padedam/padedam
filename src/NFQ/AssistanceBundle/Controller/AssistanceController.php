@@ -45,4 +45,19 @@ class AssistanceController extends Controller
 
         return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('assistance'=>$assistance));
     }
+
+    public function requestCategoryAction(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('SELECT partial c.{id, name}, partial c1.{id, name} FROM NFQ\AssistanceBundle\Entity\AssistanceCategories c JOIN c.children c1');
+        $cats = $query->getArrayResult();
+        dump($cats);
+        exit;
+
+
+
+        //dump($category); exit;
+        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('output'=>''));
+    }
 }

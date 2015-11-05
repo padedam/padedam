@@ -45,6 +45,7 @@ help.start_writeing: Pradėkite rašyti
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
 generic.assistance_req_list: Pagalbos prašymų sąrašas
+generic.assistance_cat_list: Pagalbos categorijų sąrašas
 generic.ask_assistance_form: Pagalbos prašymo forma
 generic.ask_assistance_navbar: Prašyti pagalbos
 assistance.label_short_description: Trumpas aprašymas (100 simbolių)
@@ -55,6 +56,8 @@ assistance.label_long_description: Išsamus aprašymas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
+assistance.cat_name: Kategorijos pavadinimas
+assistance.parent: Aukštesnė kategorija
 
 #menu
 menu.help: Pagalba

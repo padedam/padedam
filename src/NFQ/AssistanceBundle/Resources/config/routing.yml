@@ -9,3 +9,7 @@ nfq_assistance_request_submitted:
 nfq_assistance_request_list:
     path:     /request-list
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestList }
+
+nfq_assistance_request_category:
+    path:     /request-category
+    defaults: { _controller: NFQAssistanceBundle:Assistance:requestCategory }
