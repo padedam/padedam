@@ -4,6 +4,7 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
+use NFQ\AssistanceBundle\Entity\AssistanceCategories;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,11 +18,9 @@ class AssistanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            $assistanceField = $form->get('assistanceField')->getData();
             $shortDescription = $form->get('shortDescription')->getData();
             $longDescription = $form->get('longDescription')->getData();
 
-            $assistanceRequest->setAssistanceField($assistanceField);
             $assistanceRequest->setShortDescription($shortDescription);
             $assistanceRequest->setLongDescription($longDescription);
 
@@ -47,17 +46,25 @@ class AssistanceController extends Controller
     }
 
     public function requestCategoryAction(){
-
+//create categories
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('NFQAssistanceBundle:AssistanceCategories');
 
-        $query = $em->createQuery('SELECT partial c.{id, name}, partial c1.{id, name} FROM NFQ\AssistanceBundle\Entity\AssistanceCategories c JOIN c.children c1');
-        $cats = $query->getArrayResult();
-        dump($cats);
-        exit;
+        $options = array(
+            'decorate' => true,
+            'rootOpen' => '<ul>',
+            'rootClose' => '</ul>',
+            'childOpen' => '<li>',
+            'childClose' => '</li>'
+        );
 
-
+        $htmlTree = $repo->childrenHierarchy(
+            null, /* starting from root nodes */
+            false, /* true: load all children, false: only direct */
+            $options
+        );
 
         //dump($category); exit;
-        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('output'=>''));
+        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('tree'=>$htmlTree));
     }
 }
