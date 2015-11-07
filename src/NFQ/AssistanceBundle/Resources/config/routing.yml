@@ -13,3 +13,12 @@ nfq_assistance_request_list:
 nfq_assistance_request_category:
     path:     /request-category
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestCategory }
+
+nfq_assistance_match_tags:
+    path:     /mt
+    defaults: { _controller: NFQAssistanceBundle:Assistance:matchTags }
+
+nfq_assistance_save_tags:
+    path:     /st
+    defaults: { _controller: NFQAssistanceBundle:Assistance:saveTags }
+

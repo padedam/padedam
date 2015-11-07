@@ -5,15 +5,20 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+
 /**
+ * Tags
+ *
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="assistance_categories")
- * use repository for handy tree functions
+ * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class AssistanceCategories
+class Tags
 {
     /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,9 +26,12 @@ class AssistanceCategories
     private $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=64)
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=100)
      */
     private $title;
+
 
     /**
      * @Gedmo\TreeLeft
@@ -51,24 +59,41 @@ class AssistanceCategories
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="AssistanceCategories", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Tags", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="AssistanceCategories", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Tags", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
 
+
     /**
-     * Constructor
+     * @var boolean
+     *
+     * @ORM\Column(name="is_enabled", type="boolean")
      */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $isEnabled = true;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="added_at", type="datetime")
+     */
+    private $addedAt;
+
+    /** @ORM\OneToMany(targetEntity="Tag2User", mappedBy="tag") */
+    protected $usersWithTag;
 
     /**
      * Get id
@@ -80,11 +105,22 @@ class AssistanceCategories
         return $this->id;
     }
 
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     /**
      * Set title
      *
      * @param string $title
-     * @return AssistanceCategories
+     * @return Tags
      */
     public function setTitle($title)
     {
@@ -107,7 +143,7 @@ class AssistanceCategories
      * Set lft
      *
      * @param integer $lft
-     * @return AssistanceCategories
+     * @return Tags
      */
     public function setLft($lft)
     {
@@ -130,7 +166,7 @@ class AssistanceCategories
      * Set lvl
      *
      * @param integer $lvl
-     * @return AssistanceCategories
+     * @return Tags
      */
     public function setLvl($lvl)
     {
@@ -153,7 +189,7 @@ class AssistanceCategories
      * Set rgt
      *
      * @param integer $rgt
-     * @return AssistanceCategories
+     * @return Tags
      */
     public function setRgt($rgt)
     {
@@ -176,7 +212,7 @@ class AssistanceCategories
      * Set root
      *
      * @param integer $root
-     * @return AssistanceCategories
+     * @return Tags
      */
     public function setRoot($root)
     {
@@ -196,12 +232,81 @@ class AssistanceCategories
     }
 
     /**
+     * Set isEnabled
+     *
+     * @param boolean $isEnabled
+     * @return Tags
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnabled
+     *
+     * @return boolean 
+     */
+    public function getIsEnabled()
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Tags
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set addedAt
+     *
+     * @param \DateTime $addedAt
+     * @return Tags
+     */
+    public function setAddedAt($addedAt)
+    {
+        $this->addedAt = $addedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get addedAt
+     *
+     * @return \DateTime 
+     */
+    public function getAddedAt()
+    {
+        return $this->addedAt;
+    }
+
+    /**
      * Set parent
      *
-     * @param \NFQ\AssistanceBundle\Entity\AssistanceCategories $parent
-     * @return AssistanceCategories
+     * @param \NFQ\AssistanceBundle\Entity\Tags $parent
+     * @return Tags
      */
-    public function setParent(\NFQ\AssistanceBundle\Entity\AssistanceCategories $parent = null)
+    public function setParent(\NFQ\AssistanceBundle\Entity\Tags $parent = null)
     {
         $this->parent = $parent;
 
@@ -211,7 +316,7 @@ class AssistanceCategories
     /**
      * Get parent
      *
-     * @return \NFQ\AssistanceBundle\Entity\AssistanceCategories
+     * @return \NFQ\AssistanceBundle\Entity\Tags
      */
     public function getParent()
     {
@@ -221,10 +326,10 @@ class AssistanceCategories
     /**
      * Add children
      *
-     * @param \NFQ\AssistanceBundle\Entity\AssistanceCategories $children
-     * @return AssistanceCategories
+     * @param \NFQ\AssistanceBundle\Entity\Tags $children
+     * @return Tags
      */
-    public function addChild(\NFQ\AssistanceBundle\Entity\AssistanceCategories $children)
+    public function addChild(\NFQ\AssistanceBundle\Entity\Tags $children)
     {
         $this->children[] = $children;
 
@@ -234,9 +339,9 @@ class AssistanceCategories
     /**
      * Remove children
      *
-     * @param \NFQ\AssistanceBundle\Entity\AssistanceCategories $children
+     * @param \NFQ\AssistanceBundle\Entity\Tags $children
      */
-    public function removeChild(\NFQ\AssistanceBundle\Entity\AssistanceCategories $children)
+    public function removeChild(\NFQ\AssistanceBundle\Entity\Tags $children)
     {
         $this->children->removeElement($children);
     }
@@ -249,5 +354,20 @@ class AssistanceCategories
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setUpdatedAt(new \DateTime(date('Y-m-d H:i:s')));
+
+        if($this->getAddedAt() == null)
+        {
+            $this->setAddedAt(new \DateTime(date('Y-m-d H:i:s')));
+        }
     }
 }

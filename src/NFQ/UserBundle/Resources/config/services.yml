@@ -1,0 +1,4 @@
+services:
+    nfq_user.user_manager:
+        class: NFQ\UserBundle\Service\UserManager
+        arguments: ["@doctrine.orm.entity_manager"]
