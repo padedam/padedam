@@ -1,0 +1,4 @@
+services:
+#    nfq_admin.example:
+#        class: NFQ\AdminBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

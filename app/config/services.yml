@@ -4,6 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    nfq.form.registration:
+        class: NFQ\UserBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: nfq_user_registration }
+    nfq.form.profile:
+            class: NFQ\UserBundle\Form\ProfileType
+            tags:
+                - { name: form.type, alias: nfq_user_profile }

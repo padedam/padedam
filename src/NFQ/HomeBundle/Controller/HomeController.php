@@ -6,30 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
-    public function homeAction()
-    {
-        return $this->render('NFQHomeBundle:Home:home.html.twig', array(
-                // ...
-            ));
-    }
-
     public function signupAction()
     {
         return $this->render('NFQHomeBundle:Home:signup.html.twig', array(
                 // ...
             ));
     }
-
-    public function profileAction()
+    public function homeAction()
     {
-        return $this->render('NFQHomeBundle:Home:profile.html.twig', array(
-                // ...
-            ));
-    }
-
-    public function loginAction()
-    {
-        return $this->render('NFQHomeBundle:Home:login.html.twig', array(
+        return $this->render('NFQHomeBundle:Home:home.html.twig', array(
                 // ...
             ));
     }
