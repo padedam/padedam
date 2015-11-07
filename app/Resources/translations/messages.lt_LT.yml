@@ -40,15 +40,22 @@ help.choose_or: Pasirinkite tinkamus arba
 help.create_new: sukurkite naują
 help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
+generic.date: Data
 help.start_writeing: Pradėkite rašyti
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
+generic.assistance_req_list: Pagalbos prašymų sąrašas
 generic.ask_assistance_form: Pagalbos prašymo forma
 generic.ask_assistance_navbar: Prašyti pagalbos
 assistance.label_short_description: Trumpas aprašymas (100 simbolių)
 assistance.short_description_placeholder: Trumpas reikalingos pagalbos aprašymas
 assistance.field: Pagalbos sritis
+assistance.short_desc: Trumpas aprašymas
 assistance.label_long_description: Išsamus aprašymas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
+
+#menu
+menu.help: Pagalba
+menu.req_list: Prašymų sąrašas

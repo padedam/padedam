@@ -38,4 +38,11 @@ class AssistanceController extends Controller
     public function requestSubmittedAction(){
         return $this->render('NFQAssistanceBundle:Assistance:requestSubmitted.html.twig');
     }
+
+    public function requestListAction(){
+
+        $assistance = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
+
+        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('assistance'=>$assistance));
+    }
 }
