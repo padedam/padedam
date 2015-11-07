@@ -1,6 +1,6 @@
 nfq_reviews:
     resource: "@NFQReviewsBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /reviews
 
 easy_admin_bundle:
     resource: "@EasyAdminBundle/Controller/"

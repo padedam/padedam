@@ -60,3 +60,6 @@ assistance.owner_first_name: Prašymo autorius
 #menu
 menu.help: Pagalba
 menu.req_list: Prašymų sąrašas
+
+#review
+review.submit_button: Išsaugoti atsiliepimą
