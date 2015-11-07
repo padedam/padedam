@@ -8,7 +8,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator: { fallbacks: [ en ] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -33,6 +33,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+            #resources: ['bootstrap_3_layout.html.twig']
+            resources: ['bootstrap_3_horizontal_layout.html.twig']
 
 # Assetic Configuration
 assetic:
@@ -76,3 +79,37 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_user:
+    from_email:
+            address:        info@padedam.lt
+            sender_name:    Padedam.lt administracija
+    service:
+            mailer: fos_user.mailer.twig_swift
+    db_driver: orm
+    firewall_name: main
+    user_class: NFQ\UserBundle\Entity\User
+    registration:
+            confirmation:
+                enabled: true
+            form:
+                type: nfq_user_registration
+                validation_groups: [NFQRegistration]
+    profile:
+            form:
+                type: nfq_user_profile
+                validation_groups: [NFQProfile]
+easy_admin:
+    site_name: 'Padedam.lt'
+    entities:
+      Users:
+        class: NFQ\UserBundle\Entity\User
+        label: Users
+        list:
+          fields: ['id', 'First name', 'Last name', 'email', 'enabled', 'locked', 'lastLogin']
+        show:
+          fields: ['First name', 'Last name', 'email', 'phone', 'birthday','description', 'enabled', 'locked', 'lastLogin']
+        edit:
+          fields: [{property: 'first_name', label:'First Name' }, {property: 'last_name', label:'Last Name' }, 'email', 'phone', {property: 'birthday', label:'Birthday', type: 'birthday' },'description', 'enabled', 'locked']
+        disabled_actions: ['new']
+

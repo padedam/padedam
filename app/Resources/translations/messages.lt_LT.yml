@@ -6,6 +6,7 @@ generic.forgot_password: Pamiršau slaptažodį
 generic.close: Uždaryti
 generic.login: Prisijungti
 generic.please_login: Prisijunkite
+generic.logout: Atsijungti
 nav.toggle_nav: Toggle navigation
 generic.website_name: Padedam.lt
 generic.registration: Registracija
@@ -41,7 +42,6 @@ help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
 generic.date: Data
 help.start_writeing: Pradėkite rašyti
-
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
 generic.assistance_req_list: Pagalbos prašymų sąrašas
