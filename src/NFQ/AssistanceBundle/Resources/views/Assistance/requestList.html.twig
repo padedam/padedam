@@ -39,6 +39,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>{{ 'assistance.owner_first_name'|trans }}</th>
                 <th>{{ 'assistance.short_desc'|trans }}</th>
                 <th>{{ 'assistance.label_long_description'|trans }}</th>
                 <th>{{ 'generic.date'|trans }}</th>
@@ -49,6 +50,7 @@
     {% for row in assistance %}
         <tr>
             <td>{{ row.id }}</td>
+            <td>{{ row.owner.firstName }}</td>
             <td>{{ row.shortDescription }}</td>
             <td>
                 {{ _self.stringMaxLength(row.longDescription, 50, row.id) }}

@@ -12,18 +12,14 @@ class AssistanceController extends Controller
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
-        $form = $this->createForm(new AssistanceRequestType(),$assistanceRequest, array('method'=>'POST'));
+        $form = $this->createForm(new AssistanceRequestType(), $assistanceRequest, array('method'=>'POST'));
 
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-            $assistanceField = $form->get('assistanceField')->getData();
-            $shortDescription = $form->get('shortDescription')->getData();
-            $longDescription = $form->get('longDescription')->getData();
 
-            $assistanceRequest->setAssistanceField($assistanceField);
-            $assistanceRequest->setShortDescription($shortDescription);
-            $assistanceRequest->setLongDescription($longDescription);
+            $currentUser = $this->getUser();
+            $assistanceRequest->setOwner($currentUser);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($assistanceRequest);

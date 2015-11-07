@@ -55,6 +55,7 @@ assistance.label_long_description: Išsamus aprašymas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
+assistance.owner_first_name: Prašymo autorius
 
 #menu
 menu.help: Pagalba
