@@ -1,13 +1,13 @@
 $(document).ready(function () {
     var taggable = $('#competence');
-    taggable.val('dummy');
+    taggable.val('narsieji');
     taggable.select2({
-        initSelection: function (element, callback) {
-            var obj_id = '';
-            if (obj_id && obj_class) {
+    initSelection: function (element, callback) {
+            var obj_id = element.val();
+            if (obj_id !== "")  {
                 $.getJSON(
-                    'http://symfony.local/app_dev.php/assistance/mt',
-                    {obj_id: obj_id},
+                    'http://symfony.local/app_dev.php/assistance/mytags',
+                    {},
                     function (response) {
                         element.val(JSON.stringify(response));
                         callback(response);
@@ -15,12 +15,11 @@ $(document).ready(function () {
             }
         },
         triggerChange: true,
-        placeholder: 'Pasirinkite bendras žymas',
         allowClear: true,
         quietMillis: 250,
         minimumInputLength: 2,
         tags: true,
-        tokenSeparators: [','],
+        tokenSeparators: [',', ' '],
         createSearchChoice: function (term) {
             return {
                 id: $.trim(term),
@@ -28,11 +27,11 @@ $(document).ready(function () {
             };
         },
         ajax: {
-            url: '',
+            url: 'http://symfony.local/app_dev.php/assistance/mt',
             dataType: 'json',
             data: function (term, page) {
                 return {
-                    q: term
+                    tag: term
                 };
             },
             results: function (data, page) {
@@ -41,29 +40,26 @@ $(document).ready(function () {
                 };
             }
         },
-        // maximumSelectionSize: 3,
-        // override message for max tags
         formatSelectionTooBig: function (limit) {
             return "Daugiausiai raktažodžių galite parinkti " + limit;
         }
     }).on('select2-removed', function (e) {
-        var tagId = e.choice.id;
-        if (!isNaN(tagId)) {
-            $.getJSON(
-                'http://symfony.local/app_dev.php/assistance/rmt',
-                {
-                    obj_id: '869',
-                    tag_id: tagId
-                },
-                function (response) {
-                    if (!response.success) {
-                        e.preventDefault();
-                    }
-                });
-        }
-    });
-    taggable.on('change', function (e) {
-        var _data = taggable.select2('data');
+       $.post(
+            'http://symfony.local/app_dev.php/assistance/rmt',
+            {tag: e.choice},
+            function (response) {
+                if (!response.success) {
+                    e.preventDefault();
+                }
+            },'json'
+        );
+    }).on('select2-selecting', function (e) {
+        var _data = e.choice;
         taggable.val(JSON.stringify(_data));
+        $.post(
+            'http://symfony.local/app_dev.php/assistance/st',
+            {tag: e.choice},
+            function(response){},'json'
+        );
     });
 });

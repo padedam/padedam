@@ -1,3 +1,16 @@
+<style>
+    .select2-choices{
+        width:100%;
+    }
+
+    .select2-search-choice-close:before {
+        content: 'x';
+        color: #fff;
+        font-weight: 300;
+        font-family: Arial, sans-serif;
+    }
+
+</style>
 <div class="col-md-6 col-md-offset-3">
 
     <div class="well bs-component">
@@ -9,7 +22,7 @@
                 <div class="form-group">
                     <label for="fos_user_profile_form_last_name" class="col-sm-2 control-label required">My Competence</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="" value="" id="competence" />
+                        <input id="competence" class="form-control" name="optionvalue" type="hidden" data-placeholder="Choose An Option.." />
                     </div>
                 </div>
 
@@ -21,3 +34,5 @@
     </div>
 
 </div>
+
+
