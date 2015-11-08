@@ -8,12 +8,9 @@ Pagalbos ieškantys kauniečiai gali skelbti savo pagalbos prašymus.
 Komanda
 --------------
 Žygimantas Končius;
-
 Matas Valužis;
-
 Renaldas Zajančkauskas;
 
 
 Mentorius
-
 Paulius Kaminskas
