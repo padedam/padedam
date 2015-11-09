@@ -6,11 +6,15 @@ $(document).ready(function () {
             var obj_id = element.val();
             if (obj_id !== "")  {
                 $.getJSON(
-                    'http://symfony.local/app_dev.php/assistance/mytags',
-                    {},
+                    taggable.data('current'),
+                    {obj_id: obj_id},
                     function (response) {
-                        element.val(JSON.stringify(response));
-                        callback(response);
+                        if (response.status == 'success') {
+                            element.val(JSON.stringify(response.tags));
+                            callback(response.tags);
+                        } else {
+                            alert(response.message);
+                        }
                     });
             }
         },
@@ -27,7 +31,7 @@ $(document).ready(function () {
             };
         },
         ajax: {
-            url: 'http://symfony.local/app_dev.php/assistance/mt',
+            url: taggable.data('match'),
             dataType: 'json',
             data: function (term, page) {
                 return {
@@ -45,7 +49,7 @@ $(document).ready(function () {
         }
     }).on('select2-removed', function (e) {
        $.post(
-            'http://symfony.local/app_dev.php/assistance/rmt',
+           taggable.data('rem'),
             {tag: e.choice},
             function (response) {
                 if (!response.success) {
@@ -57,7 +61,7 @@ $(document).ready(function () {
         var _data = e.choice;
         taggable.val(JSON.stringify(_data));
         $.post(
-            'http://symfony.local/app_dev.php/assistance/st',
+            taggable.data('save'),
             {tag: e.choice},
             function(response){},'json'
         );

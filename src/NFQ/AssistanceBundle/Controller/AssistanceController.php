@@ -97,17 +97,22 @@ class AssistanceController extends Controller
      */
     public function matchTagsAction(Request $request)
     {
+        $response = [];
+        try {
+            $tag = $request->query->get('tag', '');
+            $em = $this->getDoctrine()->getManager();
 
-        $tag = $request->query->get('tag', '');
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder();
-        $qb->select('t.id AS id, t.title as text')
-            ->from('NFQAssistanceBundle:Tags', 't')
-            ->where('t.title LIKE :title')
-            ->setParameter(':title', $tag . '%');
-        $tags = $qb->getQuery()->getArrayResult();
-
+            $qb = $em->createQueryBuilder();
+            $qb->select('t.id AS id, t.title as text')
+                ->from('NFQAssistanceBundle:Tags', 't')
+                ->where('t.title LIKE :title')
+                ->setParameter(':title', $tag . '%');
+            $tags = $qb->getQuery()->getArrayResult();
+            $response ['status'] = 'success';
+        }catch (\Exception $e){
+            $response['status'] = 'failed';
+            $response['message'] = $e->getMessage();
+        }
         return new JsonResponse($tags);
     }
 
@@ -121,40 +126,51 @@ class AssistanceController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $response = [];
 
-        $tag_ar = $request->request->get('tag', null);
-        if(!is_array($tag_ar)) exit('no info');
+        try {
+            $em = $this->getDoctrine()->getManager();
 
-        if($tag_id = $tag_ar['id'] and !is_numeric($tag_id)){
-            //create a new tag
-            $tag = new Tags();
-            $tag->setTitle($tag_id);
-            $em->persist($tag);
+            $tag_ar = $request->request->get('tag', null);
+            if (!is_array($tag_ar)) {
+                throw new \InvalidArgumentException('Tags are missing');
+            }
+
+            if ($tag_id = $tag_ar['id'] and !is_numeric($tag_id)) {
+                //create a new tag
+                $tag = new Tags();
+                $tag->setTitle($tag_id);
+                $em->persist($tag);
+                $em->flush();
+            } else {
+                $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
+                $tag = $tagRepo->findOneById($tag_id);
+            }
+
+            $user = $this->getUser();
+
+            //check if not present already
+            $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tag2User');
+            $tag2userCheck = $tagRepo->findOneBy(['tag' => $tag, 'user' => $user]);
+            if (!empty($tag2userCheck)) {
+                throw new \Exception('Tag already exists');
+            }
+
+            $tag2user = new Tag2User();
+            $tag2user->setTag($tag);
+            $tag2user->setUser($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tag2user);
             $em->flush();
-        }else{
-            $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
-            $tag = $tagRepo->findOneById($tag_id);
+
+            $response['status'] = 'success';
+        } catch (\Exception $ex) {
+            $response['status'] = 'failed';
+            $response['message'] = $ex->getMessage();
         }
 
-        $user = $this->getUser();
-
-        //check if not present already
-        $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tag2User');
-        $tag2userCheck = $tagRepo->findOneBy(['tag'=>$tag, 'user'=>$user]);
-        if(!empty($tag2userCheck)){
-            exit('already present');
-        }
-
-        $tag2user = new Tag2User();
-        $tag2user->setTag($tag);
-        $tag2user->setUser($user);
-
-        $em  = $this->getDoctrine()->getManager();
-        $em->persist($tag2user);
-        $em->flush();
-
-        return new JsonResponse('saved');
+        return new JsonResponse($response);
     }
 
     /**
@@ -163,39 +179,48 @@ class AssistanceController extends Controller
      */
     public function removeTagsAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
+        $response = [];
+        try {
+
+            if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $tagAr = $request->request->get('tag', null);
+            if (!isset($tagAr['id'])) {
+                throw new \Exception('no tag sent');
+            } else {
+                $tag_id = $tagAr['id'];
+            }
+            $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
+            if (!is_numeric($tag_id)) {
+                $tag = $tagRepo->findOneByTitle($tag_id);
+            } else {
+                $tag = $tagRepo->findOneById($tag_id);
+            }
+            if (!$tag) {
+                throw new \Exception('this tag was not found');
+            }
+
+            $user = $this->getUser();
+            $tag2userRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tag2User');
+            $tag2user = $tag2userRepo->findOneBy(['user' => $user, 'tag' => $tag]);
+
+            if (!$tag2user) {
+                throw new \Exception('user does not have this tag');
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($tag2user);
+            $em->flush();
+
+            $response['status'] = 'success';
+        }catch (\Exception $e){
+            $response['status'] = 'failed';
+            $response['message'] = $e->getMessage();
         }
 
-        $tagAr = $request->request->get('tag', null);
-        if(!isset($tagAr['id'])){
-            exit('no tag sent');
-        }else{
-            $tag_id = $tagAr['id'];
-        }
-        $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
-        if(!is_numeric($tag_id)){
-            $tag = $tagRepo->findOneByTitle($tag_id);
-        }else{
-            $tag = $tagRepo->findOneById($tag_id);
-        }
-        if(!$tag){
-            exit('this tag was not found');
-        }
-
-        $user = $this->getUser();
-        $tag2userRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tag2User');
-        $tag2user = $tag2userRepo->findOneBy(['user'=>$user, 'tag'=>$tag]);
-
-        if(!$tag2user){
-            exit('user does not have this tag');
-        }
-
-        $em  = $this->getDoctrine()->getManager();
-        $em->remove($tag2user);
-        $em->flush();
-
-        return new JsonResponse('removed');
+        return new JsonResponse($response);
     }
 
     /**
@@ -203,19 +228,28 @@ class AssistanceController extends Controller
      */
     public function myTagsAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
+        $response = [];
+
+        try {
+            if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $dql = '
+                SELECT   t.id AS id, t.title as text
+                FROM     NFQAssistanceBundle:Tags t
+                JOIN     t.usersWithTag t2u
+                WHERE    t2u.user = :user
+            ';
+            $tags = $em->createQuery($dql)->setParameter('user', $this->getUser())->getResult();
+
+            $response['status'] = 'success';
+            $response['tags'] = $tags;
+        }catch (\Exception $e){
+            $response['status'] = 'failed';
+            $response['message'] = $e->getMessage();
         }
-
-        $em = $this->getDoctrine()->getManager();
-        $dql = '
-            SELECT   t.id AS id, t.title as text
-            FROM     NFQAssistanceBundle:Tags t
-            JOIN     t.usersWithTag t2u
-            WHERE    t2u.user = :user
-        ';
-        $tags = $em->createQuery($dql)->setParameter('user', $this->getUser())->getResult();
-
-        return new JsonResponse($tags);
+        return new JsonResponse($response);
     }
 }
