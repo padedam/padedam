@@ -118,13 +118,11 @@ class AssistanceController extends Controller
      */
     public function saveTagsAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
-
         $response = [];
-
         try {
+            if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                throw $this->createAccessDeniedException();
+            }
             $em = $this->getDoctrine()->getManager();
 
             $tag_ar = $request->request->get('tag', null);
@@ -132,13 +130,14 @@ class AssistanceController extends Controller
                 throw new \InvalidArgumentException('Tags are missing');
             }
 
-            if ($tag_id = $tag_ar['id'] and !is_numeric($tag_id)) {
+            $tag_id = $tag_ar['id'];
+            if (!is_numeric($tag_id) and !$tag = $this->getTagByTitle($tag_id)) {
                 //create a new tag
                 $tag = new Tags();
                 $tag->setTitle($tag_id);
                 $em->persist($tag);
                 $em->flush();
-            } else {
+            }elseif(is_numeric($tag_id)) {
                 $tagRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
                 $tag = $tagRepo->findOneById($tag_id);
             }
@@ -167,6 +166,11 @@ class AssistanceController extends Controller
         }
 
         return new JsonResponse($response);
+    }
+
+    private function getTagByTitle($title){
+        $tagsRepo = $this->getDoctrine()->getRepository('NFQAssistanceBundle:Tags');
+        return $tagsRepo->findOneByTitle($title);
     }
 
     /**
