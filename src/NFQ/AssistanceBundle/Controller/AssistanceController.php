@@ -101,13 +101,8 @@ class AssistanceController extends Controller
         try {
             $tag = $request->query->get('tag', '');
             $em = $this->getDoctrine()->getManager();
+            $tags = $em->getRepository('NFQAssistanceBundle:Tags')->matchEnteredTags($tag);
 
-            $qb = $em->createQueryBuilder();
-            $qb->select('t.id AS id, t.title as text')
-                ->from('NFQAssistanceBundle:Tags', 't')
-                ->where('t.title LIKE :title')
-                ->setParameter(':title', $tag . '%');
-            $tags = $qb->getQuery()->getArrayResult();
             $response ['status'] = 'success';
             $response['tags'] = $tags;
         }catch (\Exception $e){
@@ -237,13 +232,8 @@ class AssistanceController extends Controller
             }
 
             $em = $this->getDoctrine()->getManager();
-            $dql = '
-                SELECT   t.id AS id, t.title as text
-                FROM     NFQAssistanceBundle:Tags t
-                JOIN     t.usersWithTag t2u
-                WHERE    t2u.user = :user
-            ';
-            $tags = $em->createQuery($dql)->setParameter('user', $this->getUser())->getResult();
+
+            $tags = $em->getRepository('NFQAssistanceBundle:Tags')->getMyTags($this->getUser());
 
             $response['status'] = 'success';
             $response['tags'] = $tags;

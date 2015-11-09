@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Repository\TagsRepository")
  */
 class Tags
 {

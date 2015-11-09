@@ -54,7 +54,7 @@ $(document).ready(function () {
            taggable.data('rem'),
             {tag: e.choice},
             function (response) {
-                if (!response.success) {
+                if (response.status != 'success') {
                     e.preventDefault();
                 }
             },'json'
@@ -65,7 +65,13 @@ $(document).ready(function () {
         $.post(
             taggable.data('save'),
             {tag: e.choice},
-            function(response){},'json'
+            function(response){
+                if (response.status == 'success') {
+                    //ok, saved
+                }else{
+                    /*alert('tag was not saved');*/
+                }
+            },'json'
         );
     });
 });
