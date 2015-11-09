@@ -13,7 +13,7 @@ $(document).ready(function () {
                             element.val(JSON.stringify(response.tags));
                             callback(response.tags);
                         } else {
-                            alert(response.message);
+                            /* alert(response.message);*/
                         }
                     });
             }
@@ -36,12 +36,14 @@ $(document).ready(function () {
             data: function (term, page) {
                 return {
                     tag: term
-                };
+                }
             },
             results: function (data, page) {
-                return {
-                    results: data
-                };
+                if(data.status == 'success') {
+                    return {
+                        results: data.tags
+                    };
+                }
             }
         },
         formatSelectionTooBig: function (limit) {

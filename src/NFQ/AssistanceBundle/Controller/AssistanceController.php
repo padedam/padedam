@@ -109,11 +109,12 @@ class AssistanceController extends Controller
                 ->setParameter(':title', $tag . '%');
             $tags = $qb->getQuery()->getArrayResult();
             $response ['status'] = 'success';
+            $response['tags'] = $tags;
         }catch (\Exception $e){
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
-        return new JsonResponse($tags);
+        return new JsonResponse($response);
     }
 
     /**
