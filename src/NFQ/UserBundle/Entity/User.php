@@ -43,18 +43,6 @@ class User extends BaseUser
      */
     protected $description = "";
 
-    /**
-     * @var integer
-     * @ORM\Column(name="thumb_ups", type="integer")
-     */
-    protected $thumbUps= 0;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="thumb_downs", type="integer")
-     */
-    protected $thumbDowns = 0;
-
     public function getId()
     {
         return $this->id;
@@ -193,45 +181,5 @@ class User extends BaseUser
     {
         parent::__construct();
 
-    }
-
-    /**
-     * @return int
-     */
-    public function getThumbUps()
-    {
-        return $this->thumbUps;
-    }
-
-    /**
-     * @param int $thumbUps
-     */
-    public function setThumbUps($thumbUps)
-    {
-        $this->thumbUps = $thumbUps;
-    }
-
-    /**
-     * @return int
-     */
-    public function getThumbDowns()
-    {
-        return $this->thumbDowns;
-    }
-
-    /**
-     * @param int $thumbDowns
-     */
-    public function setThumbDowns($thumbDowns)
-    {
-        $this->thumbDowns = $thumbDowns;
-    }
-
-    public function incrementThumbUps(){
-        $this->thumbUps++;
-    }
-
-    public function incrementThumbDowns(){
-        $this->thumbDowns++;
     }
 }

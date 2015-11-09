@@ -3,6 +3,7 @@
 namespace NFQ\ReviewsBundle\Controller;
 
 use NFQ\ReviewsBundle\Entity\Review;
+use NFQ\ReviewsBundle\Entity\Thanks;
 use NFQ\ReviewsBundle\Form\ReviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +24,23 @@ class ReviewController extends Controller
             $review->setHelper($currentUser);
             $review->setHelpGetter($currentUser);
 
-            if($form->get('thumbUp')->getData()){
-                $currentUser->incrementThumbUps();
-            }
-            else{
-                $currentUser->incrementThumbDowns();
+            $em = $this->getDoctrine()->getManager();
+
+            if($form->get('thank')->getData()){
+                $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
+
+                if(!$thank){
+                    $thank = new Thanks();
+                    $thank->setHelper($currentUser);
+                }
+
+                if($form->get('reviewMessage')->getData()){
+                    $thank->addReview($review->getId());
+                }
+                $thank->incrementNumber();
+                $em->persist($thank);
             }
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
 

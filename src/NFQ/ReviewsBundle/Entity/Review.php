@@ -25,14 +25,14 @@ class Review
     /**
      * @var boolean
      *
-     * @ORM\Column(name="thumbUp", type="boolean")
+     * @ORM\Column(name="thank", type="boolean")
      */
-    private $thumbUp;
+    private $thank;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="reviewMessage", type="text")
+     * @ORM\Column(name="reviewMessage", type="text", nullable=true)
      */
     private $reviewMessage;
 
@@ -61,26 +61,26 @@ class Review
     }
 
     /**
-     * Set thumbUp
+     * Set thank
      *
-     * @param boolean $thumbUp
+     * @param boolean $thank
      * @return Review
      */
-    public function setThumbUp($thumbUp)
+    public function setThank($thank)
     {
-        $this->thumbUp = $thumbUp;
+        $this->thank = $thank;
 
         return $this;
     }
 
     /**
-     * Get thumbUp
+     * Get thank
      *
      * @return boolean 
      */
-    public function getThumbUp()
+    public function getThank()
     {
-        return $this->thumbUp;
+        return $this->thank;
     }
 
     /**

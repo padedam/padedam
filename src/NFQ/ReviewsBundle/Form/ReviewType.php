@@ -15,15 +15,7 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('thumbUp', 'choice', [
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices' => [
-                        1 => 'Up',
-                        0 => 'Down',
-                    ]
-                ]
-            )
+            ->add('thank','radio')
             ->add('reviewMessage')
             ->add('save', 'submit', array('label' => 'review.submit_button', 'translation_domain' => 'messages'));
     }
