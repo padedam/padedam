@@ -38,14 +38,14 @@ class Review
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User", inversedBy="gReviews")
      * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
      */
     private $helper;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User", inversedBy="wReviews")
      * @ORM\JoinColumn(name="help_getter_id", referencedColumnName="id")
      */
     private $helpGetter;

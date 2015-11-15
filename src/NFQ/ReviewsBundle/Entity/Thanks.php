@@ -23,13 +23,6 @@ class Thanks
     private $id;
 
     /**
-     * @var array
-     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
-     * @ORM\Column(name="reviews", type="array")
-     */
-    private $reviews;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="number", type="integer")
@@ -52,36 +45,6 @@ class Thanks
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set reviews
-     *
-     * @param array $reviews
-     * @return Thanks
-     */
-    public function setReviews($reviews)
-    {
-        $this->reviews = $reviews;
-
-        return $this;
-    }
-
-    /**
-     * Get reviews
-     *
-     * @return array 
-     */
-    public function getReviews()
-    {
-        return $this->reviews;
-    }
-
-    /**
-     * @param $review
-     */
-    public function addReview($review){
-        $this->reviews[count($this->reviews)] = $review;
     }
 
     /**
