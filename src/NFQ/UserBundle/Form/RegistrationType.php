@@ -37,6 +37,7 @@ class RegistrationType extends AbstractType
             array(
                 "label" => "user.birth_year",
                 "required" => true,
+                'years' => range(date('Y') - 18, date('Y') - 100)
             )
         );
         $builder->add('description', 'textarea',
