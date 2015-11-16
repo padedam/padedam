@@ -2,3 +2,8 @@ services:
     nfq_user.user_manager:
         class: NFQ\UserBundle\Service\UserManager
         arguments: ["@doctrine.orm.entity_manager"]
+
+    nfq_user.tag_manager:
+        class: NFQ\UserBundle\Service\TagManager
+        arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
+

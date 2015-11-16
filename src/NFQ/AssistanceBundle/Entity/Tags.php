@@ -2,6 +2,7 @@
 
 namespace NFQ\AssistanceBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -11,7 +12,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="tags")
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Repository\TagsRepository")
  */
@@ -71,7 +71,6 @@ class Tags
      */
     private $children;
 
-
     /**
      * @var boolean
      *
@@ -96,6 +95,7 @@ class Tags
     /** @ORM\OneToMany(targetEntity="Tag2User", mappedBy="tag") */
     protected $usersWithTag;
 
+
     /**
      * Get id
      *
@@ -115,7 +115,6 @@ class Tags
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Set title
@@ -398,7 +397,7 @@ class Tags
     /**
      * Get usersWithTag
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection
      */
     public function getUsersWithTag()
     {

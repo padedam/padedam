@@ -63,3 +63,7 @@ assistance.parent: Aukštesnė kategorija
 menu.help: Pagalba
 menu.req_list: Prašymų sąrašas
 menu.req_cat: Prašymų kategorijos
+
+
+generic.field: Sritis
+generic.field.palceholder: Sritis, kurioje reikalinga pagalba
