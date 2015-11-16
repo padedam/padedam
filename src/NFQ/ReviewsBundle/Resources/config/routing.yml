@@ -1,3 +1,7 @@
 nfq_reviews_homepage:
     path:     /createReview
     defaults: { _controller: NFQReviewsBundle:Review:createReview }
+
+nfq_reviews_review_submitted:
+    path:     /sucessfullySubmitted
+    defaults: { _controller: NFQReviewsBundle:Review:reviewSubmitted }

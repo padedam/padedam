@@ -4,6 +4,7 @@ namespace NFQ\ReviewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\UserBundle\Entity\User;
+use \DateTime;
 
 /**
  * Review
@@ -49,6 +50,13 @@ class Review
      * @ORM\JoinColumn(name="help_getter_id", referencedColumnName="id")
      */
     private $helpGetter;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
 
     /**
      * Get id
@@ -136,5 +144,21 @@ class Review
     public function setHelpGetter($helpGetter)
     {
         $this->helpGetter = $helpGetter;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

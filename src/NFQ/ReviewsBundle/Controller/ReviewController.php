@@ -34,6 +34,18 @@ class ReviewController extends Controller
         return $this->render('NFQReviewsBundle:Review:reviewsProfile.html.twig', ['number' => $thank->getNumber(), 'reviews' => $list]);
     }
 
+    /**
+     * @return Response
+     */
+    public function reviewSubmittedAction()
+    {
+        return $this->render('NFQReviewsBundle:Review:reviewSubmitted.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function createReviewAction(Request $request)
     {
         $review = new Review();
@@ -46,6 +58,8 @@ class ReviewController extends Controller
             $currentUser = $this->getUser();
             $review->setHelper($currentUser);
             $review->setHelpGetter($currentUser);
+
+            $review->setDate(new \DateTime('now'));
 
             $em = $this->getDoctrine()->getManager();
 
@@ -64,7 +78,7 @@ class ReviewController extends Controller
             $em->persist($review);
             $em->flush();
 
-            return $this->redirectToRoute('nfq_assistance_request_submitted');
+            return $this->redirectToRoute('nfq_reviews_review_submitted');
         }
 
         return $this->render('NFQReviewsBundle:Review:createReview.html.twig', array('form' => $form->createView()));

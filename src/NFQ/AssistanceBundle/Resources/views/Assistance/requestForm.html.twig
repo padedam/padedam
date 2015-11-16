@@ -17,14 +17,14 @@
             <legend>{{ 'generic.ask_assistance_form'|trans }}</legend>
             <fieldset>
                 {{ form_start(form) }}
-                    {{ form_row(form.assistanceField, {'attr': {'class': 'form-control'}}) }}
-                    <br>
-                    {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'100' }}) }}
-                    <br>
-                    {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
-                        'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
-                    <br>
-                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_row(form.assistanceField, {'attr': {'class': 'form-control'}}) }}
+                <br>
+                {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'100' }}) }}
+                <br>
+                {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
+                    'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
+                <br>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                 {{ form_end(form) }}
             </fieldset>
         </div>
