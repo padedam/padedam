@@ -12,7 +12,7 @@ class AssistanceRequestType extends AbstractType
     {
         $builder
             ->add('assistanceField','choice', array("choices"=>array(0=>'IT',1=>'Dujotiekis',2=>'Santechnika',3=>'Elektronika'),
-                'attr'=> array('class'=>'col-lg-3 control-label','for'=>'assistanceField'), 'translation_domain' => 'messages'))
+                'attr'=> array('class'=>'col-lg-3 control-label'), 'label'=>'assistance.field', 'translation_domain' => 'messages'))
             ->add('shortDescription', 'text', array("label"=>"assistance.label_short_description",
                 'attr'=>array('placeholder'=>'{{ "assistance.label_short_description"|trans }}'), 'translation_domain' => 'messages'))
             ->add('longDescription', 'textarea', array("label"=>"assistance.label_long_description", 'translation_domain' => 'messages'))

@@ -55,7 +55,19 @@ assistance.label_long_description: Išsamus aprašymas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
+assistance.owner_first_name: Prašymo autorius
 
 #menu
 menu.help: Pagalba
 menu.req_list: Prašymų sąrašas
+
+#review
+review.submit_button: Išsaugoti atsiliepimą
+profile.thanks_number: Padėkų skaičius
+profile.reviews: Atsiliepimai
+review.successful_review: Ačiū už atsiliepimą
+generic.write_review: Atsiliepimas
+generic.write_review_form: Atsiliepimo forma
+review.review_textarea_placeholder: Atsiliepimas, padėka
+review.message_label: Atsiliepimas
+review.checkbox_label: Padėkoti
