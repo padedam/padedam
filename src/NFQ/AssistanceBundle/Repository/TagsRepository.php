@@ -7,9 +7,17 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\UserBundle\Entity\User;
 
+/**
+ * Class TagsRepository
+ * @package NFQ\AssistanceBundle\Repository
+ */
 class TagsRepository extends NestedTreeRepository
 {
-
+    /**
+     * @param User $user
+     * @param $parent
+     * @return array
+     */
     public function getMyTags(\NFQ\UserBundle\Entity\User $user, $parent)
     {
 
@@ -25,10 +33,12 @@ class TagsRepository extends NestedTreeRepository
         return $qb->getQuery()->getArrayResult();
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getMyRootTags(User $user)
     {
-        $rootNodes = $this->getRootNodes();
-
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t, r')
             ->from('NFQAssistanceBundle:Tags', 't')
@@ -41,6 +51,25 @@ class TagsRepository extends NestedTreeRepository
         return $qb->getQuery()->getArrayResult();
     }
 
+    /**
+     * @return array
+     */
+    public function getAllRootTags()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t, r')
+            ->from('NFQAssistanceBundle:Tags', 't')
+            ->leftJoin('t.parent', 'r')
+            ->where('t.parent IS NULL');
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param $tag
+     * @param $parent
+     * @return array
+     */
     public function matchEnteredTags($tag, $parent)
     {
 

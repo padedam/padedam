@@ -86,10 +86,9 @@ class AssistanceController extends Controller
 
 
     /**
-     * @param Request $request
      * @return JsonResponse
      */
-    public function removeTagsAction(Request $request)
+    public function removeTagsAction()
     {
         $container = $this->container->get('nfq_user.tag_manager');
         $response = $container->removeTag();
@@ -104,4 +103,12 @@ class AssistanceController extends Controller
         $tagService = $this->container->get('nfq_user.tag_manager');
         return new JsonResponse($tagService->getMyChildTags($this->getUser()));
     }
+
+
+    public function getParentTagsAction()
+    {
+        
+    }
+
+
 }

@@ -64,34 +64,31 @@ $(function(){
         }).on('select2-selecting', function (e) {
             var _data = e.choice;
             taggable.val(JSON.stringify(_data));
-            $.post(
-                taggable.data('save'),
-                {tag: e.choice, parent_id: taggable.data('parentid')},
-                function(response){
-                    if (response.status == 'success') {
-                        //ok, saved
-                    }else{
-                        /*alert('tag was not saved');*/
-                    }
-                },'json'
-            );
+            saveTag(taggable.data('save'), e.choice, taggable.data('parentid'));
         });
     };
 
     /** SELECT ALL ELEMENTS AND MAKE THEM SELECT2 **/
     $( ".form-select" ).each(function() {
         var id = $(this).attr('id');
-        element = $("#" + id);
-        competences(element, id);
+        var element = $("#" + id);
+        competences(element);
     });
 
 /* create a new competence category */
-    $("#create_competence").click(function(e){
+    $("#new_competence").change(function(e){
         e.preventDefault();
-        var id = uniqId();
-        var select = $('<select/>', {
+        var selval = $("#new_competence").val();
+        var seltext = $("#new_competence option:selected" ).text();
+
+        var input = $('<input/>', {
             'class': 'form-control',
-            id: id
+            'id': "child_"+selval,
+            'data-save': $("#new_competence").data('save'),
+            'data-current': $("#new_competence").data('current'),
+            'data-rem' :$("#new_competence").data('rem'),
+            'data-match': $("#new_competence").data('match'),
+            'data-parentid': selval
         });
 
         var formgroup = $('<div/>', {
@@ -100,20 +97,38 @@ $(function(){
 
         var label = $( '<label>', {
             'class': 'col-sm-2 control-label required',
-            'text': 'Pagalbos sritis'
+            'text': seltext
         });
         var col10 = $( '<div/>', {
             'class': 'col-sm-10'
         });
 
-        $('#wrapper').append( formgroup.append( label).append( col10.append( select ) ) );
-        $("#"+id).select2(
-
-        );
+        //add element to DOM
+        $('#wrapper').prepend( formgroup.append( label).append( col10.append( input )));
+        //make element select2
+        var element = $("#" + "child_"+selval);
+        competences(element);
+        //remove selected element from select list and reset selection
+        $("#new_competence option[value="+selval+"]").remove().prop('selectedIndex',0);
+        saveTag($("#new_competence").data('save'), {id:selval, text:seltext}, null);
     });
 
 });
 
 function uniqId() {
     return Math.round(new Date().getTime() + (Math.random() * 100));
+}
+
+function saveTag(url, tag, parent){
+    $.post(
+        url,
+        {tag: tag, parent_id: parent},
+        function(response){
+            if (response.status == 'success') {
+                //ok, saved
+            }else{
+                /*alert('tag was not saved');*/
+            }
+        },'json'
+    );
 }

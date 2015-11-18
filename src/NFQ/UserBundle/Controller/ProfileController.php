@@ -36,11 +36,11 @@ class ProfileController extends BaseController
             return new RedirectResponse($this->getRedirectionUrl($user));
         }
 
-        $myTags = $this->container->get('nfq_user.tag_manager')->getMyTags($user);
+        $tags = $this->container->get('nfq_user.tag_manager')->getMyTags();
 
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'tags'=>$myTags)
+            array('form' => $form->createView(), 'tags'=>$tags)
         );
     }
 }

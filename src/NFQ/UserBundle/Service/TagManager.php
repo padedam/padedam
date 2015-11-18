@@ -65,16 +65,20 @@ class TagManager
 
         $user = $this->getUser();
 
-        $myTags = $tagsRepo->getMyRootTags($user);
-        $tagTree = [];
-        foreach($myTags as $tag){
-            if( !empty($tag['parent']) ){
-                $tagTree[$tag['parent']['id']][$tag['parent']['title']][$tag['id']] = $tag['title'];
-            }else{
-                $tagTree[$tag['id']][$tag['title']] = [];
+        $myRootTags = $tagsRepo->getMyRootTags($user);
+        $allRootTags = $tagsRepo->getAllRootTags();
+        $mytagsId = [];
+        foreach($myRootTags as $k=>$tag){
+            $mytagsId[] = $tag['id'];
+        }
+        foreach($allRootTags as $k=>$tag){
+            if(in_array($tag['id'], $mytagsId)) {
+                unset($allRootTags[$k]);
             }
         }
-        return $tagTree;
+
+        return array('my'=>$myRootTags, 'root'=>$allRootTags);
+
     }
 
     /**
@@ -89,7 +93,7 @@ class TagManager
             }
             $user = $this->getUser();
 
-            $parent_id = $this->requestStack->getCurrentRequest()->query->get('parent_id');
+            $parent_id = $this->getRequest()->query->get('parent_id');
             //get parent tag
             $parentTag = $this->em->getRepository('NFQAssistanceBundle:Tags')->findOneById($parent_id);
 
@@ -115,14 +119,18 @@ class TagManager
                 throw new AccessDeniedException();
             }
 
-            $tag_ar = $this->requestStack->getCurrentRequest()->request->get('tag', null);
-            $parent_id = $this->requestStack->getCurrentRequest()->request->get('parent_id', null);
+            $tag_ar = $this->getRequest()->get('tag', null);
+            $parent_id = $this->getRequest()->get('parent_id', null);
 
             $user = $this->getUser();
+            $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
 
             //get parent tag object
-            $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
-            $parent = $tagRepo->findOneBy(array('id' => $parent_id));
+            if (is_numeric($parent_id)) {
+                $parent = $tagRepo->findOneBy(array('id' => $parent_id));
+            }else{
+                $parent = null;
+            }
 
             if (!is_array($tag_ar)) {
                 throw new \InvalidArgumentException('Tags are missing');
@@ -137,8 +145,9 @@ class TagManager
                 $this->em->persist($tag);
                 $this->em->flush();
             }elseif(is_numeric($tag_id)) {
-
-                $tag = $tagRepo->findOneBy(['id' => $tag_id, 'parent' => $parent_id]);
+                $tag = $tagRepo->findOneBy(['id' => $tag_id, 'parent' => $parent]);
+            }else{
+                throw new \Exception('Some error occured');
             }
 
             //check if not present already
@@ -171,8 +180,8 @@ class TagManager
     {
         $response = [];
         try {
-            $tag = $this->requestStack->getCurrentRequest()->query->get('tag', '');
-            $parent_id = $this->requestStack->getCurrentRequest()->query->get('parent_id', '');
+            $tag = $this->getRequest()->get('tag', '');
+            $parent_id = $this->getRequest()->get('parent_id', '');
 
             $tagRepo =  $this->em->getRepository('NFQAssistanceBundle:Tags');
 
@@ -190,7 +199,8 @@ class TagManager
     }
 
     /**
-     * @return array $response
+     * removes tags assigned to user
+     * @return status array
      */
     public function removeTag()
     {
@@ -201,7 +211,7 @@ class TagManager
                 throw new AccessDeniedException();
             }
 
-            $tagAr = $this->requestStack->getCurrentRequest()->request->get('tag', null);
+            $tagAr = $this->getRequest()->get('tag', null);
             if (!isset($tagAr['id'])) {
                 throw new \Exception('no tag sent');
             } else {
@@ -236,4 +246,11 @@ class TagManager
         return $response;
     }
 
+    /**
+     * @return null|\Symfony\Component\HttpFoundation\Request
+     */
+    private function getRequest()
+    {
+        return $this->requestStack->getCurrentRequest();
+    }
 }

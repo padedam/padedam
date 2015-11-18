@@ -58,6 +58,8 @@ assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
 assistance.cat_name: Kategorijos pavadinimas
 assistance.parent: Aukštesnė kategorija
+assistance.select_parent: Pasirinkite pagalbos sritį
+
 
 #menu
 menu.help: Pagalba
