@@ -228,6 +228,16 @@ class TagManager
             }
 
             $user = $this->getUser();
+
+            //check if is parent and delete all children
+            if(is_null($tag->getParent())){
+                //delete all child tags
+                $childTags = $tagRepo->getTagChildsByParent($tag, $user);
+                foreach($childTags as $t2u){
+                    $this->em->remove($t2u);
+                }
+            }
+
             $tag2userRepo = $this->em->getRepository('NFQAssistanceBundle:Tag2User');
             $tag2user = $tag2userRepo->findOneBy(['user' => $user, 'tag' => $tag]);
 

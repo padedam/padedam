@@ -52,15 +52,8 @@ $(function(){
                 return "Daugiausiai raktažodžių galite parinkti " + limit;
             }
         }).on('select2-removed', function (e) {
-           $.post(
-               taggable.data('rem'),
-                {tag: e.choice},
-                function (response) {
-                    if (response.status != 'success') {
-                        e.preventDefault();
-                    }
-                },'json'
-            );
+            //send delete tag request
+            remTag(taggable.data('rem'), {tag: e.choice});
         }).on('select2-selecting', function (e) {
             var _data = e.choice;
             taggable.val(JSON.stringify(_data));
@@ -74,6 +67,7 @@ $(function(){
         var element = $("#" + id);
         competences(element);
     });
+
 
 /* create a new competence category */
     $("#new_competence").change(function(e){
@@ -99,36 +93,75 @@ $(function(){
             'class': 'col-sm-2 control-label required',
             'text': seltext
         });
-        var col10 = $( '<div/>', {
-            'class': 'col-sm-10'
+        var col9 = $( '<div/>', {
+            'class': 'col-sm-9'
+        });
+        var col1 = $( '<div/>', {
+            'class': 'col-sm-1'
+        });
+        var remlink = $('<a/>', {
+            'class': 'rem-cat',
+            'data-id': selval,
+            'data-text': seltext,
+            'data-rem': $("#new_competence").data('rem'),
+            'text': 'pašalinti',
+            'href': '#'
         });
 
         //add element to DOM
-        $('#wrapper').prepend( formgroup.append( label).append( col10.append( input )));
+        $('#wrapper').prepend( formgroup.append( label).append( col9.append( input )).append( col1.append( remlink) ));
+
         //make element select2
         var element = $("#" + "child_"+selval);
         competences(element);
         //remove selected element from select list and reset selection
         $("#new_competence option[value="+selval+"]").remove().prop('selectedIndex',0);
         saveTag($("#new_competence").data('save'), {id:selval, text:seltext}, null);
+
+        //bind remove category button
+        bindRemcat();
     });
 
-});
+    bindRemcat();
 
-function uniqId() {
-    return Math.round(new Date().getTime() + (Math.random() * 100));
-}
+});
 
 function saveTag(url, tag, parent){
     $.post(
         url,
         {tag: tag, parent_id: parent},
         function(response){
-            if (response.status == 'success') {
-                //ok, saved
-            }else{
-                /*alert('tag was not saved');*/
+            return response;
+        },'json'
+    );
+}
+
+function remTag(url, data, parent){
+    $.post(
+        url,
+        data,
+        function (response) {
+            if(parent === true && response.status == 'success'){
+                $()
             }
         },'json'
     );
+}
+
+var bindRemcat = function(){
+    $(".rem-cat").unbind('click').bind('click', function(e){
+        e.preventDefault();
+        var el = $(this);
+        var id =el.data('id');
+        //send delete tag request
+        $.post(
+            el.data('rem'),
+            {'tag':{'id': el.data('id'), 'text': el.data('text')}},
+            function (response) {
+                if(response.status == 'success'){
+                    el.parents('.form-group').hide('slow');
+                }
+            },'json'
+        );
+    });
 }

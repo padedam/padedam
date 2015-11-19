@@ -42,6 +42,9 @@ help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
 generic.date: Data
 help.start_writeing: Pradėkite rašyti
+generic.remove: Pašalinti
+
+
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
 generic.assistance_req_list: Pagalbos prašymų sąrašas
