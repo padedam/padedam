@@ -10,6 +10,9 @@
         font-weight: 300;
         font-family: Arial, sans-serif;
     }
+    #new_competence{
+        width: 200px;
+    }
 
 </style>
 <div class="col-md-6 col-md-offset-3">
@@ -33,7 +36,7 @@
                                     data-rem="{{ url('nfq_assistance_remove_tags') }}"
                                     data-match="{{ url('nfq_assistance_match_tags') }}"
                             >
-                                <option>{{ 'assistance.select_parent'|trans }}</option>
+                                <option value="0">{{ 'assistance.select_parent'|trans }}</option>
                                 {% for tag in tags.root %}
                                     <option value="{{ tag.id }}">{{ tag.title }}</option>
                                 {% endfor %}
@@ -55,7 +58,7 @@
                             </div>
                         </div> #}
 
-                        <div class="form-group parent_{{ id }}">
+                        <div class="form-group">
                             <span class="col-sm-2 control-label required">{{ key|title }}</span>
 
                             <div class="col-sm-9">
