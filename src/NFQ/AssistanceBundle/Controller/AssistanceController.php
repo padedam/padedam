@@ -4,8 +4,13 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
+use NFQ\AssistanceBundle\Entity\Tags;
+use NFQ\AssistanceBundle\Entity\Tag2User;
+use NFQ\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
@@ -41,4 +46,67 @@ class AssistanceController extends Controller
 
         return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('assistance'=>$assistance));
     }
+
+    public function requestCategoryAction()
+    {
+
+        $htmlTree = $this->getAssistanceManager()->getCategoryTree();
+        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('tree'=>$htmlTree));
+    }
+
+    /**
+     * @return \NFQ\AssistanceBundle\Service\AssistanceManager
+     */
+    private function getAssistanceManager()
+    {
+        return $this->container->get('nfq_assistance.assistance_manager');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function matchTagsAction()
+    {
+        $container = $this->container->get('nfq_user.tag_manager');
+        $response = $container->findTag();
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function saveTagsAction()
+    {
+        $container = $this->container->get('nfq_user.tag_manager');
+        $response = $container->saveTag($this->getUser());
+        return new JsonResponse($response);
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
+    public function removeTagsAction()
+    {
+        $container = $this->container->get('nfq_user.tag_manager');
+        $response = $container->removeTag();
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function myTagsAction()
+    {
+        $tagService = $this->container->get('nfq_user.tag_manager');
+        return new JsonResponse($tagService->getMyChildTags($this->getUser()));
+    }
+
+
+    public function getParentTagsAction()
+    {
+
+    }
+
+
 }

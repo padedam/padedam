@@ -9,3 +9,24 @@ nfq_assistance_request_submitted:
 nfq_assistance_request_list:
     path:     /request-list
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestList }
+
+nfq_assistance_request_category:
+    path:     /request-category
+    defaults: { _controller: NFQAssistanceBundle:Assistance:requestCategory }
+
+nfq_assistance_match_tags:
+    path:     /mt
+    defaults: { _controller: NFQAssistanceBundle:Assistance:matchTags }
+
+nfq_assistance_save_tags:
+    path:     /st
+    defaults: { _controller: NFQAssistanceBundle:Assistance:saveTags }
+
+nfq_assistance_remove_tags:
+    path:     /rmt
+    defaults: { _controller: NFQAssistanceBundle:Assistance:removeTags }
+
+nfq_assistance_selected_tags:
+    path:     /mytags
+    defaults: { _controller: NFQAssistanceBundle:Assistance:myTags }
+
