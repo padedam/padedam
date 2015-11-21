@@ -28,15 +28,24 @@
                     </ul>
                 </li>
             </ul>
+            {#}
             <form role="search" class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" placeholder="Search" class="form-control">
                 </div>
                 <button class="btn btn-default" type="submit">{{ 'generic.submit'|trans }}</button>
             </form>
+            {#}
+            {% if not app.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
             </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ path("fos_user_security_logout") }}">{{ 'generic.logout'|trans }}</a></li>
+                </ul>
+            {% endif %}
+
         </div>
     </div>
 </nav>

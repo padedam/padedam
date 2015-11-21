@@ -120,4 +120,7 @@ easy_admin:
         edit:
           fields: [{property: 'first_name', label:'First Name' }, {property: 'last_name', label:'Last Name' }, 'email', 'phone', {property: 'birthday', label:'Birthday', type: 'birthday' },'description', 'enabled', 'locked']
         disabled_actions: ['new']
+      AssistanceRequest:
+        class: NFQ\AssistanceBundle\Entity\AssistanceRequest
+        label: Assistance requests
 
