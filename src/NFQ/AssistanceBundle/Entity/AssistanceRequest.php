@@ -3,12 +3,13 @@
 namespace NFQ\AssistanceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AssistanceRequest
  *
- * @ORM\Table()
+ * @ORM\Table(name="assistance_request")
  * @ORM\Entity
  */
 class AssistanceRequest
@@ -21,15 +22,6 @@ class AssistanceRequest
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="assistanceField", type="integer")
-     *
-     * @Assert\NotBlank()
-     */
-    private $assistanceField;
 
     /**
      * @var string
@@ -57,6 +49,13 @@ class AssistanceRequest
      */
     private $date;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $owner;
+
 
     /**
      * Get id
@@ -66,29 +65,6 @@ class AssistanceRequest
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set assistanceField
-     *
-     * @param integer $assistanceField
-     * @return AssistanceRequest
-     */
-    public function setAssistanceField($assistanceField)
-    {
-        $this->assistanceField = $assistanceField;
-
-        return $this;
-    }
-
-    /**
-     * Get assistanceField
-     *
-     * @return string 
-     */
-    public function getAssistanceField()
-    {
-        return $this->assistanceField;
     }
 
     /**
@@ -159,5 +135,21 @@ class AssistanceRequest
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setOwner(User $user)
+    {
+        $this->owner = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }

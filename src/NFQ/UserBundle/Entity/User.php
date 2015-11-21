@@ -2,6 +2,7 @@
 
 namespace NFQ\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -42,6 +43,23 @@ class User extends BaseUser
      * @ORM\Column(type="text")
      */
     protected $description = "";
+
+
+    /** @ORM\OneToMany(targetEntity="NFQ\AssistanceBundle\Entity\Tag2User", mappedBy="user") */
+    protected $taglist;
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="NFQ\ReviewsBundle\Entity\Review", mappedBy="helper")
+     */
+    private $gReviews;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="NFQ\ReviewsBundle\Entity\Review", mappedBy="helpGetter")
+     */
+    private $wReviews;
 
     public function getId()
     {
@@ -181,5 +199,70 @@ class User extends BaseUser
     {
         parent::__construct();
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGReviews()
+    {
+        return $this->gReviews;
+    }
+
+    /**
+     * @param mixed $gReviews
+     */
+    public function setGReviews($gReviews)
+    {
+        $this->gReviews = $gReviews;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWReviews()
+    {
+        return $this->wReviews;
+    }
+
+    /**
+     * @param mixed $wReviews
+     */
+    public function setWReviews($wReviews)
+    {
+        $this->wReviews = $wReviews;
+    }
+
+    /**
+     * Add taglist
+     *
+     * @param \NFQ\UserBundle\Entity\Tag2User $taglist
+     * @return User
+     */
+    public function addTaglist(\NFQ\UserBundle\Entity\Tag2User $taglist)
+    {
+        $this->taglist[] = $taglist;
+
+        return $this;
+    }
+
+    /**
+     * Remove taglist
+     *
+     * @param \NFQ\UserBundle\Entity\Tag2User $taglist
+     */
+    public function removeTaglist(\NFQ\UserBundle\Entity\Tag2User $taglist)
+    {
+        $this->taglist->removeElement($taglist);
+    }
+
+    /**
+     * Get taglist
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTaglist()
+    {
+        return $this->taglist;
     }
 }
