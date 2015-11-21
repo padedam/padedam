@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new NFQ\FrontendBundle\NFQFrontendBundle(),
             new NFQ\UserBundle\NFQUserBundle(),
             new NFQ\AdminBundle\NFQAdminBundle(),
+            new NFQ\ReviewsBundle\NFQReviewsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

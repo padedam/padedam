@@ -3,6 +3,7 @@
 namespace NFQ\AssistanceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -47,6 +48,13 @@ class AssistanceRequest
      * @var \DateTime
      */
     private $date;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $owner;
 
 
     /**
@@ -127,5 +135,21 @@ class AssistanceRequest
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setOwner(User $user)
+    {
+        $this->owner = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }
