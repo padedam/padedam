@@ -42,9 +42,13 @@ help.i_agree_to_help: Sutinku padėti artimui
 generic.save: Išsaugoti
 generic.date: Data
 help.start_writeing: Pradėkite rašyti
+generic.remove: Pašalinti
+
+
 #Assistance form
 generic.ask_assistance: Pagalbos prašymas
 generic.assistance_req_list: Pagalbos prašymų sąrašas
+generic.assistance_cat_list: Pagalbos categorijų sąrašas
 generic.ask_assistance_form: Pagalbos prašymo forma
 generic.ask_assistance_navbar: Prašyti pagalbos
 assistance.label_short_description: Trumpas aprašymas (100 simbolių)
@@ -55,7 +59,16 @@ assistance.label_long_description: Išsamus aprašymas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
+assistance.cat_name: Kategorijos pavadinimas
+assistance.parent: Aukštesnė kategorija
+assistance.select_parent: Pasirinkite pagalbos sritį
+
 
 #menu
 menu.help: Pagalba
 menu.req_list: Prašymų sąrašas
+menu.req_cat: Prašymų kategorijos
+
+
+generic.field: Sritis
+generic.field.palceholder: Sritis, kurioje reikalinga pagalba

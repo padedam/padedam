@@ -44,7 +44,7 @@ class User extends BaseUser
     protected $description = "";
 
 
-    /** @ORM\OneToMany(targetEntity="NFQ\AssistanceBundle\Entity\Tag2User", mappedBy="user") */
+    /** @ORM\OneToMany(targetEntity="Tag2User", mappedBy="user") */
     protected $taglist;
 
 
@@ -186,38 +186,5 @@ class User extends BaseUser
     {
         parent::__construct();
 
-    }
-
-    /**
-     * Add taglist
-     *
-     * @param \NFQ\UserBundle\Entity\Tag2User $taglist
-     * @return User
-     */
-    public function addTaglist(\NFQ\UserBundle\Entity\Tag2User $taglist)
-    {
-        $this->taglist[] = $taglist;
-
-        return $this;
-    }
-
-    /**
-     * Remove taglist
-     *
-     * @param \NFQ\UserBundle\Entity\Tag2User $taglist
-     */
-    public function removeTaglist(\NFQ\UserBundle\Entity\Tag2User $taglist)
-    {
-        $this->taglist->removeElement($taglist);
-    }
-
-    /**
-     * Get taglist
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTaglist()
-    {
-        return $this->taglist;
     }
 }
