@@ -16,7 +16,7 @@
     </head>
     <header>
         {% include 'navigation.html.twig' %}
-        {% include 'login_modal.html.twig' %}
+        {{  render(controller('NFQUserBundle:Security:modal_login')) }}
     </header>
     <body>
         {% block body %}{% endblock %}
