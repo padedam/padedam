@@ -30,3 +30,7 @@ nfq_assistance_selected_tags:
     path:     /mytags
     defaults: { _controller: NFQAssistanceBundle:Assistance:myTags }
 
+nfq_assistance_suggest_tag:
+    path:     /suggest-tag
+    defaults: { _controller: NFQAssistanceBundle:Assistance:suggestTag }
+

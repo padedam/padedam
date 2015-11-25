@@ -124,3 +124,37 @@ easy_admin:
         class: NFQ\AssistanceBundle\Entity\AssistanceRequest
         label: Assistance requests
 
+ongr_elasticsearch:
+    connections:
+        default:
+            hosts: %elasticsearch.hosts%
+            index_name: padedam
+            settings:
+                number_of_shards: 1
+                number_of_replicas: 0
+                index:
+                    refresh_interval: -1
+                analysis:
+                    analyzer:
+                        analyzer:
+                        completion_analyzer:
+                            tokenizer: whitespace
+                            filter: [ "lowercase"]
+                        suggest_analyzer:
+                            tokenizer: whitespace
+                            filter: [ "lowercase", "suggest_filter"]
+                        whitespace_analyzer:
+                            tokenizer: whitespace
+                            filter: [ "lowercase" ]
+                            char_filter: [ "html_strip" ]
+                    filter:
+                        suggest_filter:
+                            type: edgeNGram
+                            min_gram: 2
+                            max_gram: 15
+                            token_chars: ["letter", "digit"]
+    managers:
+        default:
+            connection: default
+            mappings:
+               - NFQAssistanceBundle

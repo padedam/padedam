@@ -8,3 +8,12 @@ services:
         arguments: ["@nfq_assistance.assistance_manager"]
         tags:
             - { name: twig.extension }
+
+    nfq_assitance.entity_listener.tag_populate:
+        class: NFQ\AssistanceBundle\EventListener\Doctrine\TagListener
+        arguments: ["@es.manager.default.tag"]
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: prePersist }
+            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: postUpdate }
+            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: preRemove }
+            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: postRemove }

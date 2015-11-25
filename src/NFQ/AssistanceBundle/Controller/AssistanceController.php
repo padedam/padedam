@@ -63,13 +63,27 @@ class AssistanceController extends Controller
     }
 
     /**
+     * @return \NFQ\UserBundle\Service\TagManager
+     */
+    private function getTagManager(){
+        return $this->container->get('nfq_user.tag_manager');
+    }
+
+    /**
      * @return JsonResponse
      */
     public function matchTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->findTag();
+        $response = $this->getTagManager()->findTag();
         return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function suggestTagAction()
+    {
+        return new JsonResponse($this->getTagManager()->suggestTag());
     }
 
     /**
@@ -77,8 +91,7 @@ class AssistanceController extends Controller
      */
     public function saveTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->saveTag($this->getUser());
+        $response = $this->getTagManager()->saveTag($this->getUser());
         return new JsonResponse($response);
     }
 
@@ -88,8 +101,7 @@ class AssistanceController extends Controller
      */
     public function removeTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->removeTag();
+        $response = $this->getTagManager()->removeTag();
         return new JsonResponse($response);
     }
 
@@ -98,8 +110,7 @@ class AssistanceController extends Controller
      */
     public function myTagsAction()
     {
-        $tagService = $this->container->get('nfq_user.tag_manager');
-        return new JsonResponse($tagService->getMyChildTags($this->getUser()));
+        return new JsonResponse($this->getTagManager()->getMyChildTags($this->getUser()));
     }
 
 

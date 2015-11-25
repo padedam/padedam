@@ -4,12 +4,14 @@ namespace NFQ\UserBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use NFQ\UserBundle\Entity\User;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\AssistanceBundle\Entity\Tag2User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TagManager
 {
@@ -30,6 +32,10 @@ class TagManager
      */
     private $tokenStorage;
 
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
     /**
      * TagManager constructor.
@@ -37,14 +43,21 @@ class TagManager
      * @param RequestStack $requestStack
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TokenStorage $tokenStorage
+     * @param ValidatorInterface $validator
      */
-    public function __construct(EntityManagerInterface $em, RequestStack $requestStack, AuthorizationCheckerInterface $authorizationChecker, TokenStorage $tokenStorage)
+    public function __construct(
+        EntityManagerInterface $em,
+        RequestStack $requestStack,
+        AuthorizationCheckerInterface $authorizationChecker,
+        TokenStorage $tokenStorage,
+        ValidatorInterface $validator)
     {
         $this->em = $em;
 
         $this->requestStack = $requestStack;
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
+        $this->validator = $validator;
     }
 
     /**
@@ -68,23 +81,24 @@ class TagManager
         $myRootTags = $tagsRepo->getMyRootTags($user);
         $allRootTags = $tagsRepo->getAllRootTags();
         $mytagsId = [];
-        foreach($myRootTags as $k=>$tag){
+        foreach ($myRootTags as $k => $tag) {
             $mytagsId[] = $tag['id'];
         }
-        foreach($allRootTags as $k=>$tag){
-            if(in_array($tag['id'], $mytagsId)) {
+        foreach ($allRootTags as $k => $tag) {
+            if (in_array($tag['id'], $mytagsId)) {
                 unset($allRootTags[$k]);
             }
         }
 
-        return array('my'=>$myRootTags, 'root'=>$allRootTags);
+        return array('my' => $myRootTags, 'root' => $allRootTags);
 
     }
 
     /**
      * @return array $response
      */
-    public function getMyChildTags(){
+    public function getMyChildTags()
+    {
 
         $response = [];
         try {
@@ -101,7 +115,7 @@ class TagManager
 
             $response['status'] = 'success';
             $response['tags'] = $tags;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
@@ -112,7 +126,8 @@ class TagManager
     /**
      * @return array
      */
-    public function saveTag(){
+    public function saveTag()
+    {
         $response = [];
         try {
             if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -128,7 +143,7 @@ class TagManager
             //get parent tag object
             if (is_numeric($parent_id)) {
                 $parent = $tagRepo->findOneBy(array('id' => $parent_id));
-            }else{
+            } else {
                 $parent = null;
             }
 
@@ -144,9 +159,9 @@ class TagManager
                 $tag->setParent($parent);
                 $this->em->persist($tag);
                 $this->em->flush();
-            }elseif(is_numeric($tag_id)) {
+            } elseif (is_numeric($tag_id)) {
                 $tag = $tagRepo->findOneBy(['id' => $tag_id, 'parent' => $parent]);
-            }else{
+            } else {
                 throw new \Exception('Some error occured');
             }
 
@@ -183,7 +198,7 @@ class TagManager
             $tag = $this->getRequest()->get('tag', '');
             $parent_id = $this->getRequest()->get('parent_id', '');
 
-            $tagRepo =  $this->em->getRepository('NFQAssistanceBundle:Tags');
+            $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
 
             $parent = $tagRepo->findOneById($parent_id);
 
@@ -191,7 +206,7 @@ class TagManager
 
             $response ['status'] = 'success';
             $response['tags'] = $tags;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
@@ -230,10 +245,10 @@ class TagManager
             $user = $this->getUser();
 
             //check if is parent and delete all children
-            if(is_null($tag->getParent())){
+            if (is_null($tag->getParent())) {
                 //delete all child tags
                 $childTags = $tagRepo->getTagChildsByParent($tag, $user);
-                foreach($childTags as $t2u){
+                foreach ($childTags as $t2u) {
                     $this->em->remove($t2u);
                 }
             }
@@ -249,7 +264,33 @@ class TagManager
             $this->em->flush();
 
             $response['status'] = 'success';
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
+            $response['status'] = 'failed';
+            $response['message'] = $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function suggestTag()
+    {
+        $response = [];
+        try {
+            $tag = $this->getRequest()->get('tag', null);
+            if (!isset($tag)) {
+                throw new \Exception('no tag sent');
+            }
+            $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
+            $foundTag = $tagsRepo->suggestTag($tag);
+            $foundTag = array_pop($foundTag);
+            if (isset($foundTag['parent']) and !empty($foundTag['parent'])) {
+                $response['tag'] = $foundTag['parent'];
+            } else {
+
+                $response['tag'] = $foundTag;
+            }
+
+            $response['status'] = 'success';
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
