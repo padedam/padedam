@@ -79,7 +79,9 @@ generic.write_review: Atsiliepimas
 generic.write_review_form: Atsiliepimo forma
 review.review_textarea_placeholder: Atsiliepimas, padėka
 review.message_label: Atsiliepimas
-review.checkbox_label: Padėkoti
+review.checkbox_label: Padėkoti už suteiktą pagalbą
 
 generic.field: Sritis
 generic.field.palceholder: Sritis, kurioje reikalinga pagalba
+generic.assistance_my_req_list: Mano pagalbos prašymų sąrašas
+generic.assistance_taken_req_list: Pagalbos prašymų kuriuos aš pasiryžau įvykdyti sąrašas

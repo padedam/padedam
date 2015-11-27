@@ -14,6 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AssistanceRequest
 {
+    const STATUS_WAITING = 'WAITING';
+    const STATUS_TAKEN = 'TAKEN';
+    const STATUS_DONE = 'DONE';
+    const STATUS_CANCELED = 'CANCELED';
+
     /**
      * @var integer
      *
@@ -52,10 +57,23 @@ class AssistanceRequest
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
     private $owner;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
+     */
+    private $helper=NULL;
 
     /**
      * Get id
@@ -151,5 +169,37 @@ class AssistanceRequest
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return User
+     */
+    public function getHelper()
+    {
+        return $this->helper;
+    }
+
+    /**
+     * @param User $helper
+     */
+    public function setHelper($helper)
+    {
+        $this->helper = $helper;
     }
 }

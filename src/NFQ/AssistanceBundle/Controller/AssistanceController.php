@@ -25,6 +25,7 @@ class AssistanceController extends Controller
 
             $currentUser = $this->getUser();
             $assistanceRequest->setOwner($currentUser);
+            $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($assistanceRequest);
@@ -42,9 +43,29 @@ class AssistanceController extends Controller
 
     public function requestListAction(){
 
-        $assistance = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
+        $allAssistanceRequests = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
 
-        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('assistance'=>$assistance));
+        $myAssistanceRequests = [];
+        $waitingRequests = [];
+        $takenRequests = [];
+
+        foreach($allAssistanceRequests as $request){
+            if($request->getOwner()==$this->getUser()){
+                $myAssistanceRequests[] = $request;
+            }
+            elseif($request->getStatus()==AssistanceRequest::STATUS_TAKEN){
+                if($request->getHelper()==$this->getUser()){
+                    $takenRequests[] = $request;
+                }
+            }
+            elseif($request->getStatus()==AssistanceRequest::STATUS_WAITING){
+                $waitingRequests[] = $request;
+            }
+
+        }
+
+        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('waitingRequests'=>$waitingRequests,
+            'myAssistanceRequests'=>$myAssistanceRequests, 'takenRequests'=>$takenRequests));
     }
 
     public function requestCategoryAction()
