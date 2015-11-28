@@ -123,6 +123,18 @@ easy_admin:
       AssistanceRequest:
         class: NFQ\AssistanceBundle\Entity\AssistanceRequest
         label: Assistance requests
+      Tags:
+        class: NFQ\AssistanceBundle\Entity\Tags
+        label: Request tags
+        list:
+          fields: ['title', 'parent']
+        show:
+          fields: ['title', 'parent']
+        edit:
+          fields: ['title', 'parent']
+        new:
+          fields: ['title', 'parent']
+
 
 ongr_elasticsearch:
     connections:
