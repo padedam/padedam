@@ -8,13 +8,17 @@ use NFQ\AssistanceBundle\Entity\Tags;
 use ONGR\ElasticsearchBundle\Service\Manager;
 use ONGR\ElasticsearchBundle\Service\Repository;
 
-
 class TagListener
 {
     /**
      * @var Repository
      */
     private $repository;
+
+    /**
+     * @var int
+     */
+    private $entityId;
 
     /**
      * TagListener constructor.
@@ -29,14 +33,9 @@ class TagListener
      * @param Tags $entity
      * @param LifecycleEventArgs $event
      */
-    public function prePersist(Tags $entity, LifecycleEventArgs $event)
+    public function postPersist(Tags $entity, LifecycleEventArgs $event)
     {
-        $tagDocument = new TagDocument();
-        $tagDocument->setId('tag-'.$entity->getId());
-        $tagDocument->setName($entity->getTitle());
-
-        $this->repository->getManager()->persist($tagDocument);
-        $this->repository->getManager()->commit();
+        $this->persistToElastic($entity);
     }
 
     /**
@@ -45,16 +44,7 @@ class TagListener
      */
     public function postUpdate(Tags $entity, LifecycleEventArgs $event)
     {
-
-    }
-
-    /**
-     * @param Tags $entity
-     * @param PreUpdateEventArgs $event
-     */
-    public function preUpdate(Tags $entity, PreUpdateEventArgs $event)
-    {
-
+        $this->persistToElastic($entity);
     }
 
     /**
@@ -72,6 +62,21 @@ class TagListener
      */
     public function postRemove(Tags $entity, LifecycleEventArgs $event)
     {
-        $this->uploadManager->removeFiles($this->entityId);
+        $tagDocumentId = 'tag-' . $this->entityId;
+
+        $this->repository->remove($tagDocumentId);
+    }
+
+    /**
+     * @param Tags $entity
+     */
+    private function persistToElastic(Tags $entity)
+    {
+        $tagDocument = new TagDocument();
+        $tagDocument->setId('tag-' . $entity->getId());
+        $tagDocument->setName($entity->getTitle());
+
+        $this->repository->getManager()->persist($tagDocument);
+        $this->repository->getManager()->commit();
     }
 }

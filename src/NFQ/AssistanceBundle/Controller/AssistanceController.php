@@ -91,7 +91,7 @@ class AssistanceController extends Controller
      */
     public function saveTagsAction()
     {
-        $response = $this->getTagManager()->saveTag($this->getUser());
+        $response = $this->getTagManager()->saveTag();
         return new JsonResponse($response);
     }
 

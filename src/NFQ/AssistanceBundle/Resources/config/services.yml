@@ -13,7 +13,7 @@ services:
         class: NFQ\AssistanceBundle\EventListener\Doctrine\TagListener
         arguments: ["@es.manager.default.tag"]
         tags:
-            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: prePersist }
-            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: postUpdate }
-            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: preRemove }
-            - { name: doctrine.orm.entity_listener, entity: Nfq\AssistanceBundle\Entity\Tags, event: postRemove }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: postPersist }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: postUpdate }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: preRemove }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: postRemove }
