@@ -12,7 +12,7 @@ class TagDocument extends AbstractDocument
     /**
      * @var string
      *
-     * @ES\Property(name="name", type="string")
+     * @ES\Property(name="name", type="string", analyzer="lithuanian")
      */
     private $name;
 

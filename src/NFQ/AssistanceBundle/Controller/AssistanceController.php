@@ -4,9 +4,8 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
-use NFQ\AssistanceBundle\Entity\Tags;
-use NFQ\AssistanceBundle\Entity\Tag2User;
-use NFQ\UserBundle\Entity\User;
+use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +13,22 @@ use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
+
+    public function fooAction(Request $request)
+    {
+        $text = $request->get('text');
+
+        $repository = $this->get('es.manager.default.tag');
+        $search = $repository->createSearch();
+        $search->addQuery(new MatchAllQuery());
+        $termSuggester = new Term('name', $text);
+        $termSuggester->setAnalyzer('lithuanian');
+        $termSuggester->setSuggestMode(Term::SUGGEST_MODE_POPULAR);
+        $search->addSuggester($termSuggester);
+        $results = $repository->execute($search);
+
+    }
+    
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();

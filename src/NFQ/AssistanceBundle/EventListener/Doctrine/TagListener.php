@@ -5,8 +5,7 @@ namespace NFQ\AssistanceBundle\EventListener\Doctrine;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use NFQ\AssistanceBundle\Document\TagDocument;
 use NFQ\AssistanceBundle\Entity\Tags;
-use ONGR\ElasticsearchBundle\Service\Manager;
-use ONGR\ElasticsearchBundle\Service\Repository;
+use ONGR\ElasticsearchBundle\ORM\Repository;
 
 class TagListener
 {
@@ -42,7 +41,7 @@ class TagListener
      * @param Tags $entity
      * @param LifecycleEventArgs $event
      */
-    public function postUpdate(Tags $entity, LifecycleEventArgs $event)
+    public function preUpdate(Tags $entity, LifecycleEventArgs $event)
     {
         $this->persistToElastic($entity);
     }

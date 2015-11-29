@@ -151,7 +151,11 @@ class TagManager
                 throw new \InvalidArgumentException('Tags are missing');
             }
 
-            $tag_id = $tag_ar['id'];
+            if (!is_numeric($tag_ar['id'])){
+                $tag_id =  $this->suggestSpelling($tag_ar['id']);
+            }else{
+                $tag_id = $tag_ar['id'];
+            }
             if (!is_numeric($tag_id) and !$tag = $tagRepo->findOneBy(['title' => $tag_id, 'parent' => $parent])) {
                 //create a new tag
                 $tag = new Tags();
@@ -195,7 +199,10 @@ class TagManager
     {
         $response = [];
         try {
-            $tag = $this->getRequest()->get('tag', '');
+            $tag = $this->suggestSpelling($this->getRequest()->get('tag', ''));
+            if (!isset($tag)) {
+                throw new \Exception('no tag sent');
+            }
             $parent_id = $this->getRequest()->get('parent_id', '');
 
             $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
@@ -275,7 +282,7 @@ class TagManager
     {
         $response = [];
         try {
-            $tag = $this->getRequest()->get('tag', null);
+            $tag = $this->suggestSpelling($this->getRequest()->get('tag', null));
             if (!isset($tag)) {
                 throw new \Exception('no tag sent');
             }
@@ -303,5 +310,24 @@ class TagManager
     private function getRequest()
     {
         return $this->requestStack->getCurrentRequest();
+    }
+
+    private function suggestSpelling($word=''){
+        if( strlen($word) < 3 ){
+            return;
+        }
+        //check if not more than 1 word
+        $words = explode(' ', $word);
+        $result = '';
+        $pspell_link = pspell_new("lt", null, null, "utf-8");
+        foreach($words as $item){
+            if (!pspell_check($pspell_link, $item)) {
+                $suggestions = pspell_suggest($pspell_link, $item);
+                $item = strtolower(reset($suggestions));
+            }
+            $result .= $item.' ';
+        }
+
+        return rtrim($result);
     }
 }

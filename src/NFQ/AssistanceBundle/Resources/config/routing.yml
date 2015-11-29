@@ -1,3 +1,7 @@
+nfq_assistance_request_foo:
+    path:     /requestFoo
+    defaults: { _controller: NFQAssistanceBundle:Assistance:foo }
+
 nfq_assistance_request_form:
     path:     /requestForm
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestForm }
