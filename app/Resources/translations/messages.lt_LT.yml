@@ -85,3 +85,5 @@ generic.field: Sritis
 generic.field.palceholder: Sritis, kurioje reikalinga pagalba
 generic.assistance_my_req_list: Mano pagalbos prašymų sąrašas
 generic.assistance_taken_req_list: Pagalbos prašymų kuriuos aš pasiryžau įvykdyti sąrašas
+reviews.table_actions_label: Veiksmai
+reviews.table_actions_done: Padėjo
