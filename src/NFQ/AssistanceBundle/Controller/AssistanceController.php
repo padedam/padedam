@@ -49,9 +49,12 @@ class AssistanceController extends Controller
 
     public function requestCategoryAction()
     {
-
-        $htmlTree = $this->getAssistanceManager()->getCategoryTree();
-        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('tree'=>$htmlTree));
+//        $resp = $this->getAssistanceManager()->getRequestsForMe();
+//        foreach($resp['data'] as $req){
+//            dump($req->getOwner()->getFirstName());
+//            exit;
+//        }
+        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig');
     }
 
     /**
