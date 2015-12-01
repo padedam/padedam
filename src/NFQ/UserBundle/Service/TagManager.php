@@ -282,21 +282,24 @@ class TagManager
     {
         $response = [];
         try {
-            $tag = $this->suggestSpelling($this->getRequest()->get('tag', null));
-            if (!isset($tag)) {
+            $tags = $this->suggestWordstart($this->getRequest()->get('tag', null));
+            if (!isset($tags)) {
                 throw new \Exception('no tag sent');
             }
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
-            $foundTag = $tagsRepo->suggestTag($tag);
-            $foundTag = array_pop($foundTag);
-            if (isset($foundTag['parent']) and !empty($foundTag['parent'])) {
-                $response['tag'] = $foundTag['parent'];
-            } else {
-
-                $response['tag'] = $foundTag;
+            $foundTag = $tagsRepo->suggestTag($tags);
+            if (isset($foundTag[0]['parent_id']) and !empty($foundTag[0]['parent_id'])) {
+                $tag[0]['id'] = $foundTag[0]['parent_id'];
+                $tag[0]['text'] = $foundTag[0]['parent_text'];
+            } elseif(isset($foundTag[0]['child_id']) and !empty($foundTag[0]['child_id'])) {
+                $tag[0]['id'] = $foundTag[0]['child_id'];
+                $tag[0]['text'] = $foundTag[0]['child_text'];
+            }else{
+                $tag = [];
             }
 
             $response['status'] = 'success';
+            $response['tags'] = $tag;
         } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
@@ -329,5 +332,37 @@ class TagManager
         }
 
         return rtrim($result);
+    }
+
+    /**
+     * @param string $word
+     * @return string|void
+     */
+    private function suggestWordstart($word){
+        if( strlen($word) < 3 ){
+            return '';
+        }
+        //check if not more than 1 word
+        $words = explode(' ', $word);
+        $pspell_link = pspell_new("lt", null, null, "utf-8");
+        $first_word = reset($words);
+        $item = $this->remAppendix($first_word);
+
+        $suggestions = pspell_suggest($pspell_link, $item);
+        $first_suggested = strtolower(reset($suggestions));
+        $result = substr($first_suggested, 0, strlen($first_word)/2);
+        return $result;
+    }
+
+    /**
+     * @param $word
+     */
+    private function remAppendix($word)
+    {
+        $appendix = ['pa', 'nu', 'iš'];
+        foreach ($appendix as $what) {
+            if (($pos = strpos($word, $what)) === 0) return substr($word, 2);
+        }
+        return $word;
     }
 }
