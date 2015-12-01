@@ -44,7 +44,7 @@
                             <th>{{ 'assistance.short_desc'|trans }}</th>
                             <th>{{ 'assistance.label_long_description'|trans }}</th>
                             <th>{{ 'generic.date'|trans }}</th>
-                            <th>{{ 'reviews.table_actions_label'|trans }}</th>
+                            <th>{{ 'assistances.table_actions_label'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,7 +60,14 @@
                                 <td>
                                 {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
                                     <a class="btn btn-success btn-sm" href="{{ url('nfq_review_create',
-                                    {'arid': row.id}) }}">{{ 'reviews.table_actions_done'|trans }}</a>
+                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_done'|trans }}</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url('nfq_assistance_not_done',
+                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_not_done'|trans }}</a>
+                                {% endif %}
+
+                                {% if row.status != constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_CANCELED') %}
+                                    <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_cancel',
+                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
                                 {% endif %}
                                 </td>
                             </tr>
@@ -70,7 +77,6 @@
                     </table>
                 </div>
             </div>
-            {#<div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div>#}
         </div>
     {% endif %}
 
@@ -88,6 +94,7 @@
                             <th>{{ 'assistance.short_desc'|trans }}</th>
                             <th>{{ 'assistance.label_long_description'|trans }}</th>
                             <th>{{ 'generic.date'|trans }}</th>
+                            <th>{{ 'assistances.table_actions_label'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -100,6 +107,10 @@
                                     {{ _self.stringMaxLength(row.longDescription, 50, row.id) }}
                                 </td>
                                 <td>{{ row.date|date('Y-m-d') }}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_helper_cancel',
+                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
+                                </td>
                             </tr>
                         {% endfor %}
 
@@ -107,7 +118,6 @@
                     </table>
                 </div>
             </div>
-            <div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div>
         </div>
     {% endif %}
 
@@ -125,6 +135,7 @@
                         <th>{{ 'assistance.short_desc'|trans }}</th>
                         <th>{{ 'assistance.label_long_description'|trans }}</th>
                         <th>{{ 'generic.date'|trans }}</th>
+                        <th>{{ 'assistances.table_actions_label'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -137,6 +148,10 @@
                                 {{ _self.stringMaxLength(row.longDescription, 50, row.id) }}
                             </td>
                             <td>{{ row.date|date('Y-m-d') }}</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="{{ url('nfq_assistance_help',
+                                {'arid': row.id}) }}">{{ 'assistances.table_actions_help'|trans }}</a>
+                            </td>
                         </tr>
                     {% endfor %}
 
@@ -144,8 +159,6 @@
                 </table>
             </div>
         </div>
-        {#<div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div>#}
     </div>
-
 
 {% endblock %}
