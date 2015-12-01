@@ -47,7 +47,6 @@ class AssistanceController extends Controller
     public function requestListAction(){
 
         $allAssistanceRequests = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
-
         $myAssistanceRequests = [];
         $waitingRequests = [];
         $takenRequests = [];
