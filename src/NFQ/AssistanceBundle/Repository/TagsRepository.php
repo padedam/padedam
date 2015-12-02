@@ -113,18 +113,22 @@ class TagsRepository extends NestedTreeRepository
     public function suggestTag($tag)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('t.id as child_id, t.title as child_text, p.id as parent_id, p.title as parent_text')
+        $qb->select('t, p')
             ->from('NFQAssistanceBundle:Tags', 't')
             ->leftJoin('t.parent', 'p');
            if( is_array($tag) ) {
-               $qb->where('t.title IN (:suggestions)')
-                       ->setParameter('suggestions', $tag);
+               $i = 1;
+               foreach($tag as $t){
+                   $i++;
+                   $qb->orWhere('t.title LIKE :title'.$i)
+                       ->setParameter('title'.$i, $t . '%');
+               }
            }else{
                $qb->where('t.title LIKE :title')
                     ->setParameter('title', $tag . '%');
            }
 
-        return $qb->getQuery()->setMaxResults(1)->getArrayResult();
+        return $qb->getQuery()->getArrayResult();
     }
 
 }

@@ -278,6 +278,9 @@ class TagManager
         return $response;
     }
 
+    /**
+     * @return array
+     */
     public function suggestTag()
     {
         $response = [];
@@ -288,24 +291,32 @@ class TagManager
             }
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
             $foundTag = $tagsRepo->suggestTag($tags);
-            if (isset($foundTag[0]['parent_id']) and !empty($foundTag[0]['parent_id'])) {
-                $tag[0]['id'] = $foundTag[0]['parent_id'];
-                $tag[0]['text'] = $foundTag[0]['parent_text'];
-            } elseif(isset($foundTag[0]['child_id']) and !empty($foundTag[0]['child_id'])) {
-                $tag[0]['id'] = $foundTag[0]['child_id'];
-                $tag[0]['text'] = $foundTag[0]['child_text'];
-            }else{
-                $tag = [];
+            $result = [];
+            foreach($foundTag as $tag){
+                $process = $this->processTag($tag);
+                $result[$process['id']] = $process['id'];
             }
-
             $response['status'] = 'success';
-            $response['tags'] = $tag;
+            $response['tags'] = array_keys($result);
         } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
         return $response;
     }
+
+    private function processTag($tag){
+        $result= [];
+        if ( isset( $tag['parent'] ) and !empty( $tag['parent'] ) ) {
+            $result['id'] = $tag['parent']['id'];
+            $result['text'] = $tag['parent']['title'];
+        } elseif ( isset( $tag['id'] ) and is_numeric( $tag['id'] ) ) {
+            $result['id'] = $tag['id'];
+            $result['text'] = $tag['title'];
+        }
+        return $result;
+    }
+
 
     /**
      * @return null|\Symfony\Component\HttpFoundation\Request
@@ -339,19 +350,22 @@ class TagManager
      * @return string|void
      */
     private function suggestWordstart($word){
-        if( strlen($word) < 3 ){
-            return '';
-        }
+
         //check if not more than 1 word
         $words = explode(' ', $word);
         $pspell_link = pspell_new("lt", null, null, "utf-8");
-        $first_word = reset($words);
-        $item = $this->remAppendix($first_word);
-
-        $suggestions = pspell_suggest($pspell_link, $item);
-        $first_suggested = strtolower(reset($suggestions));
-        $result = substr($first_suggested, 0, strlen($first_word)/2);
-        return $result;
+        $results = [];
+        foreach($words as $w){
+            if( strlen(trim($w)) < 3 ){
+                continue;
+            }
+            $suggestions = pspell_suggest($pspell_link, $w);
+            $first_suggested = mb_strtolower(reset($suggestions));
+            $item = $this->remAppendix($first_suggested);
+            $result = mb_substr($item, 0, mb_strlen($w)/2);
+            $results[] = $result;
+        }
+        return $results;
     }
 
     /**
@@ -361,7 +375,7 @@ class TagManager
     {
         $appendix = ['pa', 'nu', 'iš'];
         foreach ($appendix as $what) {
-            if (($pos = strpos($word, $what)) === 0) return substr($word, 2);
+            if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }
         return $word;
     }
