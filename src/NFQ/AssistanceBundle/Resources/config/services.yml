@@ -1,7 +1,7 @@
 services:
     nfq_assistance.assistance_manager:
         class: NFQ\AssistanceBundle\Service\AssistanceManager
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
 
     nfq_assitance.twig.assistance_extension:
         class: NFQ\AssistanceBundle\Twig\AssitanceExtension

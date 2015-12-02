@@ -1,7 +1,61 @@
+{%- macro stringMaxLength(request, maxLength) -%}
+    {%- if request.shortDescription | length < maxLength -%}
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.shortDescription }}</p>
+    {%- else -%}
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.shortDescription|slice(0, maxLength) }}...</p>
+    {%- endif -%}
+    <div class="bs-component">
+        <div id="m{{ request.id }}" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            {{ request.longDescription }}
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <h4 class="text-left">{{ 'user.name'|trans }}: {{ request.getOwner().getFirstName() }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div></div>
+{%- endmacro -%}
+
 {% extends "::base.html.twig" %}
 
 {% block body %}
-<h1>Categories</h1>
-{{ tree|raw }}
-{% endblock %}
 
+<div class="row">
+    <div class="col-md-5 col-md-offset-1">
+        <h1>My requests</h1>
+        {% set requests = get_my_requests() %}
+        {% if requests.status == 'success' %}
+            <ul>
+           {% for request in requests.data %}
+               <li class="active">{{ _self.stringMaxLength(request, 50) }}</li>
+           {% endfor %}
+            </ul>
+        {% else %}
+            {{ requests.data }}
+        {% endif %}
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+        <h1>I can help</h1>
+        {% set requests_for_me = get_requests_for_me() %}
+        {% if requests_for_me.status == 'success' %}
+            <ul>
+                {% for request in requests_for_me.data %}
+                    <li>{{ _self.stringMaxLength(request, 50) }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ requests_for_me.data }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

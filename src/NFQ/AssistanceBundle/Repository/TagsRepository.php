@@ -16,6 +16,7 @@ class TagsRepository extends NestedTreeRepository
      * @param User $user
      * @param $parent
      * @return array
+     * Method returns child tags by parrent
      */
     public function getMyTags(\NFQ\UserBundle\Entity\User $user, $parent)
     {

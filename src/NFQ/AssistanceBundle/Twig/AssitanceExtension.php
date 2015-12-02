@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: renaldas
- * Date: 15.11.6
- * Time: 11.05
- */
 
 namespace NFQ\AssistanceBundle\Twig;
 
@@ -30,8 +24,18 @@ class AssitanceExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction(
-                'get_assistance_categories',
-                [$this, 'getAssistanceCategories'],
+                'get_assistance_tags',
+                [$this, 'getAssistanceTags'],
+                ['is_safe' => ['html']]
+            ),
+            new \Twig_SimpleFunction(
+                'get_my_requests',
+                [$this, 'getMyRequests'],
+                ['is_safe' => ['html']]
+            ),
+            new \Twig_SimpleFunction(
+                'get_requests_for_me',
+                [$this, 'getRequestsForMe'],
                 ['is_safe' => ['html']]
             )
         ];
@@ -40,10 +44,29 @@ class AssitanceExtension extends \Twig_Extension
     /**
      * @return array|string
      */
-    public function getAssistanceCategories()
+    public function getAssistanceTags()
     {
-        return $this->manager->getCategoryTree();
+        return $this->manager->getTagTree();
     }
+
+
+    /**
+     * @return string
+     */
+    public function getMyRequests()
+    {
+        return $this->manager->getMyRequests();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getRequestsForMe()
+    {
+        return $this->manager->getRequestsForMe();
+    }
+
 
     /**
      * @return string
