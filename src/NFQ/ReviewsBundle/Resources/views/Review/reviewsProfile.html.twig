@@ -4,7 +4,7 @@
     <p>{{ 'profile.reviews'|trans }}:</p>
 
     {% for review in reviews %}
-        {{ review.helpGetter }}
+        {{ review.helpGetter.firstName }}
         {{ review.reviewMessage }} <br>
     {% endfor %}
 </div>

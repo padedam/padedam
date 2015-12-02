@@ -25,7 +25,7 @@
                 <p>{{ 'profile.reviews'|trans }}:</p>
                 {% for review in reviewList.reviews %}
                     <a class="list-group-item well-sm">
-                        <h4 class="list-group-item-heading">{{ review.helpGetter }}</h4>
+                        <h4 class="list-group-item-heading">{{ review.helpGetter.firstName }}</h4>
                         <p class="list-group-item-text">{{ review.reviewMessage }}</p>
                     </a>
                 {% endfor %}

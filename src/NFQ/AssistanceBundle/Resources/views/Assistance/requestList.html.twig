@@ -40,7 +40,6 @@
                     <table class="table table-striped table-hover ">
                         <thead>
                         <tr>
-                            <th>{{ 'assistance.owner_first_name'|trans }}</th>
                             <th>{{ 'assistance.short_desc'|trans }}</th>
                             <th>{{ 'assistance.label_long_description'|trans }}</th>
                             <th>{{ 'generic.date'|trans }}</th>
@@ -51,7 +50,6 @@
 
                         {% for row in myAssistanceRequests %}
                             <tr>
-                                <td>{{ row.owner.firstName }}</td>
                                 <td>{{ row.shortDescription }}</td>
                                 <td>
                                     {{ _self.stringMaxLength(row.longDescription, 50, row.id) }}
@@ -65,7 +63,8 @@
                                     {'arid': row.id}) }}">{{ 'assistances.table_actions_not_done'|trans }}</a>
                                 {% endif %}
 
-                                {% if row.status != constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_CANCELED') %}
+                                {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING')
+                                    or row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN')%}
                                     <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_cancel',
                                     {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
                                 {% endif %}
