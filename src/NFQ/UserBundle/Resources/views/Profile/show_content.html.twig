@@ -22,6 +22,7 @@
             {% set reviewList = get_review_list() %}
             <legend>{{ 'profile.thanks_number'|trans }}: {{ reviewList.number }}</legend>
             <div class="list-group">
+                {% if reviewList.reviews is not empty %}
                 <p>{{ 'profile.reviews'|trans }}:</p>
                 {% for review in reviewList.reviews %}
                     <a class="list-group-item well-sm">
@@ -29,6 +30,9 @@
                         <p class="list-group-item-text">{{ review.reviewMessage }}</p>
                     </a>
                 {% endfor %}
+                {% else %}
+                    <p class="list-group-item-text">{{ 'review.no_reviews'|trans }}</p>
+                {% endif %}
             </div>
         </div>
     </div>

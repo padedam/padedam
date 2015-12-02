@@ -80,6 +80,7 @@ generic.write_review_form: Atsiliepimo forma
 review.review_textarea_placeholder: Atsiliepimas, padėka
 review.message_label: Atsiliepimas
 review.checkbox_label: Padėkoti už suteiktą pagalbą
+review.no_reviews: Jūs neturite atsiliepimų
 
 generic.field: Sritis
 generic.field.palceholder: Sritis, kurioje reikalinga pagalba

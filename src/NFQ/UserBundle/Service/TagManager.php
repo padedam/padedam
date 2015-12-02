@@ -327,7 +327,7 @@ class TagManager
     }
 
     private function suggestSpelling($word=''){
-        if( strlen($word) < 3 ){
+        if( strlen($word) < 4 or $this->removeWords($w)){
             return;
         }
         //check if not more than 1 word
@@ -356,7 +356,7 @@ class TagManager
         $pspell_link = pspell_new("lt", null, null, "utf-8");
         $results = [];
         foreach($words as $w){
-            if( strlen(trim($w)) < 3 ){
+            if( strlen(trim($w)) < 4 or $this->removeWords($w)){
                 continue;
             }
             $suggestions = pspell_suggest($pspell_link, $w);
@@ -373,10 +373,21 @@ class TagManager
      */
     private function remAppendix($word)
     {
-        $appendix = ['pa', 'nu', 'iš'];
+        $appendix = ['pa', 'nu', 'iš', 'su'];
         foreach ($appendix as $what) {
             if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }
         return $word;
     }
+
+    private function removeWords($w){
+        $words = ['vis', 'man'];
+        foreach($words as $word){
+            if(strpos($w, $word) === 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
