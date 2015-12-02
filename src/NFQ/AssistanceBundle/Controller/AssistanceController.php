@@ -37,7 +37,6 @@ class AssistanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-
             $currentUser = $this->getUser();
             $assistanceRequest->setOwner($currentUser);
 
