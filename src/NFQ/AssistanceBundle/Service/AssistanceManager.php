@@ -97,6 +97,9 @@ class AssistanceManager
         return $response;
     }
 
+    /**
+     * @return array
+     */
     public function getRequestsForMe()
     {
         $response = [];
@@ -125,6 +128,25 @@ class AssistanceManager
         return $response;
     }
 
+    /**
+     * @return array
+     */
+    public function getReviewList()
+    {
+        $currentUser  = $this->getUser();
+        $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
+
+        if (!$thank) {
+            $result = ['number' => 0, 'reviews' => []];
+        } else {
+            $result = ['number' => $thank->getNumber(), 'reviews' => $currentUser->getGReviews()->toArray()];
+        }
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
     private function getUser()
     {
         if ( !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') ) {
@@ -133,5 +155,6 @@ class AssistanceManager
             return $this->tokenStorage->getToken()->getUser();
         }
     }
+
 
 }

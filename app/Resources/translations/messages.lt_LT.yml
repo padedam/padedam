@@ -90,3 +90,7 @@ assistances.table_actions_done: Padėjo
 assistances.table_actions_not_done: Nepadėjo
 assistances.table_actions_cancel: Atšaukti
 assistances.table_actions_help: Padėti
+
+#user
+user.details: Mano informacija
+user.edit_profile: Redaguoti profilį

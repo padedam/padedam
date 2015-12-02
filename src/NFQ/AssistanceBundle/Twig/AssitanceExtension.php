@@ -30,13 +30,15 @@ class AssitanceExtension extends \Twig_Extension
             ),
             new \Twig_SimpleFunction(
                 'get_my_requests',
-                [$this, 'getMyRequests'],
-                ['is_safe' => ['html']]
+                [$this, 'getMyRequests']
             ),
             new \Twig_SimpleFunction(
                 'get_requests_for_me',
-                [$this, 'getRequestsForMe'],
-                ['is_safe' => ['html']]
+                [$this, 'getRequestsForMe']
+            ),
+            new \Twig_SimpleFunction(
+                'get_review_list',
+                [$this, 'getReviewList']
             )
         ];
     }
@@ -65,6 +67,14 @@ class AssitanceExtension extends \Twig_Extension
     public function getRequestsForMe()
     {
         return $this->manager->getRequestsForMe();
+    }
+
+    /**
+     * @return array
+     */
+    public function getReviewList()
+    {
+        return $this->manager->getReviewList();
     }
 
 
