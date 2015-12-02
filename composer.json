@@ -24,7 +24,8 @@
         "ongr/elasticsearch-bundle": "~0.10"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "doctrine/doctrine-fixtures-bundle": "^2.2@dev"
     },
     "scripts": {
         "post-install-cmd": [
