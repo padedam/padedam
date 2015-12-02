@@ -1,7 +1,3 @@
-nfq_assistance_request_foo:
-    path:     /requestFoo
-    defaults: { _controller: NFQAssistanceBundle:Assistance:foo }
-
 nfq_assistance_request_form:
     path:     /requestForm
     defaults: { _controller: NFQAssistanceBundle:Assistance:requestForm }
@@ -34,7 +30,22 @@ nfq_assistance_selected_tags:
     path:     /mytags
     defaults: { _controller: NFQAssistanceBundle:Assistance:myTags }
 
+nfq_assistance_not_done:
+    path:     /notDone/{arid}
+    defaults: { _controller: NFQAssistanceBundle:Assistance:notDone }
 nfq_assistance_suggest_tag:
     path:     /suggest-tag
     defaults: { _controller: NFQAssistanceBundle:Assistance:suggestTag }
 
+
+nfq_assistance_cancel:
+    path:     /cancel/{arid}
+    defaults: { _controller: NFQAssistanceBundle:Assistance:cancel }
+
+nfq_assistance_helper_cancel:
+    path:     /helperCancel/{arid}
+    defaults: { _controller: NFQAssistanceBundle:Assistance:helperCancel }
+
+nfq_assistance_help:
+    path:     /help/{arid}
+    defaults: { _controller: NFQAssistanceBundle:Assistance:help }

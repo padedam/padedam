@@ -6,29 +6,19 @@ use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
 use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
+use NFQ\AssistanceBundle\Entity\Tags;
+use NFQ\AssistanceBundle\Entity\Tag2User;
+use NFQ\ReviewsBundle\Entity\Review;
+use NFQ\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
-
-    public function fooAction(Request $request)
-    {
-        $text = $request->get('text');
-
-        $repository = $this->get('es.manager.default.tag');
-        $search = $repository->createSearch();
-        $search->addQuery(new MatchAllQuery());
-        $termSuggester = new Term('name', $text);
-        $termSuggester->setAnalyzer('lithuanian');
-        $termSuggester->setSuggestMode(Term::SUGGEST_MODE_POPULAR);
-        $search->addSuggester($termSuggester);
-        $results = $repository->execute($search);
-
-    }
-    
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
@@ -150,11 +140,89 @@ class AssistanceController extends Controller
         return new JsonResponse($this->getTagManager()->getMyChildTags($this->getUser()));
     }
 
+    public function notDoneAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getOwner()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
+
 
     public function getParentTagsAction()
     {
 
     }
 
+    public function helpAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
+        if($assistanceRequest->getOwner()==$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);
+        $assistanceRequest->setHelper($currentUser);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
+
+    public function helperCancelAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getHelper()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
+
+
+    public function cancelAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getOwner()!=$currentUser){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_CANCELED);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
 }

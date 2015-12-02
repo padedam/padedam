@@ -66,8 +66,6 @@ class ReviewController extends Controller
         $review = new Review();
         $review->setAssistanceRequest($assistanceRequest);
 
-        //return new RedirectResponse($request->server->get('HTTP_REFERER'));
-
         $form = $this->createForm(new ReviewType(), $review, array('method' => 'POST'));
 
         $form->handleRequest($request);
