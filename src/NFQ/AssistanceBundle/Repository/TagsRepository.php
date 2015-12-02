@@ -16,6 +16,7 @@ class TagsRepository extends NestedTreeRepository
      * @param User $user
      * @param $parent
      * @return array
+     * Method returns child tags by parrent
      */
     public function getMyTags(\NFQ\UserBundle\Entity\User $user, $parent)
     {
@@ -76,9 +77,11 @@ class TagsRepository extends NestedTreeRepository
         $qb->select('t.id AS id, t.title as text')
             ->from('NFQAssistanceBundle:Tags', 't')
             ->where('t.title LIKE :title')
-            ->andWhere('t.parent = :parent')
-            ->setParameter(':title', $tag . '%')
-            ->setParameter(':parent', $parent);
+            ->setParameter(':title', $tag . '%');
+        if( isset( $parent ) ) {
+            $qb->andWhere('t.parent = :parent')
+                ->setParameter(':parent', $parent);
+        }
 
         return $qb->getQuery()->getArrayResult();
     }
@@ -102,4 +105,30 @@ class TagsRepository extends NestedTreeRepository
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * @param $tag
+     * @return int
+     */
+    public function suggestTag($tag)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('t, p')
+            ->from('NFQAssistanceBundle:Tags', 't')
+            ->leftJoin('t.parent', 'p');
+           if( is_array($tag) ) {
+               $i = 1;
+               foreach($tag as $t){
+                   $i++;
+                   $qb->orWhere('t.title LIKE :title'.$i)
+                       ->setParameter('title'.$i, $t . '%');
+               }
+           }else{
+               $qb->where('t.title LIKE :title')
+                    ->setParameter('title', $tag . '%');
+           }
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
 }

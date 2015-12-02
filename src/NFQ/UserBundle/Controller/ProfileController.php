@@ -3,6 +3,7 @@
 namespace NFQ\UserBundle\Controller;
 
 use FOS\UserBundle\Controller\ProfileController as BaseController;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,6 +20,7 @@ class ProfileController extends BaseController
      */
     public function editAction()
     {
+
         $em = $this->container->get('doctrine')->getManager();
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 

@@ -4,9 +4,8 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
-use NFQ\AssistanceBundle\Entity\Tags;
-use NFQ\AssistanceBundle\Entity\Tag2User;
-use NFQ\UserBundle\Entity\User;
+use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +13,22 @@ use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
+
+    public function fooAction(Request $request)
+    {
+        $text = $request->get('text');
+
+        $repository = $this->get('es.manager.default.tag');
+        $search = $repository->createSearch();
+        $search->addQuery(new MatchAllQuery());
+        $termSuggester = new Term('name', $text);
+        $termSuggester->setAnalyzer('lithuanian');
+        $termSuggester->setSuggestMode(Term::SUGGEST_MODE_POPULAR);
+        $search->addSuggester($termSuggester);
+        $results = $repository->execute($search);
+
+    }
+    
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
@@ -22,7 +37,6 @@ class AssistanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-
             $currentUser = $this->getUser();
             $assistanceRequest->setOwner($currentUser);
             $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
@@ -69,9 +83,12 @@ class AssistanceController extends Controller
 
     public function requestCategoryAction()
     {
-
-        $htmlTree = $this->getAssistanceManager()->getCategoryTree();
-        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('tree'=>$htmlTree));
+//        $resp = $this->getAssistanceManager()->getRequestsForMe();
+//        foreach($resp['data'] as $req){
+//            dump($req->getOwner()->getFirstName());
+//            exit;
+//        }
+        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig');
     }
 
     /**
@@ -83,13 +100,27 @@ class AssistanceController extends Controller
     }
 
     /**
+     * @return \NFQ\UserBundle\Service\TagManager
+     */
+    private function getTagManager(){
+        return $this->container->get('nfq_user.tag_manager');
+    }
+
+    /**
      * @return JsonResponse
      */
     public function matchTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->findTag();
+        $response = $this->getTagManager()->findTag();
         return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function suggestTagAction()
+    {
+        return new JsonResponse($this->getTagManager()->suggestTag());
     }
 
     /**
@@ -97,8 +128,7 @@ class AssistanceController extends Controller
      */
     public function saveTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->saveTag($this->getUser());
+        $response = $this->getTagManager()->saveTag();
         return new JsonResponse($response);
     }
 
@@ -108,8 +138,7 @@ class AssistanceController extends Controller
      */
     public function removeTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->removeTag();
+        $response = $this->getTagManager()->removeTag();
         return new JsonResponse($response);
     }
 
@@ -118,8 +147,7 @@ class AssistanceController extends Controller
      */
     public function myTagsAction()
     {
-        $tagService = $this->container->get('nfq_user.tag_manager');
-        return new JsonResponse($tagService->getMyChildTags($this->getUser()));
+        return new JsonResponse($this->getTagManager()->getMyChildTags($this->getUser()));
     }
 
 

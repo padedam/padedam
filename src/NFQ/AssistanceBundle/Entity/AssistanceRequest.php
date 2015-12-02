@@ -5,12 +5,13 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use NFQ\AssistanceBundle\Entity\Tags;
 
 /**
  * AssistanceRequest
  *
  * @ORM\Table(name="assistance_request")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Repository\AssistanceRequestRepository")
  */
 class AssistanceRequest
 {
@@ -74,6 +75,14 @@ class AssistanceRequest
      * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
      */
     private $helper=NULL;
+
+    /**
+     * @var Tags
+     * @ORM\ManyToMany(targetEntity="NFQ\AssistanceBundle\Entity\Tags")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     */
+    private $tags;
+
 
     /**
      * Get id
@@ -201,5 +210,48 @@ class AssistanceRequest
     public function setHelper($helper)
     {
         $this->helper = $helper;
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \NFQ\AssistanceBundle\Entity\Tags $tag
+     *
+     * @return AssistanceRequest
+     */
+    public function addTag(\NFQ\AssistanceBundle\Entity\Tags $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \NFQ\AssistanceBundle\Entity\Tags $tag
+     */
+    public function removeTag(\NFQ\AssistanceBundle\Entity\Tags $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

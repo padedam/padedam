@@ -1,10 +1,19 @@
 services:
     nfq_assistance.assistance_manager:
         class: NFQ\AssistanceBundle\Service\AssistanceManager
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
 
     nfq_assitance.twig.assistance_extension:
         class: NFQ\AssistanceBundle\Twig\AssitanceExtension
         arguments: ["@nfq_assistance.assistance_manager"]
         tags:
             - { name: twig.extension }
+
+    nfq_assitance.entity_listener.tag_populate:
+        class: NFQ\AssistanceBundle\EventListener\Doctrine\TagListener
+        arguments: ["@es.manager.default.tag"]
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: postPersist }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: preUpdate }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: preRemove }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\Tags, event: postRemove }
