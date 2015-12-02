@@ -1,28 +1,35 @@
 <div class="col-md-3 col-md-offset-3">
 
-    <div class="well bs-component">
+    <div class="panel panel-default bs-component">
+        <div class="panel-body">
 
-    <legend>{{ 'user.details'|trans }}</legend>
-    <div class="fos_user_user_show">
-        <p>{{ 'user.name'|trans }}: {{ user.firstName }}</p>
-        <p>{{ 'user.surname'|trans }}: {{ user.lastName }}</p>
-        <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
+            <legend>{{ 'user.details'|trans }}</legend>
+            <div class="fos_user_user_show">
+                <p>{{ 'user.name'|trans }}: {{ user.firstName }}</p>
+                <p>{{ 'user.surname'|trans }}: {{ user.lastName }}</p>
+                <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
 
-    </div>
-        <p><a href="{{ path('fos_user_profile_edit') }}">{{ 'user.edit_profile'|trans }}</a></p>
+            </div>
+                <p><a href="{{ path('fos_user_profile_edit') }}">{{ 'user.edit_profile'|trans }}</a></p>
+        </div>
     </div>
 </div>
 
 <div class="col-md-3">
 
-    <div class="well bs-component">
-        {% set reviewList = get_review_list() %}
-        <legend>{{ 'profile.thanks_number'|trans }}: {{ reviewList.number }}</legend>
-            <p>{{ 'profile.reviews'|trans }}:</p>
-        {{ dump(reviewList) }}
-            {% for review in reviewList.reviews %}
-                {{ review.helpGetter }}
-                {{ review.reviewMessage }} <br>
-            {% endfor %}
+    <div class="panel panel-default bs-component">
+        <div class="panel-body">
+            {% set reviewList = get_review_list() %}
+            <legend>{{ 'profile.thanks_number'|trans }}: {{ reviewList.number }}</legend>
+            <div class="list-group">
+                <p>{{ 'profile.reviews'|trans }}:</p>
+                {% for review in reviewList.reviews %}
+                    <a class="list-group-item well-sm">
+                        <h4 class="list-group-item-heading">{{ review.helpGetter }}</h4>
+                        <p class="list-group-item-text">{{ review.reviewMessage }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
