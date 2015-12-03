@@ -1,0 +1,17 @@
+{% for type, flashMessages in app.session.flashbag.all() %}
+    <div class="bs-component">
+        <div class="alert alert-dismissible alert-{{ type }} text-center">
+            <button data-dismiss="alert" class="close" type="button">×</button>
+                {% for flashMessage in flashMessages %}
+                        {{ flashMessage|trans }}
+                {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+{# available alert types:
+danger      red color
+success     green color
+info        blue color
+warning     yellow color
+#}

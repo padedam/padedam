@@ -156,15 +156,10 @@ class AssistanceController extends Controller
 
         $em->persist($assistanceRequest);
         $em->flush();
-
+        $this->get('session')->getFlashBag()->add('danger', 'assistance_not_done');
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
-
-    public function getParentTagsAction()
-    {
-
-    }
 
     public function helpAction(Request $request, $arid)
     {
@@ -182,7 +177,7 @@ class AssistanceController extends Controller
 
         $em->persist($assistanceRequest);
         $em->flush();
-
+        $this->get('session')->getFlashBag()->add('success', 'assistance_registered');
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
@@ -202,7 +197,7 @@ class AssistanceController extends Controller
 
         $em->persist($assistanceRequest);
         $em->flush();
-
+        $this->get('session')->getFlashBag()->add('info', 'assistance_helper_cancel');
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
@@ -222,7 +217,7 @@ class AssistanceController extends Controller
 
         $em->persist($assistanceRequest);
         $em->flush();
-
+        $this->get('session')->getFlashBag()->add('danger', 'assistance_canceled');
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 }

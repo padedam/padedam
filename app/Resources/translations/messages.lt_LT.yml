@@ -74,6 +74,8 @@ menu.req_cat: Prašymų kategorijos
 review.submit_button: Išsaugoti atsiliepimą
 profile.thanks_number: Padėkų skaičius
 profile.reviews: Atsiliepimai
+profile.view: Peržiūrėti profilio informaciją
+profile.edit: Redaguoti profilio informaciją
 review.successful_review: Ačiū už atsiliepimą
 generic.write_review: Atsiliepimas
 generic.write_review_form: Atsiliepimo forma
@@ -91,7 +93,10 @@ assistances.table_actions_done: Padėjo
 assistances.table_actions_not_done: Nepadėjo
 assistances.table_actions_cancel: Atšaukti
 assistances.table_actions_help: Padėti
-
+assistance_canceled: Pagalbos prašymas atšauktas
+assistance_helper_cancel: Pagalbos teikimas atšauktas
+assistance_registered: Pagalbos teikimas registruotas
+assistance_not_done: Jūsų pagalbos prašymas atnaujintas
 #user
 user.details: Mano informacija
 user.edit_profile: Redaguoti profilį

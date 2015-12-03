@@ -14,8 +14,14 @@
             <ul class="nav navbar-nav">
 
                 {% if app.user %}
-                <li><a href="{{ path('fos_user_profile_show') }}">{{ 'generic.profile'|trans }}</a></li>
-                <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'generic.profile'|trans }} <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="{{ path('fos_user_profile_show') }}">{{ 'profile.view'|trans }}</a></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'profile.edit'|trans }}</a></li>
+                    </ul>
+
+                </li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'menu.help'|trans }} <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
@@ -28,15 +34,7 @@
                 </li>
                 {% endif %}
             </ul>
-            {#}
-            <form role="search" class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" placeholder="Search" class="form-control">
-                </div>
-                <button class="btn btn-default" type="submit">{{ 'generic.submit'|trans }}</button>
-            </form>
-            {#}
-            {% if not app.user %}
+                {% if not app.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
                 <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span class="sr-only">(current)</span></a></li>
