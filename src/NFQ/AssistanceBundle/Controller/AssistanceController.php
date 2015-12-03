@@ -19,6 +19,10 @@ use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
@@ -34,59 +38,26 @@ class AssistanceController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($assistanceRequest);
             $em->flush();
-
-            return $this->redirectToRoute('nfq_assistance_request_submitted');
+            $this->get('session')->getFlashBag()->add('success', 'assistance.successful_request');
+            return $this->redirectToRoute('nfq_assistance_request_list');
         }
 
         return $this->render('NFQAssistanceBundle:Assistance:requestForm.html.twig', array('form' => $form->createView()));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function requestSubmittedAction(){
         return $this->render('NFQAssistanceBundle:Assistance:requestSubmitted.html.twig');
     }
 
-    public function requestListAction(){
-
-        $allAssistanceRequests = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
-        $myAssistanceRequests = [];
-        $waitingRequests = [];
-        $takenRequests = [];
-
-        foreach($allAssistanceRequests as $request){
-            if($request->getOwner()==$this->getUser()){
-                $myAssistanceRequests[] = $request;
-            }
-            elseif($request->getStatus()==AssistanceRequest::STATUS_TAKEN){
-                if($request->getHelper()==$this->getUser()){
-                    $takenRequests[] = $request;
-                }
-            }
-            elseif($request->getStatus()==AssistanceRequest::STATUS_WAITING){
-                $waitingRequests[] = $request;
-            }
-
-        }
-
-        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('waitingRequests'=>$waitingRequests,
-            'myAssistanceRequests'=>$myAssistanceRequests, 'takenRequests'=>$takenRequests));
-    }
-
-    public function requestCategoryAction()
-    {
-//        $resp = $this->getAssistanceManager()->getRequestsForMe();
-//        foreach($resp['data'] as $req){
-//            dump($req->getOwner()->getFirstName());
-//            exit;
-//        }
-        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig');
-    }
-
     /**
-     * @return \NFQ\AssistanceBundle\Service\AssistanceManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getAssistanceManager()
+    public function requestListAction()
     {
-        return $this->container->get('nfq_assistance.assistance_manager');
+        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig');
     }
 
     /**
@@ -140,6 +111,11 @@ class AssistanceController extends Controller
         return new JsonResponse($this->getTagManager()->getMyChildTags($this->getUser()));
     }
 
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
     public function notDoneAction(Request $request, $arid)
     {
         $em = $this->getDoctrine()->getManager();
@@ -161,6 +137,11 @@ class AssistanceController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
     public function helpAction(Request $request, $arid)
     {
         $em = $this->getDoctrine()->getManager();
@@ -181,6 +162,11 @@ class AssistanceController extends Controller
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
     public function helperCancelAction(Request $request, $arid)
     {
         $em = $this->getDoctrine()->getManager();
@@ -201,7 +187,11 @@ class AssistanceController extends Controller
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
-
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
     public function cancelAction(Request $request, $arid)
     {
         $em = $this->getDoctrine()->getManager();

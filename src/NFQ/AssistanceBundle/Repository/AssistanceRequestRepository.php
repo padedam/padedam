@@ -3,6 +3,7 @@
 namespace NFQ\AssistanceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use NFQ\UserBundle\Entity\User;
 
 /**
@@ -12,6 +13,11 @@ use NFQ\UserBundle\Entity\User;
 class AssistanceRequestRepository extends EntityRepository
 {
 
+    /**
+     * @param User $user
+     * @param int $limit
+     * @return array
+     */
     public function getMyRequests(User $user, $limit=5)
     {
 
@@ -24,6 +30,12 @@ class AssistanceRequestRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param User $user
+     * @param $myTags
+     * @param int $limit
+     * @return array
+     */
     public function getRequestsForMe(User $user, $myTags, $limit=5)
     {
         $qb = $this->getEntityManager()
@@ -33,8 +45,23 @@ class AssistanceRequestRepository extends EntityRepository
             ->leftJoin('ar.tags', 't')
             ->where('ar.owner != :user')
             ->andWhere('t.id IN (:myTags)')
+            ->andWhere('ar.status = :status')
+            ->setParameter('status', AssistanceRequest::STATUS_WAITING)
             ->setParameter('myTags', $myTags)
-            ->setParameter(':user', $user);
+            ->setParameter('user', $user);
+        return $qb->getQuery()->setMaxResults($limit)->getResult();
+    }
+
+    public function getMyTakenRequests(User $user, $limit=5)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder();
+        $qb->select('ar')
+            ->from('NFQAssistanceBundle:AssistanceRequest', 'ar')
+            ->where('ar.helper = :user')
+            ->andWhere('ar.status = :status')
+            ->setParameter('status', AssistanceRequest::STATUS_TAKEN)
+            ->setParameter('user', $user);
         return $qb->getQuery()->setMaxResults($limit)->getResult();
     }
 }

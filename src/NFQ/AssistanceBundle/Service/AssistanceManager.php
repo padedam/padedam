@@ -144,6 +144,24 @@ class AssistanceManager
         return $result;
     }
 
+    public function getMyTakenRequests()
+    {
+        $response = [];
+        try{
+
+            $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
+
+            $results = $repo->getMyTakenRequests($this->getUser());
+
+            $response['status'] = 'success';
+            $response['data'] = $results;
+        }catch (\Exception $e){
+            $response['status'] = 'failed';
+            $response['message'] = $e->getMessage();
+        }
+        return $response;
+    }
+
     /**
      * @return mixed
      */
