@@ -1,8 +1,8 @@
 {%- macro stringMaxLength(request, maxLength) -%}
-    {%- if request.shortDescription | length < maxLength -%}
-        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.shortDescription }}</p>
+    {%- if request.longDescription | length < maxLength -%}
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription }}</p>
     {%- else -%}
-        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.shortDescription|slice(0, maxLength) }}...</p>
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription|slice(0, maxLength) }}...</p>
     {%- endif -%}
     <div class="bs-component">
         <div id="m{{ request.id }}" class="modal">

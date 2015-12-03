@@ -373,7 +373,7 @@ class TagManager
      */
     private function remAppendix($word)
     {
-        $appendix = ['pa', 'nu', 'iš', 'su'];
+        $appendix = ['pa', 'nu', 'iš', 'su', 'vis'];
         foreach ($appendix as $what) {
             if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }

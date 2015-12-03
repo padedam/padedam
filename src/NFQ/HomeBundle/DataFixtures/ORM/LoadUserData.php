@@ -31,6 +31,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->createUser();
         $user->setUsername('admin@padedam.lt');
+        $user->setFirstName('Website admin');
         $user->setEmail('admin@padedam.lt');
         $user->setPlainPassword('pad3dam');
         $user->setEnabled(true);
