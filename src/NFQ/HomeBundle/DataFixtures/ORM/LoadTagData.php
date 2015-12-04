@@ -19,12 +19,19 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
             'statybos'=>[
                 'tinkas',
                 'glaistas',
-                'cementas'
+                'cementas',
+                'mūras',
+                'plytos',
+                'blokai',
+                'namas',
+                'remontas'
             ],
             'elektra'=>[
                 'rozetė',
                 'lemputė',
-                'lituoti'
+                'lituoti',
+                'laidas',
+                'kabelis'
             ],
             'kompiuteriai'=>[
                 'diskas',
@@ -45,9 +52,14 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
                 'gaminti',
                 'virti',
                 'kepti',
-                'gaminti',
-                'skanu',
-                'apetitas'
+                'skaniai',
+                'apetitas',
+                'tortas',
+                'varškė',
+                'sūris',
+                'pienas',
+                'patiekalas',
+                'košė'
             ],
             'buitis'=>[
                 'televizorius',
@@ -64,6 +76,16 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
                 'starteris',
                 'sankaba',
                 'žibintai'
+            ],
+            'santechnika'=>[
+                'kranas',
+                'čiaupas',
+                'vamzdynas',
+                'klozetas',
+                'bakelis',
+                'vonia',
+                'tualetas',
+                'kriauklė'
             ]
         ];
         $i = 3;

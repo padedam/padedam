@@ -56,30 +56,6 @@ class AssistanceManager
     }
 
     /**
-     * @return array|string
-     */
-    public function getTagTree()
-    {
-        $repo = $this->em->getRepository('NFQAssistanceBundle:Tags');
-
-        $options = array(
-            'decorate' => true,
-            'rootOpen' => '<ul>',
-            'rootClose' => '</ul>',
-            'childOpen' => '<li>',
-            'childClose' => '</li>'
-        );
-
-        $htmlTree = $repo->childrenHierarchy(
-            null, /* starting from root nodes */
-            false, /* true: load all children, false: only direct */
-            $options
-        );
-
-        return $htmlTree;
-    }
-
-    /**
      * @return string
      */
     public function getMyRequests()
@@ -131,19 +107,6 @@ class AssistanceManager
     /**
      * @return array
      */
-    public function getReviewList()
-    {
-        $currentUser  = $this->getUser();
-        $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
-
-        if (!$thank) {
-            $result = ['number' => 0, 'reviews' => []];
-        } else {
-            $result = ['number' => $thank->getNumber(), 'reviews' => $currentUser->getGReviews()->toArray()];
-        }
-        return $result;
-    }
-
     public function getMyTakenRequests()
     {
         $response = [];
@@ -160,6 +123,15 @@ class AssistanceManager
             $response['message'] = $e->getMessage();
         }
         return $response;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestsFrontPage()
+    {
+        $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
+        return $repo->getRequestsFrontPage();
     }
 
     /**

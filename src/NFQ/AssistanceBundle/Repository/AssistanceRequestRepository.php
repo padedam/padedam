@@ -52,6 +52,11 @@ class AssistanceRequestRepository extends EntityRepository
         return $qb->getQuery()->setMaxResults($limit)->getResult();
     }
 
+    /**
+     * @param User $user
+     * @param int $limit
+     * @return array
+     */
     public function getMyTakenRequests(User $user, $limit=5)
     {
         $qb = $this->getEntityManager()
@@ -63,5 +68,16 @@ class AssistanceRequestRepository extends EntityRepository
             ->setParameter('status', AssistanceRequest::STATUS_TAKEN)
             ->setParameter('user', $user);
         return $qb->getQuery()->setMaxResults($limit)->getResult();
+    }
+
+    public function getRequestsFrontPage()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder();
+        $qb->select('ar')
+            ->from('NFQAssistanceBundle:AssistanceRequest', 'ar')
+            ->where('ar.status = :status')
+            ->setParameter('status', AssistanceRequest::STATUS_WAITING);
+        return $qb->getQuery()->setMaxResults(5)->getResult();
     }
 }

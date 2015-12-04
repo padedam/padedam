@@ -24,11 +24,6 @@ class AssitanceExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction(
-                'get_assistance_tags',
-                [$this, 'getAssistanceTags'],
-                ['is_safe' => ['html']]
-            ),
-            new \Twig_SimpleFunction(
                 'get_my_requests',
                 [$this, 'getMyRequests']
             ),
@@ -43,18 +38,17 @@ class AssitanceExtension extends \Twig_Extension
             new \Twig_SimpleFunction(
                 'get_review_list',
                 [$this, 'getReviewList']
+            ),
+            new \Twig_SimpleFunction(
+                'front_page_reviews',
+                [$this, 'getReviewsFrontPage']
+            ),
+            new \Twig_SimpleFunction(
+                'front_page_requests',
+                [$this, 'getRequestsFrontPage']
             )
         ];
     }
-
-    /**
-     * @return array|string
-     */
-    public function getAssistanceTags()
-    {
-        return $this->manager->getTagTree();
-    }
-
 
     /**
      * @return string
@@ -88,6 +82,10 @@ class AssitanceExtension extends \Twig_Extension
         return $this->manager->getMyTakenRequests();
     }
 
+    public function getRequestsFrontPage()
+    {
+        return $this->manager->getRequestsFrontPage();
+    }
 
     /**
      * @return string

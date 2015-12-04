@@ -8,8 +8,8 @@ use NFQ\UserBundle\Entity\User;
 /**
  * Thanks
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="thanks")
+ * @ORM\Entity(repositoryClass="NFQ\ReviewsBundle\Repository\ThanksRepository")
  */
 class Thanks
 {

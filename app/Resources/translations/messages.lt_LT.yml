@@ -55,7 +55,7 @@ assistance.label_short_description: Trumpas aprašymas (100 simbolių)
 assistance.short_description_placeholder: Trumpas reikalingos pagalbos aprašymas
 assistance.field: Pagalbos sritis
 assistance.short_desc: Trumpas aprašymas
-assistance.label_long_description: Išsamus aprašymas
+assistance.label_long_description: Išsamus prašymo tekstas
 assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
 assistance.submit_button: Pateikti prašymą
 assistance.successful_request: Jūsų prašymas priimtas
@@ -100,3 +100,8 @@ assistance_not_done: Jūsų pagalbos prašymas atnaujintas
 #user
 user.details: Mano informacija
 user.edit_profile: Redaguoti profilį
+
+#front page
+
+fp.they_need_u: Tu jiems gali padėti
+fp.biggest_heroes: Aktyviausiai padedantys nariai

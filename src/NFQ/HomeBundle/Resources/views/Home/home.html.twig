@@ -1,35 +1,99 @@
 {% extends "::base.html.twig" %}
+
+{%- macro stringMaxLength(request, maxLength) -%}
+    {%- if request.longDescription | length < maxLength -%}
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription }}</p>
+    {%- else -%}
+        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription|slice(0, maxLength) }}...</p>
+    {%- endif -%}
+    <div class="bs-component">
+        <div id="m{{ request.id }}" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            {{ request.longDescription }}
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <h4 class="text-left">{{ 'user.name'|trans }}: {{ request.getOwner().getFirstName() }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div></div>
+{%- endmacro -%}
+
 {% block title %}{{ 'user.wellcome'|trans }}!
 {% endblock %}
 
 {% block body %}
-<h1 class="text-center">Pagalba Kauniečiui</h1>
+
+    <div class="bs-component" style="margin-top:-18px;">
+        <div class="jumbotron col-xs-12">
+            <div class="col-md-offset-2 col-xs-12 col-sm-6">
+                <h1>Pagalba Kauniečiui</h1>
+                <p>Paverskime Kauną draugiškiausiu Lietuvos miestu!</p>
+                <p><a href="{{ path('fos_user_registration_register') }}" class="btn btn-primary btn-lg">{{ 'generic.registration'|trans }}</a></p>
+            </div>
+            <p class="col-xs-12 col-sm-6 col-md-4 col-lg-3 "><img style="width: 100%" src="{{ asset('bundles/nfqfrontend/img/logo.png') }}" /></p>
+        </div>
+
+        <div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div>
+    </div>
+
 <br>
+<div class="bs-component">
     <div class="container-fluid">
         <div class="row row-centered">
             <div class="col-sm-8 col-sm-offset-2">
-                <div class="col-sm-4">
-                    <h4 class="text-capitalize">pirmas argumentas</h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
+                <div class="col-md-4 col-md-offset-2">
+                    <h4 class="text-capitalize">{{ 'fp.they_need_u'|trans }}</h4>
+                    {% set requests = front_page_requests() %}
+                    {% if requests is empty %}
+                    <p>{{ 'fp.no_requests_found'|trans }}</p>
+                    {% else %}
+                        <ul class='list-group'>
+                        {% for request in requests %}
+                            <li class="list-group-item">
+                                {{ _self.stringMaxLength(request, 40) }}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
 
-                <div class="col-sm-4">
-                    <h4 class="text-capitalize">antras argumentas</h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
+                <div class="col-md-4">
+                    <h4 class="text-capitalize">{{ 'fp.biggest_heroes'|trans }}</h4>
+                    {% set heroes = front_page_heroes() %}
+                    {% if heroes is empty %}
+                    <p>{{ 'fp.no_heroes_found'|trans }}</p>
+                    {% else %}
+                        <div class="bs-component">
+                            <ul class="list-group">
+                        {% for helper in heroes %}
+                                <li class="list-group-item">
+                                    <span class="badge alert-success">{{ helper.number }}</span>
+                                    {{ helper.helper }}
+                                </li>
+                        {% endfor %}
+                            </ul>
+                            <div class="btn btn-primary btn-xs" id="source-button" style="display: none;">&lt; &gt;</div></div>
+                    {% endif %}
                 </div>
 
-                <div class="col-sm-4">
-                    <h4 class="text-capitalize">trečias argumentas</h4>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow</p>
-                </div>
+                <br />
 
-<br />
-                <div class="col-sm-12">
 
-                {{ get_assistance_tags() }}
-</div>
+
 
             </div>
         </div>
     </div>
+</div>
+
 {% endblock %}

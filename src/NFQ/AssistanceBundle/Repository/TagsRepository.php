@@ -127,6 +127,7 @@ class TagsRepository extends NestedTreeRepository
                $qb->where('t.title LIKE :title')
                     ->setParameter('title', $tag . '%');
            }
+        //$qb->groupBy('t.id');
 
         return $qb->getQuery()->getArrayResult();
     }

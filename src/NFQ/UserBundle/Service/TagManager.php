@@ -297,7 +297,7 @@ class TagManager
                 $result[$process['id']] = $process['id'];
             }
             $response['status'] = 'success';
-            $response['tags'] = array_keys($result);
+            $response['tags'] = array_values($result);
         } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
@@ -373,7 +373,7 @@ class TagManager
      */
     private function remAppendix($word)
     {
-        $appendix = ['pa', 'nu', 'iš', 'su', 'vis'];
+        $appendix = ['pa', 'nu', 'iš', 'su', 'pri'];
         foreach ($appendix as $what) {
             if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }
@@ -381,7 +381,7 @@ class TagManager
     }
 
     private function removeWords($w){
-        $words = ['vis', 'man'];
+        $words = ['vis', 'man', 'aš', 'juo', 'jum'];
         foreach($words as $word){
             if(strpos($w, $word) === 0){
                 return true;

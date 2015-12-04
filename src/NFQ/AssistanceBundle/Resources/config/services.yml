@@ -3,9 +3,19 @@ services:
         class: NFQ\AssistanceBundle\Service\AssistanceManager
         arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
 
+    nfq_assistance.review_manager:
+        class: NFQ\AssistanceBundle\Service\ReviewManager
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
+
     nfq_assitance.twig.assistance_extension:
         class: NFQ\AssistanceBundle\Twig\AssitanceExtension
         arguments: ["@nfq_assistance.assistance_manager"]
+        tags:
+            - { name: twig.extension }
+
+    nfq_assitance.twig.review_extension:
+        class: NFQ\AssistanceBundle\Twig\ReviewExtension
+        arguments: ["@nfq_assistance.review_manager"]
         tags:
             - { name: twig.extension }
 
