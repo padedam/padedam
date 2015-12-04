@@ -102,6 +102,9 @@ var bindRemcat = function(){
                         var _data = e.choice;
                         createParentElement(e);
                     });
+                    showMessage('kompetencija pašalinta sėkmingai', 'success');
+                }else{
+                    showMessage(response.message, 'danger');
                 }
             },'json'
         );
@@ -170,6 +173,9 @@ function createParentElement (e){
                 });
                 //enable remove category button
                 bindRemcat();
+                showMessage('kompetencija pridėta sėkmingai', 'success');
+            }else{
+                showMessage(response.message, 'danger');
             }
         },'json'
     );
