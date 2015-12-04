@@ -13,7 +13,7 @@ var competences = function (element) {
                             element.val(JSON.stringify(response.tags));
                             callback(response.tags);
                         } else {
-                            // alert(response.message);
+                            //showMessage(response.message, 'info');
                         }
                     });
             }
@@ -21,7 +21,7 @@ var competences = function (element) {
         triggerChange: true,
         allowClear: true,
         quietMillis: 250,
-        minimumInputLength: 2,
+        minimumInputLength: 4,
         tags: true,
         tokenSeparators: [',', ';'],
         createSearchChoice: function (term) {
@@ -41,6 +41,7 @@ var competences = function (element) {
             },
             results: function (data, page) {
                 if(data.status == 'success') {
+                    //showMessage('išsaugota sėkmingai', 'success');
                     return {
                         results: data.tags
                     };
@@ -55,7 +56,13 @@ var competences = function (element) {
         $.post(
             taggable.data('rem'),
             {tag: e.choice},
-            function (response) {},
+            function (response) {
+                if(response.status === 'success'){
+                    showMessage('pašalinta sėkmingai', 'success');
+                }else{
+                    showMessage(response.message, 'danger');
+                }
+            },
             'json'
         );
 
@@ -66,7 +73,13 @@ var competences = function (element) {
         $.post(
             taggable.data('save'),
             {tag: e.choice, parent_id: taggable.data('parentid')},
-            function(response){},
+            function(response){
+                if(response.status === 'success'){
+                    showMessage('susieta sėkmingai', 'success');
+                }else{
+                    showMessage(response.message, 'danger');
+                }
+            },
             'json'
         );
     });
@@ -181,3 +194,22 @@ $(function(){
     bindRemcat();
 
 });
+
+
+function showMessage(message, type){
+        var remlink = $('<button/>', {
+            'class': 'close',
+            'data-dismiss': 'alert',
+            'type': 'button',
+            'text': 'x',
+        });
+        var message = $('<div/>',{
+            'text': message,
+            'class': 'alert alert-dismissible text-center alert-'+type,
+        });
+
+        $('.alert-dismissible').hide('slow', function(){$(this.remove())});
+        var obj = message.append(remlink);
+        $(document.body).prepend(obj.hide().slideDown( 300 ).delay( 3000 ).fadeOut( 400 , function(){$(obj.remove())}));
+
+}
