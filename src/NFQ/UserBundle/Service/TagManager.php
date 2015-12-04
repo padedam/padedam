@@ -206,7 +206,6 @@ class TagManager
             $parent_id = $this->getRequest()->get('parent_id', '');
 
             $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
-
             $parent = $tagRepo->findOneById($parent_id);
 
             $tags = $tagRepo->matchEnteredTags($tag, $parent);
@@ -327,7 +326,7 @@ class TagManager
     }
 
     private function suggestSpelling($word=''){
-        if( strlen($word) < 4 or $this->removeWords($w)){
+        if( strlen($word) < 4 or $this->removeWords($word)){
             return;
         }
         //check if not more than 1 word
