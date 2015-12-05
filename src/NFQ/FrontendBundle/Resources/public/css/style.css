@@ -26,3 +26,7 @@
 blockquote {
     font-size:13px;
 }
+.list-group-item{
+    height:50px;
+    line-height: 30px;
+}

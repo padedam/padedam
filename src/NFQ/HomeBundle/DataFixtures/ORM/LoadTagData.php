@@ -87,15 +87,21 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
                 'kriauklė'
             ]
         ];
+        $a = 3;
         $i = 3;
-        $randomTags = array_rand($tags, $i);
+        $randomTags_admin = array_rand($tags, $a);
+        $randomTags_info = array_rand($tags, $i);
 
         foreach($tags as $p=>$c){
             $parent = new Tags();
             $parent->setTitle($p);
 
-            if( in_array($p, $randomTags) ){
-                $this->addReference('tags'.$i, $parent);
+            if( in_array($p, $randomTags_admin) ){
+                $this->addReference('tags_admin'.$a, $parent);
+                $a--;
+            }
+            if( in_array($p, $randomTags_info) ){
+                $this->addReference('tags_info'.$i, $parent);
                 $i--;
             }
 

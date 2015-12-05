@@ -29,17 +29,32 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
     public function load(ObjectManager $manager)
     {
         $userManager = $this->container->get('fos_user.user_manager');
-        $user = $userManager->createUser();
-        $user->setUsername('admin@padedam.lt');
-        $user->setFirstName('Website admin');
-        $user->setEmail('admin@padedam.lt');
-        $user->setPlainPassword('pad3dam');
-        $user->setEnabled(true);
-        $user->setBirthday(new  \DateTime('1941-04-14'));
-        $user->setRoles(array('ROLE_ADMIN'));
-        $userManager->updateUser($user, true);
+        $admin = $userManager->createUser();
+        $admin->setUsername('admin@padedam.lt');
+        $admin->setFirstName('Admin');
+        $admin->setLastName('Website admin');
+        $admin->setEmail('admin@padedam.lt');
+        $admin->setPlainPassword('pad3dam');
+        $admin->setEnabled(true);
+        $admin->setBirthday(new  \DateTime('1941-04-14'));
+        $admin->setRoles(array('ROLE_ADMIN'));
+        $admin->setDescription('I am the admin user of padedam.lt website');
+        $userManager->updateUser($admin, true);
 
-        $this->addReference('user', $user);
+        $info = $userManager->createUser();
+        $info->setUsername('info@padedam.lt');
+        $info->setFirstName('Info');
+        $info->setLastName('Website info');
+        $info->setEmail('info@padedam.lt');
+        $info->setPlainPassword('pad3dam');
+        $info->setDescription('I am the info user of padedam.lt website');
+        $info->setEnabled(true);
+        $info->setBirthday(new  \DateTime('1945-04-14'));
+        $info->setRoles(array('ROLE_USER'));
+        $userManager->updateUser($info, true);
+
+        $this->addReference('admin', $admin);
+        $this->addReference('info', $info);
         //$this->getReference('sportas')
     }
 
