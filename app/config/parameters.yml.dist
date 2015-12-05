@@ -7,8 +7,6 @@ parameters:
     database_name:     symfony
     database_user:     root
     database_password: ~
-    elasticsearch.hosts:
-        - 'localhost:9200'
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
