@@ -19,7 +19,9 @@
         {{  render(controller('NFQUserBundle:Security:modal_login')) }}
     </header>
     <body>
-        {% block body %}{% endblock %}
+        {% include 'messages.html.twig' %}
+        {% block body %}
+        {% endblock %}
         {% block javascripts %}
 
             {% javascripts

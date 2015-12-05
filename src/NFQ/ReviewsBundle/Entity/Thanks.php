@@ -8,8 +8,8 @@ use NFQ\UserBundle\Entity\User;
 /**
  * Thanks
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="thanks")
+ * @ORM\Entity(repositoryClass="NFQ\ReviewsBundle\Repository\ThanksRepository")
  */
 class Thanks
 {
@@ -31,7 +31,7 @@ class Thanks
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="NFQ\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
      */
     private $helper;

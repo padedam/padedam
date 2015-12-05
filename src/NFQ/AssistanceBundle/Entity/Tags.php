@@ -5,6 +5,7 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -30,6 +31,7 @@ class Tags
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -402,5 +404,10 @@ class Tags
     public function getUsersWithTag()
     {
         return $this->usersWithTag;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }

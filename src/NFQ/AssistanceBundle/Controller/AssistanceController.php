@@ -4,16 +4,25 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
+use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
+use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
 use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\AssistanceBundle\Entity\Tag2User;
+use NFQ\ReviewsBundle\Entity\Review;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
@@ -22,44 +31,40 @@ class AssistanceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-
             $currentUser = $this->getUser();
             $assistanceRequest->setOwner($currentUser);
+            $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($assistanceRequest);
             $em->flush();
-
-            return $this->redirectToRoute('nfq_assistance_request_submitted');
+            $this->get('session')->getFlashBag()->add('success', 'assistance.successful_request');
+            return $this->redirectToRoute('nfq_assistance_request_list');
         }
 
         return $this->render('NFQAssistanceBundle:Assistance:requestForm.html.twig', array('form' => $form->createView()));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function requestSubmittedAction(){
         return $this->render('NFQAssistanceBundle:Assistance:requestSubmitted.html.twig');
     }
 
-    public function requestListAction(){
-
-        $assistance = $this->getDoctrine()->getRepository('NFQAssistanceBundle:AssistanceRequest')->findAll();
-
-        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig', array('assistance'=>$assistance));
-    }
-
-    public function requestCategoryAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function requestListAction()
     {
-
-        $htmlTree = $this->getAssistanceManager()->getCategoryTree();
-        return $this->render('NFQAssistanceBundle:Assistance:requestCategory.html.twig', array('tree'=>$htmlTree));
+        return $this->render('NFQAssistanceBundle:Assistance:requestList.html.twig');
     }
 
     /**
-     * @return \NFQ\AssistanceBundle\Service\AssistanceManager
+     * @return \NFQ\UserBundle\Service\TagManager
      */
-    private function getAssistanceManager()
-    {
-        return $this->container->get('nfq_assistance.assistance_manager');
+    private function getTagManager(){
+        return $this->container->get('nfq_user.tag_manager');
     }
 
     /**
@@ -67,9 +72,16 @@ class AssistanceController extends Controller
      */
     public function matchTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->findTag();
+        $response = $this->getTagManager()->findTag();
         return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function suggestTagAction()
+    {
+        return new JsonResponse($this->getTagManager()->suggestTag());
     }
 
     /**
@@ -77,8 +89,7 @@ class AssistanceController extends Controller
      */
     public function saveTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->saveTag($this->getUser());
+        $response = $this->getTagManager()->saveTag();
         return new JsonResponse($response);
     }
 
@@ -88,8 +99,7 @@ class AssistanceController extends Controller
      */
     public function removeTagsAction()
     {
-        $container = $this->container->get('nfq_user.tag_manager');
-        $response = $container->removeTag();
+        $response = $this->getTagManager()->removeTag();
         return new JsonResponse($response);
     }
 
@@ -98,15 +108,106 @@ class AssistanceController extends Controller
      */
     public function myTagsAction()
     {
-        $tagService = $this->container->get('nfq_user.tag_manager');
-        return new JsonResponse($tagService->getMyChildTags($this->getUser()));
+        return new JsonResponse($this->getTagManager()->getMyChildTags($this->getUser()));
     }
 
-
-    public function getParentTagsAction()
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
+    public function notDoneAction(Request $request, $arid)
     {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
+        if($assistanceRequest->getOwner()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('danger', 'assistance_not_done');
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
 
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
+    public function helpAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getOwner()==$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);
+        $assistanceRequest->setHelper($currentUser);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'assistance_registered');
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
+    public function helperCancelAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getHelper()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_WAITING);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('info', 'assistance_helper_cancel');
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $arid
+     * @return RedirectResponse
+     */
+    public function cancelAction(Request $request, $arid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->getUser();
+        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+
+        if($assistanceRequest->getOwner()!=$currentUser){
+            throw new Exception('problems');
+        }
+
+        $assistanceRequest->setStatus(AssistanceRequest::STATUS_CANCELED);
+        $assistanceRequest->setHelper(null);
+
+        $em->persist($assistanceRequest);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('danger', 'assistance_canceled');
+        return new RedirectResponse($request->server->get('HTTP_REFERER'));
+    }
 }

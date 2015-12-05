@@ -12,33 +12,31 @@
 
         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span class="sr-only">(current)</span></a></li>
-                <li><a href="{{ path('fos_user_profile_show') }}">{{ 'generic.profile'|trans }}</a></li>
-                <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
+
+                {% if app.user %}
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'generic.profile'|trans }} <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="{{ path('fos_user_profile_show') }}">{{ 'profile.view'|trans }}</a></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'profile.edit'|trans }}</a></li>
+                    </ul>
+
+                </li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'menu.help'|trans }} <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
                         <li><a href="{{ path('nfq_assistance_request_list') }}">{{ 'menu.req_list'|trans }}</a></li>
-                        <li><a href="{{ path('nfq_assistance_request_category') }}">{{ 'menu.req_cat'|trans }}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{ path('nfq_reviews_homepage') }}">Assistance review</a></li>
                         <li class="divider"></li>
                         <li><a href="#">One more separated link</a></li>
                     </ul>
                 </li>
+                {% endif %}
             </ul>
-            {#}
-            <form role="search" class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" placeholder="Search" class="form-control">
-                </div>
-                <button class="btn btn-default" type="submit">{{ 'generic.submit'|trans }}</button>
-            </form>
-            {#}
-            {% if not app.user %}
+                {% if not app.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
+                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span class="sr-only">(current)</span></a></li>
             </ul>
             {% else %}
                 <ul class="nav navbar-nav navbar-right">

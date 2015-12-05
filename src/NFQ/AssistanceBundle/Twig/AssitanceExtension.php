@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: renaldas
- * Date: 15.11.6
- * Time: 11.05
- */
 
 namespace NFQ\AssistanceBundle\Twig;
 
@@ -30,19 +24,67 @@ class AssitanceExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction(
-                'get_assistance_categories',
-                [$this, 'getAssistanceCategories'],
-                ['is_safe' => ['html']]
+                'get_my_requests',
+                [$this, 'getMyRequests']
+            ),
+            new \Twig_SimpleFunction(
+                'get_requests_for_me',
+                [$this, 'getRequestsForMe']
+            ),
+            new \Twig_SimpleFunction(
+                'get_my_taken_requests',
+                [$this, 'getMyTakenRequests']
+            ),
+            new \Twig_SimpleFunction(
+                'get_review_list',
+                [$this, 'getReviewList']
+            ),
+            new \Twig_SimpleFunction(
+                'front_page_reviews',
+                [$this, 'getReviewsFrontPage']
+            ),
+            new \Twig_SimpleFunction(
+                'front_page_requests',
+                [$this, 'getRequestsFrontPage']
             )
         ];
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getAssistanceCategories()
+    public function getMyRequests()
     {
-        return $this->manager->getCategoryTree();
+        return $this->manager->getMyRequests();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getRequestsForMe()
+    {
+        return $this->manager->getRequestsForMe();
+    }
+
+    /**
+     * @return array
+     */
+    public function getReviewList()
+    {
+        return $this->manager->getReviewList();
+    }
+    /**
+     * @return array
+     */
+    public function getMyTakenRequests()
+    {
+        return $this->manager->getMyTakenRequests();
+    }
+
+    public function getRequestsFrontPage()
+    {
+        return $this->manager->getRequestsFrontPage();
     }
 
     /**

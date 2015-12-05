@@ -1,5 +1,5 @@
-nfq_reviews_homepage:
-    path:     /createReview
+nfq_review_create:
+    path:     /createReview/{arid}
     defaults: { _controller: NFQReviewsBundle:Review:createReview }
 
 nfq_reviews_review_submitted:

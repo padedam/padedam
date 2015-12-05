@@ -2,6 +2,8 @@
 
 namespace NFQ\HomeBundle\Controller;
 
+use Chencha\Pspell\Config;
+use Chencha\Pspell\Pspell;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
@@ -14,6 +16,7 @@ class HomeController extends Controller
     }
     public function homeAction()
     {
+
         return $this->render('NFQHomeBundle:Home:home.html.twig', [
             'lastUsers' => $this->getUserManager()->getLastUsers(),
         ]);
