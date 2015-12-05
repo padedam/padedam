@@ -55,7 +55,7 @@ class ReviewManager
     public function getReviewList()
     {
         $currentUser  = $this->getUser();
-        $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
+        $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($currentUser);
 
         if (!$thank) {
             $result = ['number' => 0, 'reviews' => []];
@@ -72,6 +72,18 @@ class ReviewManager
     {
         $reviewRepository = $this->em->getRepository('NFQReviewsBundle:Thanks');
         return $reviewRepository->getTopHelpers();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getUser()
+    {
+        if ( !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') ) {
+            throw new AccessDeniedException();
+        }else {
+            return $this->tokenStorage->getToken()->getUser();
+        }
     }
     
     
