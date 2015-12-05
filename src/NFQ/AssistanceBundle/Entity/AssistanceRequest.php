@@ -74,7 +74,7 @@ class AssistanceRequest
      * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
      */
-    private $helper=NULL;
+    private $helper;
 
     /**
      * @var Tags

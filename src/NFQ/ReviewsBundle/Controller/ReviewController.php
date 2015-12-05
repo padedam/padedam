@@ -9,7 +9,6 @@ use NFQ\ReviewsBundle\Form\ReviewType;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +26,7 @@ class ReviewController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
+        $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($currentUser);
 
         if (!$thank) {
             return $this->render('NFQReviewsBundle:Review:reviewsProfile.html.twig', ['number' => 0, 'reviews' => null]);
@@ -78,12 +77,12 @@ class ReviewController extends Controller
             $review->setDate(new \DateTime('now'));
 
             $assistanceRequest->setStatus(AssistanceRequest::STATUS_DONE);
-            $em->persist($assistanceRequest);;
+            $em->persist($assistanceRequest);
 
             if ($form->get('thank')->getData()) {
-                $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByHelper($currentUser);
+                $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($assistanceRequest->getHelper());
 
-                if (!$thank) {
+                if ($thank==null) {
                     $thank = new Thanks();
                     $thank->setHelper($assistanceRequest->getHelper());
                 }
