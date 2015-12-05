@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
+{% form_theme form _self %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+    <span>{{ attr['data-help']|trans }} </span>
+{%- endblock textarea_widget %}
+
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
@@ -9,6 +17,9 @@
     {% endstylesheets %}
 
 {% endblock %}
+
+
+
 {% block body %}
 {% include "NFQUserBundle:Profile:edit_content.html.twig" %}
 {% endblock body %}

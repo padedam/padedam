@@ -1,71 +1,111 @@
 <div class="col-md-6 col-md-offset-3">
 
-    <div class="well bs-component">
-        <legend>Pagalbos prašymo forma</legend>
-        <fieldset>
-            <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST"
-                  class="fos_user_profile_edit form-horizontal">
-                {{ form_widget(form) }}
+    <ul class="nav nav-tabs">
+        <li class="{% if app.request.get('job') == "profile" %}active{% endif %}"><a href="#profile" data-toggle="tab">{{ 'user.edit_profile'|trans }}</a></li>
+        <li class="{% if app.request.get('job') == "competence" %}active{% endif %}"><a href="#competence" data-toggle="tab">{{ 'profile.competence'|trans }}</a></li>
+    </ul>
 
-                <div class="form-group">
-                    <span class="col-sm-2 control-label required">{{ 'assistance.field'|trans }}</span>
-
-                    <div class="col-sm-10">
-                        {% if (tags.root is defined) and (tags.root is iterable) %}
-                            <select id="new_competence"
-                                    class="select2-choices"
-                                    data-save="{{ url('nfq_assistance_save_tags') }}"
-                                    data-current="{{ url('nfq_assistance_selected_tags') }}"
-                                    data-rem="{{ url('nfq_assistance_remove_tags') }}"
-                                    data-match="{{ url('nfq_assistance_match_tags') }}"
-                            >
-                                <option value="0">{{ 'assistance.select_parent'|trans }}</option>
-                                {% for tag in tags.root %}
-                                    <option value="{{ tag.id }}">{{ tag.title }}</option>
-                                {% endfor %}
-                            </select>
-                        {% endif %}
-                    </div>
-                </div>
-
-
-                <div id="wrapper">
-                    {% for tag in tags.my %}
-                        {% set key = tag.title %}
-                        {% set id = tag.id %}
-
-                        <div class="form-group">
-                            <span class="col-sm-2 control-label required">{{ key|title }}</span>
-
-                            <div class="col-sm-9">
-                                    <input id="child_{{ id }}" class="form-control form-select" name="optionvalue"
-                                           type="hidden"
-                                           data-save="{{ url('nfq_assistance_save_tags') }}"
-                                           data-current="{{ url('nfq_assistance_selected_tags') }}"
-                                           data-rem="{{ url('nfq_assistance_remove_tags') }}"
-                                           data-match="{{ url('nfq_assistance_match_tags') }}"
-                                           data-parentid="{{ id }}"/>
-
-                            </div>
-                            <div class="col-sm-1">
-                                <a class="rem-cat"
-                                   data-id="{{ id }}"
-                                   data-text="{{ key }}"
-                                   data-rem="{{ url('nfq_assistance_remove_tags') }}"
-                                   href="#">{{ 'generic.remove'|trans }}</a>
-                            </div>
-                        </div>
-
-                    {% endfor %}
-                </div>
-
-                <div class="form-group">
+    <div id="myTabContent" class="tab-content well bs-component">
+            <div class="tab-pane {% if app.request.get('job') == "profile" %}active{% endif %}" id="profile">
+            <legend>{{ 'user.edit_profile'|trans }}</legend>
+            <fieldset>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
                     <input type="submit" class="" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
+                {{ form_end(form) }}
+{#                <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit form-horizontal">
+                {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'generic.email'|trans }}) }}
+                   {{ form_row(form.first_name, {'attr': {'class': 'form-control', 'placeholder': 'user.name'|trans }}) }}
+                   {{ form_row(form.last_name, {'attr': {'class': 'form-control', 'placeholder': 'user.surname'|trans }}) }}
+                   {{ form_row(form.phone, {'attr': {'class': 'form-control', 'placeholder': 'user.label.phone'|trans }}) }}
+                   {{ form_row(form.birthday, {'attr': {'class': 'form-control', 'placeholder': 'user.birth_year'|trans }}) }}
+                   {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+
+                   <div class="form-group">
+                       <input type="submit" class="" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
+                   </div>
+               </form>#}
+            </fieldset>
+        </div>
+
+        <div class="tab-pane {% if app.request.get('job') == "competence" %}active{% endif %}" id="competence">
+            <legend>{{ 'profile.competence'|trans }}</legend>
+            <div class="alert alert-warning">
+                <h4>{{ 'assistance.atention'|trans }}!</h4>
+                <p>{{ 'assistance.choose_tags'|trans }}.</p>
+            </div>
+            <div class="form-group">
+                <span class="col-sm-2 control-label required">{{ 'assistance.field'|trans }}</span>
+
+                <div class="col-sm-10">
+                    {% if (tags.root is defined) and (tags.root is iterable) %}
+                        <select id="new_competence"
+                                class="select2-choices"
+                                data-save="{{ url('nfq_assistance_save_tags') }}"
+                                data-current="{{ url('nfq_assistance_selected_tags') }}"
+                                data-rem="{{ url('nfq_assistance_remove_tags') }}"
+                                data-match="{{ url('nfq_assistance_match_tags') }}"
+                        >
+                            <option value="0">{{ 'assistance.select_parent'|trans }}</option>
+                            {% for tag in tags.root %}
+                                <option value="{{ tag.id }}">{{ tag.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
                 </div>
-            </form>
-        </fieldset>
+            </div>
+
+
+            <div id="wrapper" class="form-horizontal">
+                {% for tag in tags.my %}
+                    {% set key = tag.title %}
+                    {% set id = tag.id %}
+
+                    <div class="form-group">
+                        <span class="col-sm-2 control-label required">{{ key|title }}</span>
+
+                        <div class="col-sm-9">
+                                <input id="child_{{ id }}" class="form-control form-select" name="optionvalue"
+                                       type="hidden"
+                                       data-save="{{ url('nfq_assistance_save_tags') }}"
+                                       data-current="{{ url('nfq_assistance_selected_tags') }}"
+                                       data-rem="{{ url('nfq_assistance_remove_tags') }}"
+                                       data-match="{{ url('nfq_assistance_match_tags') }}"
+                                       data-parentid="{{ id }}"/>
+
+                        </div>
+                        <div class="col-sm-1">
+                            <a class="rem-cat"
+                               data-id="{{ id }}"
+                               data-text="{{ key }}"
+                               data-rem="{{ url('nfq_assistance_remove_tags') }}"
+                               href="#">{{ 'generic.remove'|trans }}</a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
     </div>
 
 </div>
 
 
+
+
+{#
+<ul class="nav nav-tabs">
+    <li class=""><a aria-expanded="false" href="#home" data-toggle="tab">Home</a></li>
+    <li class="active"><a aria-expanded="true" href="#profile" data-toggle="tab">Profile</a></li>
+</ul>
+
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade" id="home">
+        <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+    </div>
+    <div class="tab-pane fade active in" id="profile">
+        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+    </div>
+</div>#}

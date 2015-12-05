@@ -76,6 +76,7 @@ profile.thanks_number: Padėkų skaičius
 profile.reviews: Atsiliepimai
 profile.view: Peržiūrėti profilio informaciją
 profile.edit: Redaguoti profilio informaciją
+profile.competence: Mano kompetencijos
 review.successful_review: Ačiū už atsiliepimą
 generic.write_review: Atsiliepimas
 generic.write_review_form: Atsiliepimo forma
@@ -97,6 +98,8 @@ assistance_canceled: Pagalbos prašymas atšauktas
 assistance_helper_cancel: Pagalbos teikimas atšauktas
 assistance_registered: Pagalbos teikimas registruotas
 assistance_not_done: Jūsų pagalbos prašymas atnaujintas
+assistance.atention: Dėmesio
+assistance.choose_tags: Pasirinkite bent vieną sritį, kurioje teiksite pagalbą kitiems registruoriems puslapio vartotojams
 #user
 user.details: Mano informacija
 user.edit_profile: Redaguoti profilį
@@ -109,3 +112,6 @@ fp.no_requests_found: Laukiančių užklausų šiuo metu nėra
 fp.no_heroes_found: Kol kas vartotojai padėkų neturi
 
 registration.flash.user_created: Registracija sėkminga
+
+#fosuser
+profile.flash.updated: Jūsų informacija atnaujinta

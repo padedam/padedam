@@ -141,7 +141,7 @@ function createParentElement (e){
                 });
 
                 var label = $( '<label>', {
-                    'class': 'col-sm-2 control-label required',
+                    'class': 'col-sm-2 control-label required text-capitalize',
                     'text': seltext
                 });
                 var col9 = $( '<div/>', {
