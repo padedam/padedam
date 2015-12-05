@@ -3,6 +3,7 @@
 namespace NFQ\ReviewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use NFQ\UserBundle\Entity\User;
 use \DateTime;
 
@@ -57,6 +58,14 @@ class Review
      * @ORM\Column(name="date", type="date")
      */
     private $date;
+
+    /**
+     * @var AssistanceRequest
+     *
+     * @ORM\OneToOne(targetEntity="NFQ\AssistanceBundle\Entity\AssistanceRequest")
+     * @ORM\JoinColumn(name="assistance_request_id", referencedColumnName="id")
+     */
+    private $assistanceRequest;
 
     /**
      * Get id
@@ -160,5 +169,21 @@ class Review
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return AssistanceRequest
+     */
+    public function getAssistanceRequest()
+    {
+        return $this->assistanceRequest;
+    }
+
+    /**
+     * @param AssistanceRequest $assistanceRequest
+     */
+    public function setAssistanceRequest($assistanceRequest)
+    {
+        $this->assistanceRequest = $assistanceRequest;
     }
 }

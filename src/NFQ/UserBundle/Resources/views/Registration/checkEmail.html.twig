@@ -1,5 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+<div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default bs-component">
+        <div class="panel-body">
+            <p class="text-center">{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+        </div>
+    </div>
+</div>
 {% endblock body %}

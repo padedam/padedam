@@ -1,5 +1,5 @@
 <style>
-    .select2-choices, .form-select {
+    .select2-choice, .form-select, #s2id_new_competence, .select2-chosen-3 {
         width: 100%;
         height: 35px;
     }
@@ -10,10 +10,12 @@
         font-weight: 300;
         font-family: Arial, sans-serif;
     }
-    #new_competence{
-        width: 200px;
+    .alert-dismissible{
+        position: fixed;
+        height:60px;
+        width:100%;
+        z-index: 999;
     }
-
 </style>
 <div class="col-md-6 col-md-offset-3">
 
@@ -24,13 +26,13 @@
                   class="fos_user_profile_edit form-horizontal">
                 {{ form_widget(form) }}
 
-
                 <div class="form-group">
                     <span class="col-sm-2 control-label required">{{ 'assistance.field'|trans }}</span>
 
                     <div class="col-sm-10">
                         {% if (tags.root is defined) and (tags.root is iterable) %}
                             <select id="new_competence"
+                                    class="select2-choices"
                                     data-save="{{ url('nfq_assistance_save_tags') }}"
                                     data-current="{{ url('nfq_assistance_selected_tags') }}"
                                     data-rem="{{ url('nfq_assistance_remove_tags') }}"
@@ -50,23 +52,11 @@
                     {% for tag in tags.my %}
                         {% set key = tag.title %}
                         {% set id = tag.id %}
-                        {#    <div class="form-group">
-                                <div class="col-sm-10">
-                                <select disabled id="parent_{{ id }}" class="form-select form-control">
-                                    <option value="{{ id }}">{{ key }}</option>
-                                </select>
-                            </div>
-                        </div> #}
 
                         <div class="form-group">
                             <span class="col-sm-2 control-label required">{{ key|title }}</span>
 
                             <div class="col-sm-9">
-                                    {#                     <select multiple class="form-control form-select" id="child_{{ id }}" >
-                                                               {% for k, v in tag[key] %}
-                                                               <option value="{{ k }}">{{ v }}</option>
-                                                               {% endfor %}
-                                                           </select>    #}
                                     <input id="child_{{ id }}" class="form-control form-select" name="optionvalue"
                                            type="hidden"
                                            data-save="{{ url('nfq_assistance_save_tags') }}"

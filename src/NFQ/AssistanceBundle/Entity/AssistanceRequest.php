@@ -5,15 +5,21 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use NFQ\AssistanceBundle\Entity\Tags;
 
 /**
  * AssistanceRequest
  *
  * @ORM\Table(name="assistance_request")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Repository\AssistanceRequestRepository")
  */
 class AssistanceRequest
 {
+    const STATUS_WAITING = 'WAITING';
+    const STATUS_TAKEN = 'TAKEN';
+    const STATUS_DONE = 'DONE';
+    const STATUS_CANCELED = 'CANCELED';
+
     /**
      * @var integer
      *
@@ -52,9 +58,30 @@ class AssistanceRequest
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
     private $owner;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", columnDefinition="enum('WAITING', 'TAKEN', 'DONE', 'CANCELED')")
+     */
+    private $status;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="NFQ\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="helper_id", referencedColumnName="id")
+     */
+    private $helper;
+
+    /**
+     * @var Tags
+     * @ORM\ManyToMany(targetEntity="NFQ\AssistanceBundle\Entity\Tags")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     */
+    private $tags;
 
 
     /**
@@ -151,5 +178,80 @@ class AssistanceRequest
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return User
+     */
+    public function getHelper()
+    {
+        return $this->helper;
+    }
+
+    /**
+     * @param User $helper
+     */
+    public function setHelper($helper)
+    {
+        $this->helper = $helper;
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \NFQ\AssistanceBundle\Entity\Tags $tag
+     *
+     * @return AssistanceRequest
+     */
+    public function addTag(\NFQ\AssistanceBundle\Entity\Tags $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \NFQ\AssistanceBundle\Entity\Tags $tag
+     */
+    public function removeTag(\NFQ\AssistanceBundle\Entity\Tags $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
