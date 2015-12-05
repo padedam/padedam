@@ -4,12 +4,6 @@ namespace NFQ\AssistanceBundle\Controller;
 
 use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
-use ONGR\ElasticsearchBundle\DSL\Query\MatchAllQuery;
-use ONGR\ElasticsearchBundle\DSL\Suggester\Term;
-use NFQ\AssistanceBundle\Entity\Tags;
-use NFQ\AssistanceBundle\Entity\Tag2User;
-use NFQ\ReviewsBundle\Entity\Review;
-use NFQ\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;

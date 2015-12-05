@@ -16,7 +16,7 @@ class ReviewType extends AbstractType
     {
         $builder
             ->add('thank', 'checkbox', ['required' => false, 'label' => 'review.checkbox_label'])
-            ->add('reviewMessage', 'textarea', ['label' => 'review.message_label'])
+            ->add('reviewMessage', 'textarea', ['required' => false, 'label' => 'review.message_label'])
             ->add('save', 'submit', array('label' => 'review.submit_button', 'translation_domain' => 'messages'));
     }
 
