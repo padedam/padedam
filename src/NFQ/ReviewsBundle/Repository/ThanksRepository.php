@@ -4,6 +4,7 @@
 namespace NFQ\ReviewsBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use NFQ\UserBundle\Entity\User;
 
 /**
  * Class ThanksRepository
@@ -24,6 +25,19 @@ class ThanksRepository extends EntityRepository
             ->orderBy('t.number', 'DESC');
 
         return $qb->getQuery()->setMaxResults(5)->getResult();
+    }
+
+    public function findOneByUser(User $user){
+        $result = $this->createQueryBuilder('t')
+            ->leftJoin('t.helper','h')
+            ->where('h.id='.$user->getId())
+            ->getQuery()
+            ->getResult();
+
+        if(count($result)<1){
+            return null;
+        }
+        return $result[0];
     }
 
 }
