@@ -42,6 +42,7 @@
             {% else %}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path("fos_user_security_logout") }}">{{ 'generic.logout'|trans }}</a></li>
+                    <li><a href="{{ path("fos_user_profile_show") }}">{{ app.user.firstName }}</a></li>
                 </ul>
             {% endif %}
 

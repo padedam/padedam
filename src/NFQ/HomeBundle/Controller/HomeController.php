@@ -16,7 +16,9 @@ class HomeController extends Controller
     }
     public function homeAction()
     {
-
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('nfq_assistance_request_list');
+        }
         return $this->render('NFQHomeBundle:Home:home.html.twig', [
             'lastUsers' => $this->getUserManager()->getLastUsers(),
         ]);
