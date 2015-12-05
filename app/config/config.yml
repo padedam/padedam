@@ -99,7 +99,7 @@ fos_user:
     user_class: NFQ\UserBundle\Entity\User
     registration:
             confirmation:
-                enabled: true
+                enabled: false
             form:
                 type: nfq_user_registration
                 validation_groups: [NFQRegistration]
