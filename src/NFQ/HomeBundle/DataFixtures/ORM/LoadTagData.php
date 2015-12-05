@@ -22,7 +22,6 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
                 'cementas',
                 'mūras',
                 'plytos',
-                'blokai',
                 'namas',
                 'remontas'
             ],

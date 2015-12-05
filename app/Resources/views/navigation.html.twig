@@ -22,15 +22,16 @@
                     </ul>
 
                 </li>
-                <li class="dropdown">
+                <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
+                <li><a href="{{ path('nfq_assistance_request_list') }}">{{ 'menu.req_list'|trans }}</a></li>
+{#                <li class="dropdown">
                     <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'menu.help'|trans }} <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
-                        <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
-                        <li><a href="{{ path('nfq_assistance_request_list') }}">{{ 'menu.req_list'|trans }}</a></li>
+
                         <li class="divider"></li>
                         <li><a href="#">One more separated link</a></li>
                     </ul>
-                </li>
+                </li>#}
                 {% endif %}
             </ul>
                 {% if not app.user %}

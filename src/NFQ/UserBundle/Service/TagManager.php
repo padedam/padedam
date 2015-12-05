@@ -285,9 +285,10 @@ class TagManager
         $response = [];
         try {
             $tags = $this->suggestWordstart($this->getRequest()->get('tag', null));
-            if (!isset($tags)) {
-                throw new \Exception('no tag sent');
+            if ( empty($tags) ) {
+                throw new \Exception('no tags');
             }
+//            print_r($tags); exit;
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
             $foundTag = $tagsRepo->suggestTag($tags);
             $result = [];
@@ -355,14 +356,19 @@ class TagManager
         $pspell_link = pspell_new("lt", null, null, "utf-8");
         $results = [];
         foreach($words as $w){
-            if( strlen(trim($w)) < 4 or $this->removeWords($w)){
+            $w = trim($w);
+            if( strlen($w) < 4 or $this->removeWords($w)){
                 continue;
             }
             $suggestions = pspell_suggest($pspell_link, $w);
             $first_suggested = mb_strtolower(reset($suggestions));
             $item = $this->remAppendix($first_suggested);
             $result = mb_substr($item, 0, mb_strlen($w)/2);
-            $results[] = $result;
+            if( strlen($result) > 3 ) {
+                $results[] = $result;
+            }else{
+                $results[] = $first_suggested;
+            }
         }
         return $results;
     }
@@ -372,7 +378,7 @@ class TagManager
      */
     private function remAppendix($word)
     {
-        $appendix = ['pa', 'nu', 'iš', 'su', 'pri'];
+        $appendix = ['pa', 'nu', 'iš', 'su', 'pri', 'ne'];
         foreach ($appendix as $what) {
             if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }
@@ -380,7 +386,7 @@ class TagManager
     }
 
     private function removeWords($w){
-        $words = ['vis', 'man', 'aš', 'juo', 'jum'];
+        $words = ['vis', 'man', 'aš', 'juo', 'jum', 'kaip', 'mok'];
         foreach($words as $word){
             if(strpos($w, $word) === 0){
                 return true;

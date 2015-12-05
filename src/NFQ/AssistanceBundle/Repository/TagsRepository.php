@@ -112,6 +112,9 @@ class TagsRepository extends NestedTreeRepository
      */
     public function suggestTag($tag)
     {
+        if( ! $tag ){
+            return false;
+        }
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t, p')
             ->from('NFQAssistanceBundle:Tags', 't')
