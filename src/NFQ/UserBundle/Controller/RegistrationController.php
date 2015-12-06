@@ -16,7 +16,6 @@ class RegistrationController extends BaseController{
 
     public function confirmedAction()
     {
-        $response = new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit', ['job'=> 'profile']));
-        return $response;
+        return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit', ['job' => 'competence']));
     }
 }
