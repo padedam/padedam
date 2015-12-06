@@ -199,19 +199,26 @@ class TagManager
     {
         $response = [];
         try {
-            $tag = $this->suggestSpelling($this->getRequest()->get('tag', ''));
-            if (!isset($tag)) {
-                throw new \Exception('no tag sent');
-            }
+            $param = $this->getRequest()->get('tag', '');
             $parent_id = $this->getRequest()->get('parent_id', '');
+            if( mb_strlen($param) < 4 or !$parent_id ){
+                return;
+            }
+            $tag = $this->suggestSpelling($param);
 
             $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
             $parent = $tagRepo->findOneById($parent_id);
 
-            $tags = $tagRepo->matchEnteredTags($tag, $parent);
+
+
+            $tags = [['id'=>$param, 'text'=>$param.' (Sukurti)']];
+            if($tag and $tag != $param) {
+                $tags[] = ['id'=>$tag, 'text'=>$tag.' (Sukurti)'];
+            }
+            $fetched = $tagRepo->matchEnteredTags([$tag, $param], $parent);
 
             $response ['status'] = 'success';
-            $response['tags'] = $tags;
+            $response['tags'] = array_merge($tags, $fetched);
         } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
@@ -288,7 +295,6 @@ class TagManager
             if ( empty($tags) ) {
                 throw new \Exception('no tags');
             }
-//            print_r($tags); exit;
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
             $foundTag = $tagsRepo->suggestTag($tags);
             $result = [];
@@ -326,8 +332,12 @@ class TagManager
         return $this->requestStack->getCurrentRequest();
     }
 
+    /**
+     * @param string $word
+     * @return string|void
+     */
     private function suggestSpelling($word=''){
-        if( strlen($word) < 4 or $this->removeWords($word)){
+        if( mb_strlen($word) < 4 or $this->removeWords($word)){
             return;
         }
         //check if not more than 1 word
@@ -353,21 +363,23 @@ class TagManager
 
         //check if not more than 1 word
         $words = explode(' ', $word);
-        $pspell_link = pspell_new("lt", null, null, "utf-8");
         $results = [];
         foreach($words as $w){
-            $w = trim($w);
-            if( strlen($w) < 4 or $this->removeWords($w)){
+            $w = $this->remAppendix(trim($w));
+            if( mb_strlen($w) < 4 or $this->removeWords($w)){
                 continue;
             }
-            $suggestions = pspell_suggest($pspell_link, $w);
+            $suggestions = $this->pspell_suggest($w);
             $first_suggested = mb_strtolower(reset($suggestions));
-            $item = $this->remAppendix($first_suggested);
-            $result = mb_substr($item, 0, mb_strlen($w)/2);
-            if( strlen($result) > 3 ) {
+            $result = mb_substr($first_suggested, 0, mb_strlen($w)/2);
+            if( mb_strlen($result) > 3 and !in_array($result, $results) ) {
                 $results[] = $result;
-            }else{
+            }elseif(!in_array($first_suggested, $results)){
                 $results[] = $first_suggested;
+            }
+            $myentry = mb_substr($w, 0, mb_strlen($w)/2);
+            if(!in_array($myentry, $results)){
+                $results[] = $myentry;
             }
         }
         return $results;
@@ -378,7 +390,7 @@ class TagManager
      */
     private function remAppendix($word)
     {
-        $appendix = ['pa', 'nu', 'iš', 'su', 'pri', 'ne'];
+        $appendix = ['pa', 'pra', 'pri', 'nu', 'iš', 'is', 'su', 'pri', 'ne'];
         foreach ($appendix as $what) {
             if (($pos = mb_strpos($word, $what)) === 0) return mb_substr($word, 2);
         }
@@ -386,13 +398,23 @@ class TagManager
     }
 
     private function removeWords($w){
-        $words = ['vis', 'man', 'aš', 'juo', 'jum', 'kaip', 'mok'];
+        $words = ['vis', 'man', 'aš', 'juo', 'jum', 'kaip', 'mok', 'ir'];
         foreach($words as $word){
             if(strpos($w, $word) === 0){
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @param $tag
+     * @return array
+     */
+    private function pspell_suggest($tag)
+    {
+        $pspell_link = pspell_new("lt", null, null, "utf-8");
+        return pspell_suggest($pspell_link, $tag);
     }
 
 }

@@ -23,13 +23,13 @@ var competences = function (element) {
         quietMillis: 250,
         minimumInputLength: 4,
         tags: true,
-        tokenSeparators: [',', ';'],
+        /*tokenSeparators: [',', ';'],
         createSearchChoice: function (term) {
             return {
                 id: $.trim(term),
                 text: $.trim(term) + ' (Naujas)'
             };
-        },
+        },*/
         ajax: {
             url: taggable.data('match'),
             dataType: 'json',
