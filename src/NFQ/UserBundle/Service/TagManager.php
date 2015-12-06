@@ -378,8 +378,10 @@ class TagManager
                 $results[] = $first_suggested;
             }
             $myentry = mb_substr($w, 0, mb_strlen($w)/2);
-            if(!in_array($myentry, $results)){
+            if(!in_array($myentry, $results) and strlen($myentry) > 3){
                 $results[] = $myentry;
+            }elseif(!in_array($myentry, $results) and strlen($myentry) < 4){
+                $results[] = $w;
             }
         }
         return $results;
