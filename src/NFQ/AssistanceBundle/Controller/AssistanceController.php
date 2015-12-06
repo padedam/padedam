@@ -127,6 +127,7 @@ class AssistanceController extends Controller
         $em->persist($assistanceRequest);
         $em->flush();
         $this->get('session')->getFlashBag()->add('danger', 'assistance_not_done');
+
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
 
@@ -140,11 +141,17 @@ class AssistanceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $currentUser = $this->getUser();
-        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
+        $repo = $em->getRepository('NFQAssistanceBundle:AssistanceRequest');
+        $assistanceRequest = $repo->find($arid);
 
         if($assistanceRequest->getOwner()==$currentUser ||
             $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
             throw new Exception('problems');
+        }
+
+        if(count($repo->getMyTakenRequests($this->getUser()))==3){
+            $this->get('session')->getFlashBag()->add('danger', 'assistance_not_registered');
+            return new RedirectResponse($request->server->get('HTTP_REFERER'));
         }
 
         $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);

@@ -98,6 +98,7 @@ assistance_helper_cancel: Pagalbos teikimas atšauktas
 assistance_registered: Pagalbos teikimas registruotas
 assistance_not_done: Jūsų pagalbos prašymas atnaujintas
 review_added: Jūsų atsiliepimas išsiųstas
+assistance_not_registered: Atsiprašome, bet vienu metu jūs galite padėti tik trims žmonėms
 #user
 user.details: Mano informacija
 user.edit_profile: Redaguoti profilį
