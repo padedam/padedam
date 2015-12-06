@@ -9,6 +9,14 @@
     </div>
 {% endfor %}
 
+{% if error is defined and error != "" %}
+    <div class="bs-component">
+        <div class="alert alert-dismissible alert-danger text-center">
+            <button data-dismiss="alert" class="close" type="button">×</button>
+                {{ error|trans({}, 'messages') }}
+        </div>
+    </div>
+{% endif %}
 
 {# available alert types:
 danger      red color

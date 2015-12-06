@@ -115,3 +115,5 @@ registration.flash.user_created: Registracija sėkminga
 
 #fosuser
 profile.flash.updated: Jūsų informacija atnaujinta
+"Bad credentials.": Neteisingi prisijungimo duomenys
+user.remind_pass: Slaptažodžio priminimas
