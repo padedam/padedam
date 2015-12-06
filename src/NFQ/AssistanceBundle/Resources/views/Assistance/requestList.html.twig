@@ -127,13 +127,19 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+    {% set takenRequests = get_my_taken_requests() %}
     {% set my_requests = get_my_requests() %}
     {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
-        <div class="page-header col-md-10 col-md-offset-1">
+        {% if takenRequests.status == 'success' and takenRequests.data|length > 0 %}
+            <div class="col-md-6">
+        {% else %}
+            <div class="col-md-10 col-md-offset-1">
+        {% endif %}
+        <div class="page-header col-md-12">
             <h1 class="tables">{{ 'generic.assistance_my_req_list'|trans }}</h1>
         </div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="bs-component">
                     <table class="table table-striped table-hover ">
                         <thead>
@@ -176,15 +182,20 @@
                 </div>
             </div>
         </div>
+        </div>
     {% endif %}
 
-    {% set takenRequests = get_my_taken_requests() %}
     {% if takenRequests.status == 'success' and takenRequests.data|length > 0 %}
-        <div class="page-header col-md-10 col-md-offset-1">
+        {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
+            <div class="col-md-6">
+        {% else %}
+            <div class="col-md-10 col-md-offset-1">
+        {% endif %}
+        <div class="page-header col-md-12">
             <h1 class="tables">{{ 'generic.assistance_taken_req_list'|trans }}</h1>
         </div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="bs-component">
                     <table class="table table-striped table-hover ">
                         <thead>
@@ -246,6 +257,7 @@
                 </div>
             </div>
         </div>
+    </div>
     {% endif %}
 
 
@@ -255,19 +267,22 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="bs-component">
-                <table class="table table-striped table-hover ">
-                    <thead>
-                    <tr>
-                        <th>{{ 'assistance.owner_first_name'|trans }}</th>
-                        <th>{{ 'assistance.short_desc'|trans }}</th>
-                        <th>{{ 'generic.date'|trans }}</th>
-                        <th>{{ 'assistances.table_actions_label'|trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                {% set waitingRequests = get_requests_for_me() %}
+                {% if waitingRequests.data|length == 0 %}
+                    <h4>{{ 'assistances.no_wating_requests'|trans }}</h4>
+                {% elseif waitingRequests.status == 'success' and waitingRequests.data|length > 0 %}
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                        <tr>
+                            <th>{{ 'assistance.owner_first_name'|trans }}</th>
+                            <th>{{ 'assistance.short_desc'|trans }}</th>
+                            <th>{{ 'generic.date'|trans }}</th>
+                            <th>{{ 'assistances.table_actions_label'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    {% set waitingRequests = get_requests_for_me() %}
-                    {% if waitingRequests.status == 'success' and waitingRequests.data|length > 0 %}
+
                         {% for row in waitingRequests.data %}
                             <tr>
                                 <td>{{ row.owner.firstName }}</td>
@@ -279,9 +294,10 @@
                                 </td>
                             </tr>
                         {% endfor %}
-                    {% endif %}
-                    </tbody>
-                </table>
+
+                        </tbody>
+                    </table>
+                {% endif %}
             </div>
         </div>
     </div>
