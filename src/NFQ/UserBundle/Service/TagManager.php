@@ -389,6 +389,7 @@ class TagManager
 
     /**
      * @param $word
+     * @return string
      */
     private function remAppendix($word)
     {

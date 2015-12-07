@@ -85,7 +85,7 @@ class AssistanceRequest
 
     /**
      * @var AssistanceEvent
-     * @ORM\OneToMany(targetEntity="NFQ\AssistanceBundle\Entity\AssistanceEvent", mappedBy="assistance_request_id")
+     * @ORM\OneToMany(targetEntity="NFQ\AssistanceBundle\Entity\AssistanceEvent", mappedBy="assistanceRequest")
      */
     private $events;
 

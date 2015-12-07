@@ -67,6 +67,11 @@ class AssistanceController extends Controller
         return $this->container->get('nfq_user.tag_manager');
     }
 
+    private function getAssistanceManager()
+    {
+        return $this->container->get('nfq_assistance.assistance_manager');
+    }
+
     /**
      * @return JsonResponse
      */
@@ -144,22 +149,10 @@ class AssistanceController extends Controller
      */
     public function helpAction(Request $request, $arid)
     {
-        $em = $this->getDoctrine()->getManager();
-        $currentUser = $this->getUser();
-        $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
-
-        if($assistanceRequest->getOwner()==$currentUser ||
-            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
-            throw new Exception('problems');
-        }
-
-        $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);
-        $assistanceRequest->setHelper($currentUser);
-
-        $em->persist($assistanceRequest);
-        $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'assistance_registered');
+        $response = $this->getAssistanceManager()->registerHelper($arid);
+        $this->get('session')->getFlashBag()->add('success', $response['message']);
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
+
     }
 
     /**
@@ -210,4 +203,5 @@ class AssistanceController extends Controller
         $this->get('session')->getFlashBag()->add('danger', 'assistance_canceled');
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
     }
+
 }
