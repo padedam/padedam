@@ -1,47 +1,151 @@
-{%- macro stringMaxLength(request, maxLength) -%}
-    {%- if request.longDescription | length < maxLength -%}
-        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription }}</p>
-    {%- else -%}
-        <p class="btn-link" data-target="#m{{ request.id }}" data-toggle="modal">{{ request.longDescription|slice(0, maxLength) }}...</p>
-    {%- endif -%}
+{% block my_assistances_description %}
+    <p class="btn-link" data-target="#1m{{ row.id }}" data-toggle="modal">{{ row.shortDescription }}</p>
+
     <div class="bs-component">
-        <div id="m{{ request.id }}" class="modal">
+        <div id="1m{{ row.id }}" class="modal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
                         <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
                     </div>
                     <div class="modal-body">
                         <fieldset>
-                            {{ request.longDescription }}
+                            {{ row.longDescription }}
                         </fieldset>
                     </div>
-                    <div class="modal-footer">
-                        <h4 class="text-left">{{ 'user.name'|trans }}: {{ request.getOwner().getFirstName() }}</h4>
+                    {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') or
+                    row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING') %}
+                        <div class="modal-footer">
+                            {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
+                                <a class="btn btn-success btn-sm"
+                                   href="{{ url('nfq_review_create',{'arid': row.id}) }}">
+                                    {{ 'assistances.table_actions_done'|trans }}</a>
+                                <a class="btn btn-danger btn-sm"
+                                   href="{{ url('nfq_assistance_not_done',{'arid': row.id}) }}">
+                                    {{ 'assistances.table_actions_not_done'|trans }}</a>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{ url('nfq_assistance_cancel',{'arid': row.id}) }}">
+                                    {{ 'assistances.table_actions_cancel'|trans }}</a>
+                            {% endif %}
+                            {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING') %}
+                                <a class="btn btn-primary" href="{{ url('nfq_assistance_cancel',
+                                {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block my_assistances_status %}
+    {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_CANCELED') %}
+        <p>{{ 'assistances.my_status_canceled'|trans }}</p>
+    {% elseif row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING') %}
+        <p>{{ 'assistances.my_status_waiting'|trans }} </p>
+    {% elseif row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_DONE') %}
+        <p>{{ 'assistances.my_status_done'|trans }}
+            <span class="btn-link" data-target="#2m{{ row.id }}"
+                  data-toggle="modal">{{ row.getHelper().getFirstName() }}</span>
+        </p>
+    {% elseif row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
+        <p>{{ 'assistances.my_status_taken'|trans }}
+            <span class="btn-link" data-target="#2m{{ row.id }}"
+                  data-toggle="modal">{{ row.getHelper().getFirstName() }}</span>
+        </p>
+    {% endif %}
+
+    {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') or
+    row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_DONE') %}
+        <div class="bs-component">
+            <div id="2m{{ row.id }}" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">×
+                            </button>
+                            <h4 class="modal-title">{{ 'assistances.helper_profile'|trans }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <fieldset>
+                                <div class="fos_user_user_show">
+                                    <p>{{ 'user.name'|trans }}: {{ row.getHelper().getFirstName() }}</p>
+
+                                    <p>{{ 'user.surname'|trans }}: {{ row.getHelper().getLastName() }}</p>
+
+                                    <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}
+                                        : {{ row.getHelper().getEmail() }}</p>
+
+                                    <p>{{ 'user.phone'|trans }}: {{ row.getHelper().getPhone() }}</p>
+
+                                    <p>{{ 'Trumpas aprašymas' }}: {{ row.getHelper().getDescription() }}</p>
+
+                                </div>
+                            </fieldset>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div></div>
-{%- endmacro -%}
+    {% endif %}
+{% endblock %}
+
+{% block all_assistances_description %}
+    <p class="btn-link" data-target="#3m{{ row.id }}" data-toggle="modal">{{ row.shortDescription }}</p>
+
+    <div class="bs-component">
+        <div id="3m{{ row.id }}" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            {{ row.longDescription }}
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-success" href="{{ url('nfq_assistance_help',
+                        {'arid': row.id}) }}">{{ 'assistances.table_actions_help'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% extends "::base.html.twig" %}
 
 {% block body %}
+    {% set takenRequests = get_my_taken_requests() %}
     {% set my_requests = get_my_requests() %}
     {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
-        <div class="page-header col-md-10 col-md-offset-1">
+        {% if takenRequests.status == 'success' and takenRequests.data|length > 0 %}
+            <div class="col-md-6">
+        {% else %}
+            <div class="col-md-10 col-md-offset-1">
+        {% endif %}
+        <div class="page-header col-md-12">
             <h1 class="tables">{{ 'generic.assistance_my_req_list'|trans }}</h1>
         </div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="bs-component">
                     <table class="table table-striped table-hover ">
                         <thead>
                         <tr>
                             <th>{{ 'assistance.short_desc'|trans }}</th>
-                            <th>{{ 'assistance.label_long_description'|trans }}</th>
+                            <th>{{ 'assistances.status_label'|trans }}</th>
                             <th>{{ 'generic.date'|trans }}</th>
                             <th>{{ 'assistances.table_actions_label'|trans }}</th>
                         </tr>
@@ -50,50 +154,59 @@
 
                         {% for row in my_requests.data %}
                             <tr>
-                                <td>{{ row.shortDescription }}</td>
                                 <td>
-                                    {{ _self.stringMaxLength(row, 50) }}
+                                    {{ block('my_assistances_description') }}
+                                </td>
+                                <td>
+                                    {{ block('my_assistances_status') }}
                                 </td>
                                 <td>{{ row.date|date('Y-m-d') }}</td>
                                 <td>
-                                {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
-                                    <a class="btn btn-success btn-sm" href="{{ url('nfq_review_create',
-                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_done'|trans }}</a>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('nfq_assistance_not_done',
-                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_not_done'|trans }}</a>
-                                {% endif %}
+                                    {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
+                                        <a class="btn btn-success btn-sm" href="{{ url('nfq_review_create',
+                                        {'arid': row.id}) }}">{{ 'assistances.table_actions_done'|trans }}</a>
 
-                                {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING')
-                                    or row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN')%}
-                                    <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_cancel',
-                                    {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
-                                {% endif %}
+                                        <a class="btn btn-danger btn-sm" href="{{ url('nfq_assistance_not_done',
+                                        {'arid': row.id}) }}">{{ 'assistances.table_actions_not_done'|trans }}</a>
+                                    {% endif %}
+
+                                    {% if row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_WAITING')
+                                    or row.status == constant('NFQ\\AssistanceBundle\\Entity\\AssistanceRequest::STATUS_TAKEN') %}
+                                        <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_cancel',
+                                        {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
-
                         </tbody>
                     </table>
+
+                    <div class="pagination">
+                        {{ knp_pagination_render(my_requests.data) }}
+                    </div>
                 </div>
             </div>
         </div>
+        </div>
     {% endif %}
 
-    {% set takenRequests = get_my_taken_requests() %}
     {% if takenRequests.status == 'success' and takenRequests.data|length > 0 %}
-        <div class="page-header col-md-10 col-md-offset-1">
+        {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
+            <div class="col-md-6">
+        {% else %}
+            <div class="col-md-10 col-md-offset-1">
+        {% endif %}
+        <div class="page-header col-md-12">
             <h1 class="tables">{{ 'generic.assistance_taken_req_list'|trans }}</h1>
         </div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="bs-component">
                     <table class="table table-striped table-hover ">
                         <thead>
                         <tr>
-                            <th>{{ 'assistance.owner_first_name'|trans }}</th>
                             <th>{{ 'assistance.short_desc'|trans }}</th>
-                            <th>{{ 'assistance.label_long_description'|trans }}</th>
-                            <th>{{ 'generic.date'|trans }}</th>
+                            <th>{{ 'assistances.status_label'|trans }}</th>
                             <th>{{ 'assistances.table_actions_label'|trans }}</th>
                         </tr>
                         </thead>
@@ -101,17 +214,47 @@
 
                         {% for row in takenRequests.data %}
                             <tr>
-                                <td>{{ row.owner.firstName }}</td>
-                                <td>{{ row.shortDescription }}</td>
                                 <td>
-                                    {{ _self.stringMaxLength(row, 50) }}
+                                    <p class="btn-link" data-target="#3m{{ row.id }}"
+                                       data-toggle="modal">{{ row.shortDescription }}</p>
                                 </td>
-                                <td>{{ row.date|date('Y-m-d') }}</td>
+                                <td>
+                                    <p>{{ row.owner.firstName }} {{ 'assistances.status_helper_taken'|trans }}</p>
+                                </td>
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ url('nfq_assistance_helper_cancel',
                                     {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
                                 </td>
                             </tr>
+
+                            <div class="bs-component">
+                                <div id="3m{{ row.id }}" class="modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title">{{ 'assistance.label_long_description'|trans }}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <fieldset>
+                                                    {{ row.longDescription }}
+                                                </fieldset>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <h4 class="text-left">{{ 'assistances.author_name_label'|trans }}
+                                                    : {{ row.getOwner().getFirstName() }}
+                                                    <a style="float:right" class="btn btn-primary"
+                                                       href="{{ url('nfq_assistance_helper_cancel',
+                                                       {'arid': row.id}) }}">{{ 'assistances.table_actions_cancel'|trans }}</a>
+                                                </h4>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
 
                         </tbody>
@@ -119,6 +262,7 @@
                 </div>
             </div>
         </div>
+    </div>
     {% endif %}
 
 
@@ -128,27 +272,26 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="bs-component">
-                <table class="table table-striped table-hover ">
-                    <thead>
-                    <tr>
-                        <th>{{ 'assistance.owner_first_name'|trans }}</th>
-                        <th>{{ 'assistance.short_desc'|trans }}</th>
-                        <th>{{ 'assistance.label_long_description'|trans }}</th>
-                        <th>{{ 'generic.date'|trans }}</th>
-                        <th>{{ 'assistances.table_actions_label'|trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                {% set waitingRequests = get_requests_for_me() %}
+                {% if waitingRequests.data|length == 0 %}
+                    <h4>{{ 'assistances.no_wating_requests'|trans }}</h4>
+                {% elseif waitingRequests.status == 'success' and waitingRequests.data|length > 0 %}
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                        <tr>
+                            <th>{{ 'assistance.owner_first_name'|trans }}</th>
+                            <th>{{ 'assistance.short_desc'|trans }}</th>
+                            <th>{{ 'generic.date'|trans }}</th>
+                            <th>{{ 'assistances.table_actions_label'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    {% set waitingRequests = get_requests_for_me() %}
-                    {% if waitingRequests.status == 'success' and waitingRequests.data|length > 0  %}
+
                         {% for row in waitingRequests.data %}
                             <tr>
                                 <td>{{ row.owner.firstName }}</td>
-                                <td>{{ row.shortDescription }}</td>
-                                <td>
-                                    {{ _self.stringMaxLength(row, 50) }}
-                                </td>
+                                <td>{{ block('all_assistances_description') }}</td>
                                 <td>{{ row.date|date('Y-m-d') }}</td>
                                 <td>
                                     <a class="btn btn-success btn-sm" href="{{ url('nfq_assistance_help',
@@ -156,9 +299,14 @@
                                 </td>
                             </tr>
                         {% endfor %}
-                    {% endif %}
-                    </tbody>
-                </table>
+
+                        </tbody>
+                    </table>
+
+                    <div class="pagination">
+                        {{ knp_pagination_render(waitingRequests.data) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

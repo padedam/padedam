@@ -78,7 +78,7 @@ class Tags
      *
      * @ORM\Column(name="is_enabled", type="boolean")
      */
-    private $isEnabled = true;
+    private $isEnabled = false;
 
     /**
      * @var \DateTime

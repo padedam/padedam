@@ -26,8 +26,9 @@ class AssistanceRequestRepository extends EntityRepository
         $qb->select('ar')
             ->from('NFQAssistanceBundle:AssistanceRequest', 'ar')
             ->where('ar.owner = :user')
-            ->setParameter('user', $user);
-        return $qb->getQuery()->getResult();
+            ->setParameter('user', $user)
+            ->addOrderBy('ar.date', 'DESC');
+        return $qb->getQuery();
     }
 
     /**
@@ -48,8 +49,9 @@ class AssistanceRequestRepository extends EntityRepository
             ->andWhere('ar.status = :status')
             ->setParameter('status', AssistanceRequest::STATUS_WAITING)
             ->setParameter('myTags', $myTags)
-            ->setParameter('user', $user);
-        return $qb->getQuery()->setMaxResults($limit)->getResult();
+            ->setParameter('user', $user)
+            ->addOrderBy('ar.date', 'DESC');
+        return $qb->getQuery();
     }
 
     /**
@@ -57,7 +59,7 @@ class AssistanceRequestRepository extends EntityRepository
      * @param int $limit
      * @return array
      */
-    public function getMyTakenRequests(User $user, $limit=5)
+    public function getMyTakenRequests(User $user, $limit=3)
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder();
@@ -66,7 +68,8 @@ class AssistanceRequestRepository extends EntityRepository
             ->where('ar.helper = :user')
             ->andWhere('ar.status = :status')
             ->setParameter('status', AssistanceRequest::STATUS_TAKEN)
-            ->setParameter('user', $user);
+            ->setParameter('user', $user)
+            ->addOrderBy('ar.date', 'DESC');
         return $qb->getQuery()->setMaxResults($limit)->getResult();
     }
 

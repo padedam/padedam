@@ -1,3 +1,4 @@
-/**
- * Created by renaldas on 15.10.19.
- */
+$(function(){
+    var dismisable = $(".alert-dismissible");
+    dismisable.delay(5000).slideUp('fast', function(){$(dismisable.parent().remove())});
+})

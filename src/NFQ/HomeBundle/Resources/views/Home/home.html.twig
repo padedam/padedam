@@ -52,10 +52,10 @@
         <div class="row row-centered">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="col-md-4 col-md-offset-2">
-                    <h4 class="text-capitalize">{{ 'fp.they_need_u'|trans }}</h4>
+                    <h4 class="text-capitalize text-center">{{ 'fp.they_need_u'|trans }}</h4>
                     {% set requests = front_page_requests() %}
                     {% if requests is empty %}
-                    <p>{{ 'fp.no_requests_found'|trans }}</p>
+                    <p class="">{{ 'fp.no_requests_found'|trans }}</p>
                     {% else %}
                         <ul class='list-group'>
                         {% for request in requests %}
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <h4 class="text-capitalize">{{ 'fp.biggest_heroes'|trans }}</h4>
+                    <h4 class="text-capitalize text-center">{{ 'fp.biggest_heroes'|trans }}</h4>
                     {% set heroes = front_page_heroes() %}
                     {% if heroes is empty %}
                     <p>{{ 'fp.no_heroes_found'|trans }}</p>

@@ -6,6 +6,7 @@ use Chencha\Pspell\Config;
 use Chencha\Pspell\Pspell;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,9 @@ class HomeController extends Controller
     }
     public function homeAction()
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new RedirectResponse($this->container->get('router')->generate('nfq_assistance_request_list', []));
+        }
 
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository("NFQAssistanceBundle:AssistanceRequest");

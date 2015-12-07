@@ -19,21 +19,27 @@ class ProfileType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->remove('username');
-        $builder->add('first_name');
-        $builder->add('last_name');
-        $builder->add('phone');
-        $builder->add('birthday', 'birthday');
-        $builder->add('description');
-       /* $builder->add('taglist', 'entity',[
-            'class' => 'NFQ\AssistanceBundle\Entity\Tags',
-            'query_builder' => function(TagsRepository $er) {
-                return $er->createQueryBuilder('tags')
-                    ->orderBy('tags.title', 'ASC');
-            },
-            'attr'=>[
-                'data-save'=>$this->router->match('nfq_assistance_save_tags')
+        $builder->add('first_name', 'text',[
+            'label'=>'user.name'
+        ]);
+        $builder->add('last_name', 'text',[
+            'label'=>'user.surname'
+        ]);
+        $builder->add('phone', 'text',[
+            'label'=>'user.phone'
+        ]);
+        $builder->add('birthday', 'birthday',[
+            'label' => 'user.birth_year'
+        ]);
+        $builder->add('description', 'textarea',
+            [
+                'label' => "user.about_me",
+                'required' => true,
+                'attr' => [
+                    'data-help' => 'user.short_about_me_desc',
                 ]
-        ]);*/
+            ]
+        );
     }
 
 

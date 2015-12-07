@@ -8,6 +8,9 @@
                 <p>{{ 'user.name'|trans }}: {{ user.firstName }}</p>
                 <p>{{ 'user.surname'|trans }}: {{ user.lastName }}</p>
                 <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
+                <blockquote>
+                    {{ user.description }}
+                </blockquote>
 
             </div>
                 <p><a href="{{ path('fos_user_profile_edit') }}">{{ 'user.edit_profile'|trans }}</a></p>
