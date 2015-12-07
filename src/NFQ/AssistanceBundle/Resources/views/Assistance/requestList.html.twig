@@ -83,7 +83,11 @@
 
                                     <p>{{ 'user.phone'|trans }}: {{ row.getHelper().getPhone() }}</p>
 
-                                    <p>{{ 'Trumpas aprašymas' }}: {{ row.getHelper().getDescription() }}</p>
+                                    <p>{{ 'Trumpas aprašymas' }}:</p>
+
+                                    <blockquote>
+                                        {{ row.getHelper().getDescription() }}
+                                    </blockquote>
 
                                 </div>
                             </fieldset>

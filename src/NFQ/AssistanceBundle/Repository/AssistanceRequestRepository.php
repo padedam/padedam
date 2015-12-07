@@ -18,7 +18,7 @@ class AssistanceRequestRepository extends EntityRepository
      * @param int $limit
      * @return array
      */
-    public function getMyRequests(User $user, $limit=5)
+    public function getMyRequests(User $user)
     {
 
         $qb = $this->getEntityManager()
@@ -37,7 +37,7 @@ class AssistanceRequestRepository extends EntityRepository
      * @param int $limit
      * @return array
      */
-    public function getRequestsForMe(User $user, $myTags, $limit=5)
+    public function getRequestsForMe(User $user, $myTags)
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder();

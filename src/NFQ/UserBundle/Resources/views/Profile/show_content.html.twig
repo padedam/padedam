@@ -33,6 +33,9 @@
                         <p class="list-group-item-text">{{ review.reviewMessage }}</p>
                     </a>
                 {% endfor %}
+                    <div class="pagination">
+                        {{ knp_pagination_render(reviewList.reviews)}}
+                    </div>
                 {% else %}
                     <p class="list-group-item-text">{{ 'review.no_reviews'|trans }}</p>
                 {% endif %}

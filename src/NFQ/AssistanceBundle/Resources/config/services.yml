@@ -5,7 +5,7 @@ services:
 
     nfq_assistance.review_manager:
         class: NFQ\AssistanceBundle\Service\ReviewManager
-        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage", "@knp_paginator"]
 
     nfq_assitance.twig.assistance_extension:
         class: NFQ\AssistanceBundle\Twig\AssitanceExtension

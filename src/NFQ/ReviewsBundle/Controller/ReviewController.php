@@ -84,12 +84,18 @@ class ReviewController extends Controller
                 $em->persist($thank);
             }
 
-            $em->persist($review);
+            if(!$form->get('reviewMessage')->getData()){
+                $this->get('session')->getFlashBag()->add('success', 'assistance_done');
+            }
+            else{
+                $em->persist($review);
+
+                $this->get('session')->getFlashBag()->add('success', 'review_added');
+            }
+
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'review_added');
-
-            return new RedirectResponse($request->server->get('HTTP_REFERER'));
+            return $this->redirectToRoute('nfq_assistance_request_list');
         }
 
         return $this->render('NFQReviewsBundle:Review:createReview.html.twig', array('form' => $form->createView()));
