@@ -77,7 +77,7 @@ class AssistanceManager
 
             $page = $this->requestStack->getCurrentRequest()->query->get('my_requests_page', 1);
 
-            $pagination = $this->paginator->paginate($results, $page, 10, [
+            $pagination = $this->paginator->paginate($results, $page, 5, [
                 'pageParameterName' => 'my_requests_page'
             ]);
 
@@ -113,7 +113,7 @@ class AssistanceManager
 
             $page = $this->requestStack->getCurrentRequest()->query->get('requests_for_me_page', 1);
 
-            $pagination = $this->paginator->paginate($results, $page, 1, [
+            $pagination = $this->paginator->paginate($results, $page, 10, [
                 'pageParameterName' => 'requests_for_me_page'
             ]);
 
