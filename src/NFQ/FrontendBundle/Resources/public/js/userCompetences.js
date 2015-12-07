@@ -102,7 +102,7 @@ var bindRemcat = function () {
             }, 'json'
         );
     });
-}
+};
 
 
 /* create a new competence category */
