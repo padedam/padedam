@@ -4,9 +4,6 @@
 <h1 class="text-center">{{ 'generic.please_login'|trans }}</h1>
 <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
     <div class="well bs-component">
-{#            {% if error %}
-                <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-            {% endif %}#}
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin form-horizontal">
                 <fieldset>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

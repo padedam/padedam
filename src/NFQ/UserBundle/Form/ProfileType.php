@@ -40,16 +40,6 @@ class ProfileType extends AbstractType{
                 ]
             ]
         );
-       /* $builder->add('taglist', 'entity',[
-            'class' => 'NFQ\AssistanceBundle\Entity\Tags',
-            'query_builder' => function(TagsRepository $er) {
-                return $er->createQueryBuilder('tags')
-                    ->orderBy('tags.title', 'ASC');
-            },
-            'attr'=>[
-                'data-save'=>$this->router->match('nfq_assistance_save_tags')
-                ]
-        ]);*/
     }
 
 
