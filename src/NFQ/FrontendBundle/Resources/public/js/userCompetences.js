@@ -23,13 +23,6 @@ var competences = function (element) {
         quietMillis: 250,
         minimumInputLength: 4,
         tags: true,
-        tokenSeparators: [',', ';'],
-        createSearchChoice: function (term) {
-            return {
-                id: $.trim(term),
-                text: $.trim(term) + ' (Naujas)'
-            };
-        },
         ajax: {
             url: taggable.data('match'),
             dataType: 'json',
@@ -141,7 +134,7 @@ function createParentElement (e){
                 });
 
                 var label = $( '<label>', {
-                    'class': 'col-sm-2 control-label required',
+                    'class': 'col-sm-2 control-label required text-capitalize',
                     'text': seltext
                 });
                 var col9 = $( '<div/>', {
