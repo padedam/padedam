@@ -195,10 +195,10 @@
     {% endif %}
 
     {% if takenRequests.status == 'success' and takenRequests.data|length > 0 %}
-        {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
-            <div class="col-md-6">
-        {% else %}
-            <div class="col-md-10 col-md-offset-1">
+    {% if my_requests.status == 'success' and my_requests.data|length > 0 %}
+    <div class="col-md-6">
+    {% else %}
+    <div class="col-md-10 col-md-offset-1">
         {% endif %}
         <div class="page-header col-md-12">
             <h1 class="tables">{{ 'generic.assistance_taken_req_list'|trans }}</h1>

@@ -13,22 +13,23 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProfileType extends AbstractType{
+class ProfileType extends AbstractType
+{
 
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->remove('username');
-        $builder->add('first_name', 'text',[
-            'label'=>'user.name'
+        $builder->add('first_name', 'text', [
+            'label' => 'user.name'
         ]);
-        $builder->add('last_name', 'text',[
-            'label'=>'user.surname'
+        $builder->add('last_name', 'text', [
+            'label' => 'user.surname'
         ]);
-        $builder->add('phone', 'text',[
-            'label'=>'user.phone'
+        $builder->add('phone', 'text', [
+            'label' => 'user.phone'
         ]);
-        $builder->add('birthday', 'birthday',[
+        $builder->add('birthday', 'birthday', [
             'label' => 'user.birth_year'
         ]);
         $builder->add('description', 'textarea',

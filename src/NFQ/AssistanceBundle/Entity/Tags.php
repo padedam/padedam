@@ -101,13 +101,12 @@ class Tags
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-
 
 
     /**
@@ -134,7 +133,7 @@ class Tags
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -157,7 +156,7 @@ class Tags
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -180,7 +179,7 @@ class Tags
     /**
      * Get lvl
      *
-     * @return integer 
+     * @return integer
      */
     public function getLvl()
     {
@@ -203,7 +202,7 @@ class Tags
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -226,7 +225,7 @@ class Tags
     /**
      * Get root
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoot()
     {
@@ -249,7 +248,7 @@ class Tags
     /**
      * Get isEnabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsEnabled()
     {
@@ -272,7 +271,7 @@ class Tags
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -295,7 +294,7 @@ class Tags
     /**
      * Get addedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getAddedAt()
     {
@@ -351,7 +350,7 @@ class Tags
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -367,8 +366,7 @@ class Tags
     {
         $this->setUpdatedAt(new \DateTime(date('Y-m-d H:i:s')));
 
-        if($this->getAddedAt() == null)
-        {
+        if ($this->getAddedAt() == null) {
             $this->setAddedAt(new \DateTime(date('Y-m-d H:i:s')));
         }
     }

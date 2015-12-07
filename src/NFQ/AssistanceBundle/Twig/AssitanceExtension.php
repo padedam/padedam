@@ -74,6 +74,7 @@ class AssitanceExtension extends \Twig_Extension
     {
         return $this->manager->getReviewList();
     }
+
     /**
      * @return array
      */

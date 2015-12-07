@@ -58,7 +58,7 @@ class ReviewManager
      */
     public function getReviewList()
     {
-        $currentUser  = $this->getUser();
+        $currentUser = $this->getUser();
         $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($currentUser);
 
         if (!$thank) {
@@ -93,12 +93,12 @@ class ReviewManager
      */
     private function getUser()
     {
-        if ( !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
-        }else {
+        } else {
             return $this->tokenStorage->getToken()->getUser();
         }
     }
-    
-    
+
+
 }

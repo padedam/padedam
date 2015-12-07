@@ -11,9 +11,9 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@NFQFrontendBundle/Resources/public/css/select2.css'
-        '@NFQFrontendBundle/Resources/public/css/select2-bootstrap.css' %}
-        <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
+    '@NFQFrontendBundle/Resources/public/css/select2.css'
+    '@NFQFrontendBundle/Resources/public/css/select2-bootstrap.css' %}
+    <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
     {% endstylesheets %}
 
 {% endblock %}
@@ -21,14 +21,14 @@
 
 
 {% block body %}
-{% include "NFQUserBundle:Profile:edit_content.html.twig" %}
+    {% include "NFQUserBundle:Profile:edit_content.html.twig" %}
 {% endblock body %}
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        '@NFQFrontendBundle/Resources/public/js/select2.js'
-        '@NFQFrontendBundle/Resources/public/js/select2_locale_lt.js'
-        '@NFQFrontendBundle/Resources/public/js/userCompetences.js' %}
+    '@NFQFrontendBundle/Resources/public/js/select2.js'
+    '@NFQFrontendBundle/Resources/public/js/select2_locale_lt.js'
+    '@NFQFrontendBundle/Resources/public/js/userCompetences.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

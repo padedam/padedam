@@ -1,17 +1,22 @@
 <div class="col-md-6 col-md-offset-3">
 
     <ul class="nav nav-tabs">
-        <li class="{% if app.request.get('job') == "profile" %}active{% endif %}"><a href="#profile" data-toggle="tab">{{ 'user.edit_profile'|trans }}</a></li>
-        <li class="{% if app.request.get('job') == "competence" %}active{% endif %}"><a href="#competence" data-toggle="tab">{{ 'profile.competence'|trans }}</a></li>
+        <li class="{% if app.request.get('job') == "profile" %}active{% endif %}"><a href="#profile"
+                                                                                     data-toggle="tab">{{ 'user.edit_profile'|trans }}</a>
+        </li>
+        <li class="{% if app.request.get('job') == "competence" %}active{% endif %}"><a href="#competence"
+                                                                                        data-toggle="tab">{{ 'profile.competence'|trans }}</a>
+        </li>
     </ul>
 
     <div id="myTabContent" class="tab-content well bs-component">
-            <div class="tab-pane {% if app.request.get('job') == "profile" %}active{% endif %}" id="profile">
+        <div class="tab-pane {% if app.request.get('job') == "profile" %}active{% endif %}" id="profile">
             <legend>{{ 'user.edit_profile'|trans }}</legend>
             <fieldset>
                 {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <input type="submit" class="btn btn-primary" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
+                {{ form_widget(form) }}
+                <input type="submit" class="btn btn-primary"
+                       value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
                 {{ form_end(form) }}
             </fieldset>
         </div>
@@ -20,6 +25,7 @@
             <legend>{{ 'profile.competence'|trans }}</legend>
             <div class="alert alert-warning">
                 <h4>{{ 'assistance.atention'|trans }}!</h4>
+
                 <p>{{ 'assistance.choose_tags'|trans }}.</p>
             </div>
             <div class="form-group">
@@ -53,13 +59,13 @@
                         <span class="col-sm-2 control-label required">{{ key|title }}</span>
 
                         <div class="col-sm-9">
-                                <input id="child_{{ id }}" class="form-control form-select" name="optionvalue"
-                                       type="hidden"
-                                       data-save="{{ url('nfq_assistance_save_tags') }}"
-                                       data-current="{{ url('nfq_assistance_selected_tags') }}"
-                                       data-rem="{{ url('nfq_assistance_remove_tags') }}"
-                                       data-match="{{ url('nfq_assistance_match_tags') }}"
-                                       data-parentid="{{ id }}"/>
+                            <input id="child_{{ id }}" class="form-control form-select" name="optionvalue"
+                                   type="hidden"
+                                   data-save="{{ url('nfq_assistance_save_tags') }}"
+                                   data-current="{{ url('nfq_assistance_selected_tags') }}"
+                                   data-rem="{{ url('nfq_assistance_remove_tags') }}"
+                                   data-match="{{ url('nfq_assistance_match_tags') }}"
+                                   data-parentid="{{ id }}"/>
 
                         </div>
                         <div class="col-sm-1">

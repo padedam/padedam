@@ -41,8 +41,8 @@ class ProfileController extends BaseController
         $tags = $this->container->get('nfq_user.tag_manager')->getMyTags();
 
         return $this->container->get('templating')->renderResponse(
-            'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'tags'=>$tags)
+            'FOSUserBundle:Profile:edit.html.' . $this->container->getParameter('fos_user.template.engine'),
+            array('form' => $form->createView(), 'tags' => $tags)
         );
     }
 }
