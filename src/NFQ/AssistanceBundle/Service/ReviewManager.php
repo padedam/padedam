@@ -32,6 +32,11 @@ class ReviewManager
     private $tokenStorage;
 
     /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    /**
      * ReviewManager constructor.
      * @param EntityManagerInterface $em
      * @param RequestStack $requestStack

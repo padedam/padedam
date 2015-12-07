@@ -15,7 +15,6 @@ class AssistanceRequestRepository extends EntityRepository
 
     /**
      * @param User $user
-     * @param int $limit
      * @return array
      */
     public function getMyRequests(User $user)
@@ -34,7 +33,6 @@ class AssistanceRequestRepository extends EntityRepository
     /**
      * @param User $user
      * @param $myTags
-     * @param int $limit
      * @return array
      */
     public function getRequestsForMe(User $user, $myTags)
