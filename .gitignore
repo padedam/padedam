@@ -11,4 +11,5 @@
 /bin/
 /composer.phar
 /.idea/
+*.*~
 
