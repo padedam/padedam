@@ -95,6 +95,7 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
         foreach($tags as $p=>$c){
             $parent = new Tags();
             $parent->setTitle($p);
+            $parent->setIsEnabled(true);
 
             if( in_array($p, $randomTags_admin) ){
                 $this->addReference('tags_admin'.$a, $parent);
@@ -112,6 +113,7 @@ class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
                 }
                 $tag = new Tags();
                 $tag->setTitle($child);
+                $tag->setIsEnabled(true);
                 $tag->setParent($parent);
                 $manager->persist($tag);
             }
