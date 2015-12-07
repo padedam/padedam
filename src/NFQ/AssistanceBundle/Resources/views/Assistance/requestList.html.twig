@@ -180,6 +180,10 @@
                         {% endfor %}
                         </tbody>
                     </table>
+
+                    <div class="pagination">
+                        {{ knp_pagination_render(my_requests.data) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -298,6 +302,10 @@
 
                         </tbody>
                     </table>
+
+                    <div class="pagination">
+                        {{ knp_pagination_render(waitingRequests.data) }}
+                    </div>
                 {% endif %}
             </div>
         </div>

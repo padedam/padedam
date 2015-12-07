@@ -28,7 +28,7 @@ class AssistanceRequestRepository extends EntityRepository
             ->where('ar.owner = :user')
             ->setParameter('user', $user)
             ->addOrderBy('ar.date', 'DESC');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
     }
 
     /**
@@ -51,7 +51,7 @@ class AssistanceRequestRepository extends EntityRepository
             ->setParameter('myTags', $myTags)
             ->setParameter('user', $user)
             ->addOrderBy('ar.date', 'DESC');
-        return $qb->getQuery()->setMaxResults($limit)->getResult();
+        return $qb->getQuery();
     }
 
     /**
