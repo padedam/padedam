@@ -2,14 +2,14 @@
 
 namespace NFQ\AssistanceBundle\Controller;
 
-use NFQ\AssistanceBundle\Form\AssistanceRequestType;
+use Doctrine\ORM\Query;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
+use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {

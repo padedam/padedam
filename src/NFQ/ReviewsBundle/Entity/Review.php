@@ -2,10 +2,10 @@
 
 namespace NFQ\ReviewsBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use NFQ\UserBundle\Entity\User;
-use \DateTime;
 
 /**
  * Review

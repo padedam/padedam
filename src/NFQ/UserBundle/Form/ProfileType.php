@@ -8,7 +8,6 @@
 
 namespace NFQ\UserBundle\Form;
 
-use NFQ\AssistanceBundle\Repository\TagsRepository;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

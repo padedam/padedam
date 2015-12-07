@@ -2,7 +2,6 @@
 
 namespace NFQ\AssistanceBundle\Form;
 
-use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\AssistanceBundle\Repository\TagsRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -5,7 +5,6 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
-use NFQ\AssistanceBundle\Entity\Tags;
 
 /**
  * AssistanceRequest

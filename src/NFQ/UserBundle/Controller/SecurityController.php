@@ -7,8 +7,8 @@
  */
 namespace NFQ\UserBundle\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class SecurityController extends BaseController

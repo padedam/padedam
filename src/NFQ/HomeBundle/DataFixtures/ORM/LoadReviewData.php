@@ -5,7 +5,6 @@ namespace src\NFQ\HomeBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use NFQ\ReviewsBundle\Entity\Review;
 use NFQ\ReviewsBundle\Entity\Thanks;
 
 class LoadReviewData extends AbstractFixture implements OrderedFixtureInterface

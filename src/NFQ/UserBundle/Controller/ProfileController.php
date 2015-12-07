@@ -3,10 +3,9 @@
 namespace NFQ\UserBundle\Controller;
 
 use FOS\UserBundle\Controller\ProfileController as BaseController;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class ProfileController
