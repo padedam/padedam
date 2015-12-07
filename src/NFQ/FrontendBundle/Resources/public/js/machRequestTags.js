@@ -28,7 +28,7 @@ var machTags = function (word) {
             }
         }, 'json'
     );
-};
+}
 
 
 var delay = (function () {

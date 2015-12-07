@@ -3035,7 +3035,8 @@
                 } else {
                     return this.opts.width;
                 }
-            }
+            };
+
             var width = resolveContainerWidth.call(this);
             if (width !== null) {
                 this.container.css("width", width);
@@ -3286,7 +3287,7 @@
                         this.clear();
                     }
                     killEvent(e);
-
+                    return;
                 }
             }));
 
