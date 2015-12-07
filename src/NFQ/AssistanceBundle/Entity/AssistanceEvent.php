@@ -60,8 +60,6 @@ class AssistanceEvent
     }
 
 
-
-
     /**
      * Get id
      *

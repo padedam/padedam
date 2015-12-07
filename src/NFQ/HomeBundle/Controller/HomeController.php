@@ -2,19 +2,15 @@
 
 namespace NFQ\HomeBundle\Controller;
 
-use Chencha\Pspell\Config;
-use Chencha\Pspell\Pspell;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class HomeController extends Controller
 {
-    public function signupAction()
-    {
-        return $this->render('NFQHomeBundle:Home:signup.html.twig', array(
-                // ...
-            ));
-    }
+
+    /**
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -34,11 +30,5 @@ class HomeController extends Controller
         return $this->container->get('nfq_user.user_manager');
     }
 
-    /**
-    * @return \NFQ\AssistanceBundle\Service\AssistanceManager
-    */
-    private function getAssistanceManager()
-    {
-        return $this->container->get('nfq_assistance.assistance_manager');
-    }
+
 }

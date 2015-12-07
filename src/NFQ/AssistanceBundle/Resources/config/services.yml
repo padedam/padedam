@@ -18,3 +18,9 @@ services:
         arguments: ["@nfq_assistance.review_manager"]
         tags:
             - { name: twig.extension }
+
+    nfq_assitance.entity_listener.register_event:
+        class: NFQ\AssistanceBundle\EventListener\Doctrine\AsistanceRequestListener
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postPersist }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postUpdate }

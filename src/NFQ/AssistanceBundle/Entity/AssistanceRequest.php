@@ -89,10 +89,20 @@ class AssistanceRequest
      */
     private $events;
 
+   
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -103,6 +113,7 @@ class AssistanceRequest
      * Set shortDescription
      *
      * @param string $shortDescription
+     *
      * @return AssistanceRequest
      */
     public function setShortDescription($shortDescription)
@@ -115,7 +126,7 @@ class AssistanceRequest
     /**
      * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
@@ -126,6 +137,7 @@ class AssistanceRequest
      * Set longDescription
      *
      * @param string $longDescription
+     *
      * @return AssistanceRequest
      */
     public function setLongDescription($longDescription)
@@ -138,7 +150,7 @@ class AssistanceRequest
     /**
      * Get longDescription
      *
-     * @return string 
+     * @return string
      */
     public function getLongDescription()
     {
@@ -170,22 +182,22 @@ class AssistanceRequest
     }
 
     /**
-     * @param User $user
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return AssistanceRequest
      */
-    public function setOwner(User $user)
+    public function setStatus($status)
     {
-        $this->owner = $user;
+        $this->status = $status;
+
+        return $this;
     }
 
     /**
-     * @return mixed
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
+     * Get status
+     *
      * @return string
      */
     public function getStatus()
@@ -194,29 +206,52 @@ class AssistanceRequest
     }
 
     /**
-     * @param string $status
+     * Set owner
+     *
+     * @param \NFQ\UserBundle\Entity\User $owner
+     *
+     * @return AssistanceRequest
      */
-    public function setStatus($status)
+    public function setOwner(\NFQ\UserBundle\Entity\User $owner = null)
     {
-        $this->status = $status;
+        $this->owner = $owner;
+
+        return $this;
     }
 
     /**
-     * @return User
+     * Get owner
+     *
+     * @return \NFQ\UserBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Set helper
+     *
+     * @param \NFQ\UserBundle\Entity\User $helper
+     *
+     * @return AssistanceRequest
+     */
+    public function setHelper(\NFQ\UserBundle\Entity\User $helper = null)
+    {
+        $this->helper = $helper;
+
+        return $this;
+    }
+
+    /**
+     * Get helper
+     *
+     * @return \NFQ\UserBundle\Entity\User
      */
     public function getHelper()
     {
         return $this->helper;
     }
-
-    /**
-     * @param User $helper
-     */
-    public function setHelper($helper)
-    {
-        $this->helper = $helper;
-    }
-
 
     /**
      * Add tag
@@ -250,17 +285,6 @@ class AssistanceRequest
     public function getTags()
     {
         return $this->tags;
-    }
-
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
