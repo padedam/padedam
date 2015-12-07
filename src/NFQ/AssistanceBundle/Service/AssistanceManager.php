@@ -3,6 +3,7 @@
 namespace NFQ\AssistanceBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -38,21 +39,29 @@ class AssistanceManager
     private $user;
 
     /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    /**
      * AssistanceManager constructor.
      * @param EntityManagerInterface $em
      * @param RequestStack $requestStack
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TokenStorageInterface $tokenStorage
+     * @param PaginatorInterface $paginator
      */
     public function __construct(EntityManagerInterface $em,
                                 RequestStack $requestStack,
                                 AuthorizationCheckerInterface $authorizationChecker,
-                                TokenStorageInterface $tokenStorage)
+                                TokenStorageInterface $tokenStorage,
+                                PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->requestStack = $requestStack;
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -65,7 +74,14 @@ class AssistanceManager
             $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
             $results = $repo->getMyRequests($this->getUser());
             $response['status'] = 'success';
-            $response['data'] = $results;
+
+            $page = $this->requestStack->getCurrentRequest()->query->get('my_requests_page', 1);
+
+            $pagination = $this->paginator->paginate($results, $page, 5, [
+                'pageParameterName' => 'my_requests_page'
+            ]);
+
+            $response['data'] = $pagination;
         }catch(\Exception $e){
             $response['status'] = 'failed';
             $response['data'] = $e->getMessage();
@@ -95,8 +111,14 @@ class AssistanceManager
 
             $results = $repo->getRequestsForMe($this->getUser(), $tagAr);
 
+            $page = $this->requestStack->getCurrentRequest()->query->get('requests_for_me_page', 1);
+
+            $pagination = $this->paginator->paginate($results, $page, 10, [
+                'pageParameterName' => 'requests_for_me_page'
+            ]);
+
             $response['status'] = 'success';
-            $response['data'] = $results;
+            $response['data'] = $pagination;
         }catch(\Exception $e){
             $response['status'] = 'failed';
             $response['data'] = $e->getMessage();
