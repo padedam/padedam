@@ -83,6 +83,11 @@ class AssistanceRequest
      */
     private $tags;
 
+    /**
+     * @var AssistanceEvent
+     * @ORM\OneToMany(targetEntity="NFQ\AssistanceBundle\Entity\AssistanceEvent", mappedBy="assistance_request_id")
+     */
+    private $events;
 
     /**
      * Get id
@@ -214,14 +219,6 @@ class AssistanceRequest
 
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add tag
      *
      * @param \NFQ\AssistanceBundle\Entity\Tags $tag
@@ -253,5 +250,50 @@ class AssistanceRequest
     public function getTags()
     {
         return $this->tags;
+    }
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add event
+     *
+     * @param \NFQ\AssistanceBundle\Entity\AssistanceEvent $event
+     *
+     * @return AssistanceRequest
+     */
+    public function addEvent(\NFQ\AssistanceBundle\Entity\AssistanceEvent $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \NFQ\AssistanceBundle\Entity\AssistanceEvent $event
+     */
+    public function removeEvent(\NFQ\AssistanceBundle\Entity\AssistanceEvent $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }
