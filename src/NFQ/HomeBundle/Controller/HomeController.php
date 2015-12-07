@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class HomeController extends Controller
 {
-
+    /**
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -19,6 +21,9 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * @return \NFQ\UserBundle\Service\UserManager
+     */
     private function getUserManager()
     {
         return $this->container->get('nfq_user.user_manager');
