@@ -50,7 +50,7 @@ class AssistanceRequestRepository extends EntityRepository
             ->andWhere('t.id IN (:myTags)')
             ->andWhere('ar.status = :status')
           //  ->andWhere('e.user NOT IN (:parent)')
-            ->groupBy('ar.id')
+         //   ->groupBy('ar.id')
             ->setParameter('status', AssistanceRequest::STATUS_WAITING)
             ->setParameter('myTags', $myTags)
             ->setParameter('user', $user);

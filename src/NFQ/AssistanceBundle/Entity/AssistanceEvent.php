@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AssistanceEvents
  *
  * @ORM\Table(name="assistance_events")
- * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Entity\AssistanceEventRepository")
+ * @ORM\Entity(repositoryClass="NFQ\AssistanceBundle\Repository\AssistanceEventRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class AssistanceEvent
