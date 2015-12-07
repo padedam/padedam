@@ -22,4 +22,25 @@
     height:60px;
     width:100%;
     z-index: 999;
+    top:0;
+}
+.alert-fos_user_success{
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+}
+blockquote {
+    font-size:13px;
+}
+.list-group-item{
+    height:50px;
+    line-height: 30px;
+}
+.well{
+    overflow: auto;
+    min-height: 300px;
+}
+.rem-cat{
+    height:30px;
+    line-height: 30px;
 }

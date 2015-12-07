@@ -76,6 +76,7 @@ class ReviewManager
 
     /**
      * @return mixed
+     * @throws AccessDeniedException
      */
     private function getUser()
     {

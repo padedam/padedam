@@ -70,14 +70,17 @@ class TagsRepository extends NestedTreeRepository
      * @param $parent
      * @return array
      */
-    public function matchEnteredTags($tag, $parent)
+    public function matchEnteredTags($tags, $parent)
     {
-
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t.id AS id, t.title as text')
-            ->from('NFQAssistanceBundle:Tags', 't')
-            ->where('t.title LIKE :title')
-            ->setParameter(':title', $tag . '%');
+            ->from('NFQAssistanceBundle:Tags', 't');
+            for($i=0; $i<count($tags); $i++){
+                if(strlen($tags[$i]) > 4) {
+                    $qb -> orWhere('t.title LIKE :title' . $i)
+                        ->setParameter('title' . $i, $tags[$i] . '%');
+                }
+            }
         if( isset( $parent ) ) {
             $qb->andWhere('t.parent = :parent')
                 ->setParameter(':parent', $parent);
@@ -122,6 +125,9 @@ class TagsRepository extends NestedTreeRepository
            if( is_array($tag) ) {
                $i = 1;
                foreach($tag as $t){
+                   if(mb_strlen($t)<4){
+                       continue;
+                   }
                    $i++;
                    $qb->orWhere('t.title LIKE :title'.$i)
                        ->setParameter('title'.$i, $t . '%');
