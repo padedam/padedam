@@ -288,7 +288,6 @@ class TagManager
             if ( empty($tags) ) {
                 throw new \Exception('no tags');
             }
-//            print_r($tags); exit;
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
             $foundTag = $tagsRepo->suggestTag($tags);
             $result = [];

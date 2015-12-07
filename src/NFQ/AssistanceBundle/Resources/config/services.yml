@@ -18,3 +18,8 @@ services:
         arguments: ["@nfq_assistance.review_manager"]
         tags:
             - { name: twig.extension }
+
+    nfq_assistance.form.type.request_status:
+      class: NFQ\AssistanceBundle\Form\RequestStatusType
+      tags:
+        - { name: form.type}

@@ -15,10 +15,10 @@ use NFQ\AssistanceBundle\Entity\Tags;
  */
 class AssistanceRequest
 {
-    const STATUS_WAITING = 'WAITING';
-    const STATUS_TAKEN = 'TAKEN';
-    const STATUS_DONE = 'DONE';
-    const STATUS_CANCELED = 'CANCELED';
+    const STATUS_WAITING = 0;
+    const STATUS_TAKEN = 1;
+    const STATUS_DONE = 2;
+    const STATUS_CANCELED = 3;
 
     /**
      * @var integer
@@ -65,7 +65,7 @@ class AssistanceRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", columnDefinition="enum('WAITING', 'TAKEN', 'DONE', 'CANCELED')")
+     * @ORM\Column(name="status", type="integer" )
      */
     private $status;
 
