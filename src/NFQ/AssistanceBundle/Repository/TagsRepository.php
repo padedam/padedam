@@ -6,6 +6,7 @@ namespace NFQ\AssistanceBundle\Repository;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\UserBundle\Entity\User;
+
 /**
  * Class TagsRepository
  * @package NFQ\AssistanceBundle\Repository
@@ -22,7 +23,7 @@ class TagsRepository extends NestedTreeRepository
     {
 
         $qb = $this->getEntityManager()
-        ->createQueryBuilder();
+            ->createQueryBuilder();
         $qb->select('t.id AS id, t.title as text')
             ->from('NFQAssistanceBundle:Tags', 't')
             ->leftJoin('t.usersWithTag', 't2u')
@@ -46,7 +47,7 @@ class TagsRepository extends NestedTreeRepository
             ->leftJoin('t.parent', 'r')
             ->where('t2u.user = :user')
             ->andWhere('t.parent IS NULL')
-        ->setParameter(':user', $user );
+            ->setParameter(':user', $user);
 
         return $qb->getQuery()->getArrayResult();
     }

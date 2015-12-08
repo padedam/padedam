@@ -6,14 +6,16 @@
             <legend>{{ 'user.details'|trans }}</legend>
             <div class="fos_user_user_show">
                 <p>{{ 'user.name'|trans }}: {{ user.firstName }}</p>
+
                 <p>{{ 'user.surname'|trans }}: {{ user.lastName }}</p>
+
                 <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
                 <blockquote>
                     {{ user.description }}
                 </blockquote>
 
             </div>
-                <p><a href="{{ path('fos_user_profile_edit') }}">{{ 'user.edit_profile'|trans }}</a></p>
+            <p><a href="{{ path('fos_user_profile_edit') }}">{{ 'user.edit_profile'|trans }}</a></p>
         </div>
     </div>
 </div>
@@ -26,13 +28,17 @@
             <legend>{{ 'profile.thanks_number'|trans }}: {{ reviewList.number }}</legend>
             <div class="list-group">
                 {% if reviewList.reviews is not empty %}
-                <p>{{ 'profile.reviews'|trans }}:</p>
-                {% for review in reviewList.reviews %}
-                    <a class="list-group-item well-sm">
-                        <h4 class="list-group-item-heading">{{ review.helpGetter.firstName }}</h4>
-                        <p class="list-group-item-text">{{ review.reviewMessage }}</p>
-                    </a>
-                {% endfor %}
+                    <p>{{ 'profile.reviews'|trans }}:</p>
+                    {% for review in reviewList.reviews %}
+                        <a class="list-group-item well-sm">
+                            <h4 class="list-group-item-heading">{{ review.helpGetter.firstName }}</h4>
+
+                            <p class="list-group-item-text">{{ review.reviewMessage }}</p>
+                        </a>
+                    {% endfor %}
+                    <div class="pagination">
+                        {{ knp_pagination_render(reviewList.reviews) }}
+                    </div>
                 {% else %}
                     <p class="list-group-item-text">{{ 'review.no_reviews'|trans }}</p>
                 {% endif %}

@@ -1,7 +1,8 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed"
+                    type="button">
                 <span class="sr-only">{{ 'nav.toggle_nav'|trans }}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -14,23 +15,27 @@
             <ul class="nav navbar-nav">
 
                 {% if app.user %}
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ 'generic.profile'|trans }} <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="{{ path('fos_user_profile_show') }}">{{ 'profile.view'|trans }}</a></li>
-                        <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'profile.edit'|trans }}</a></li>
-                    </ul>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle"
+                           href="#">{{ 'generic.profile'|trans }} <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="{{ path('fos_user_profile_show') }}">{{ 'profile.view'|trans }}</a></li>
+                            <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'profile.edit'|trans }}</a></li>
+                        </ul>
 
-                </li>
-                <li><a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a></li>
-                <li><a href="{{ path('nfq_assistance_request_list') }}">{{ 'menu.req_list'|trans }}</a></li>
+                    </li>
+                    <li>
+                        <a href="{{ path('nfq_assistance_request_form') }}">{{ 'generic.ask_assistance_navbar'|trans }}</a>
+                    </li>
+                    <li><a href="{{ path('nfq_assistance_request_list') }}">{{ 'menu.req_list'|trans }}</a></li>
                 {% endif %}
             </ul>
-                {% if not app.user %}
-            <ul class="nav navbar-nav navbar-right">
-                <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
-                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span class="sr-only">(current)</span></a></li>
-            </ul>
+            {% if not app.user %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li data-toggle="modal" data-target="#login"><a href="#">{{ 'generic.login'|trans }}</a></li>
+                    <li><a href="{{ path('fos_user_registration_register') }}">{{ 'generic.registration'|trans }} <span
+                                    class="sr-only">(current)</span></a></li>
+                </ul>
             {% else %}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path("fos_user_security_logout") }}">{{ 'generic.logout'|trans }}</a></li>

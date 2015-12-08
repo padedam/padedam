@@ -3,9 +3,12 @@
 namespace NFQ\UserBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use NFQ\AssistanceBundle\Entity\Tag2User;
+use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use NFQ\AssistanceBundle\Entity\Tags;
@@ -315,7 +318,7 @@ class TagManager
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
             $foundTag = $tagsRepo->suggestTag($tags);
             $result = [];
-            foreach($foundTag as $tag){
+            foreach ($foundTag as $tag) {
                 $process = $this->processTag($tag);
                 $result[$process['id']] = $process['id'];
             }
@@ -353,20 +356,21 @@ class TagManager
      * @param string $word
      * @return string|void
      */
-    private function suggestSpelling($word=''){
-        if( mb_strlen($word) < 4 or $this->removeWords($word)){
+    private function suggestSpelling($word = '')
+    {
+        if (mb_strlen($word) < 4 or $this->removeWords($word)) {
             return;
         }
         //check if not more than 1 word
         $words = explode(' ', $word);
         $result = '';
         $pspell_link = pspell_new("lt", null, null, "utf-8");
-        foreach($words as $item){
+        foreach ($words as $item) {
             if (!pspell_check($pspell_link, $item)) {
                 $suggestions = pspell_suggest($pspell_link, $item);
                 $item = strtolower(reset($suggestions));
             }
-            $result .= $item.' ';
+            $result .= $item . ' ';
         }
 
         return rtrim($result);
@@ -394,10 +398,10 @@ class TagManager
             }elseif(!in_array($first_suggested, $results)){
                 $results[] = $first_suggested;
             }
-            $myentry = mb_substr($w, 0, mb_strlen($w)/2);
-            if(!in_array($myentry, $results) and strlen($myentry) > 3){
+            $myentry = mb_substr($w, 0, mb_strlen($w) / 2);
+            if (!in_array($myentry, $results) and strlen($myentry) > 3) {
                 $results[] = $myentry;
-            }elseif(!in_array($myentry, $results) and strlen($myentry) < 4){
+            } elseif (!in_array($myentry, $results) and strlen($myentry) < 4) {
                 $results[] = $w;
             }
         }
@@ -417,10 +421,11 @@ class TagManager
         return $word;
     }
 
-    private function removeWords($w){
+    private function removeWords($w)
+    {
         $words = ['vis', 'man', 'aš', 'juo', 'jum', 'kaip', 'mok', 'ir'];
-        foreach($words as $word){
-            if(strpos($w, $word) === 0){
+        foreach ($words as $word) {
+            if (strpos($w, $word) === 0) {
                 return true;
             }
         }
