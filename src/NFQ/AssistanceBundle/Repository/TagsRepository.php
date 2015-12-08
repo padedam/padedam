@@ -132,12 +132,14 @@ class TagsRepository extends NestedTreeRepository
                    $qb->orWhere('t.title LIKE :title'.$i)
                        ->setParameter('title'.$i, $t . '%');
                }
-           }else{
+               $qb ->andWhere('t.isEnabled = :enabled')
+                ->setParameter('enabled', 1);
+           }elseif(mb_strlen($tag) > 3){
                $qb->where('t.title LIKE :title')
                     ->setParameter('title', $tag . '%');
+               $qb ->andWhere('t.isEnabled = :enabled')
+                   ->setParameter('enabled', 1);
            }
-        //$qb->groupBy('t.id');
-
         return $qb->getQuery()->getArrayResult();
     }
 

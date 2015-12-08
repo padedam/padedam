@@ -41,6 +41,12 @@ blockquote {
     min-height: 300px;
 }
 .rem-cat{
+    display:block;
     height:30px;
+    width:30px;
     line-height: 30px;
+    background: url("/bundles/nfqfrontend/img/delete.png");
+    background-size: contain;
+    text-indent:-9999px;
+    overflow:hidden;
 }
