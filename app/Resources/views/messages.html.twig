@@ -2,9 +2,9 @@
     <div class="bs-component">
         <div class="alert alert-dismissible alert-{{ type }} text-center">
             <button data-dismiss="alert" class="close" type="button">×</button>
-            {% for flashMessage in flashMessages %}
-                {{ flashMessage|trans }}
-            {% endfor %}
+                {% for flashMessage in flashMessages %}
+                        {{ flashMessage|trans }}
+                {% endfor %}
         </div>
     </div>
 {% endfor %}
@@ -13,7 +13,7 @@
     <div class="bs-component">
         <div class="alert alert-dismissible alert-danger text-center">
             <button data-dismiss="alert" class="close" type="button">×</button>
-            {{ error|trans({}, 'messages') }}
+                {{ error|trans({}, 'messages') }}
         </div>
     </div>
 {% endif %}

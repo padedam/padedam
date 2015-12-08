@@ -30,7 +30,7 @@ class Tag2User
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -76,7 +76,7 @@ class Tag2User
     /**
      * Get tag
      *
-     * @return \NFQ\AssistanceBundle\Entity\Tags
+     * @return \NFQ\AssistanceBundle\Entity\Tags 
      */
     public function getTag()
     {

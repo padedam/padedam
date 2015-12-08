@@ -19,18 +19,18 @@ class LoadTag2UserData extends AbstractFixture implements OrderedFixtureInterfac
         $users = ['admin', 'info'];
 
         foreach ($users as $user) {
-            $a = 1;
+            $a=1;
 
             $ref = $this->getReference($user);
-            while ($this->hasReference('tags_' . $user . $a)) {
-                $tag = $this->getReference('tags_' . $user . $a);
+            while($this->hasReference('tags_'.$user.$a)){
+                $tag = $this->getReference('tags_'.$user.$a);
                 $t2u = new Tag2User();
                 $t2u->setUser($ref);
                 $t2u->setTag($tag);
                 $manager->persist($t2u);
                 $a++;
             }
-            $a = 1;
+            $a=1;
         }
 
         $manager->flush();

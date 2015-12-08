@@ -2,10 +2,10 @@
 
 namespace NFQ\ReviewsBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use NFQ\UserBundle\Entity\User;
+use \DateTime;
 
 /**
  * Review
@@ -70,7 +70,7 @@ class Review
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class Review
     /**
      * Get thank
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getThank()
     {
@@ -116,7 +116,7 @@ class Review
     /**
      * Get reviewMessage
      *
-     * @return string
+     * @return string 
      */
     public function getReviewMessage()
     {

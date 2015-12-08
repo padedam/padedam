@@ -5,7 +5,7 @@ services:
 
     nfq_assistance.review_manager:
         class: NFQ\AssistanceBundle\Service\ReviewManager
-        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage", "@knp_paginator"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
 
     nfq_assitance.twig.assistance_extension:
         class: NFQ\AssistanceBundle\Twig\AssitanceExtension
@@ -24,8 +24,3 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postPersist }
             - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postUpdate }
-
-    nfq_assistance.form.type.request_status:
-      class: NFQ\AssistanceBundle\Form\RequestStatusType
-      tags:
-        - { name: form.type}

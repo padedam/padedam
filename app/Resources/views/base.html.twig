@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Padedam.lt - {% block title %}{% endblock %}</title>
-    {% block stylesheets %}
+    <head>
+        <meta charset="UTF-8" />
+        <title>Padedam.lt - {% block title %}{% endblock %}</title>
+        {% block stylesheets %}
 
-        {% stylesheets
-        '@NFQFrontendBundle/Resources/public/css/bootstrap_simplex.min.css'
-        '@NFQFrontendBundle/Resources/public/css/style.css' %}
-        <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
-        {% endstylesheets %}
+            {% stylesheets
+            '@NFQFrontendBundle/Resources/public/css/bootstrap_simplex.min.css'
+            '@NFQFrontendBundle/Resources/public/css/style.css' %}
+            <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
+            {% endstylesheets %}
 
-    {% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-</head>
-<header>
-    {% include 'navigation.html.twig' %}
-    {{ render(controller('NFQUserBundle:Security:modal_login')) }}
-</header>
-<body>
-{% include 'messages.html.twig' %}
-{% block body %}
-{% endblock %}
-{% block javascripts %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <header>
+        {% include 'navigation.html.twig' %}
+        {{  render(controller('NFQUserBundle:Security:modal_login')) }}
+    </header>
+    <body>
+        {% include 'messages.html.twig' %}
+        {% block body %}
+        {% endblock %}
+        {% block javascripts %}
 
-    {% javascripts
-    '@NFQFrontendBundle/Resources/public/js/jquery-2.1.4.js'
-    '@NFQFrontendBundle/Resources/public/js/bootstrap.js'
-    '@NFQFrontendBundle/Resources/public/js/script.js' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+            {% javascripts
+            '@NFQFrontendBundle/Resources/public/js/jquery-2.1.4.js'
+            '@NFQFrontendBundle/Resources/public/js/bootstrap.js'
+            '@NFQFrontendBundle/Resources/public/js/script.js'  %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
 
-{% endblock %}
-</body>
+        {% endblock %}
+    </body>
 </html>

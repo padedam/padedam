@@ -5,7 +5,7 @@
 
 {% block body %}
 
-    <h1 class="text-center">{{ 'generic.register'|trans }}</h1>
+<h1 class="text-center">{{ 'generic.register'|trans }}</h1>
 
     <div class="col-lg-6 col-lg-offset-3">
         <div class="well bs-component">
@@ -14,48 +14,37 @@
                     <legend>{{ 'generic.user_registration'|trans }}</legend>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputName">{{ 'user.name'|trans }}</label>
-
                         <div class="col-lg-9">
-                            <input type="text" name="inputName" placeholder="{{ 'user.label_name'|trans }}"
-                                   id="inputName" class="form-control">
+                            <input type="text" name="inputName" placeholder="{{ 'user.label_name'|trans }}" id="inputName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputSurname">{{ 'user.surname'|trans }}</label>
-
                         <div class="col-lg-9">
-                            <input type="text" name="inputSurname" placeholder="{{ 'user.label_surname'|trans }}"
-                                   id="inputSurname" class="form-control">
+                            <input type="text" name="inputSurname" placeholder="{{ 'user.label_surname'|trans }}" id="inputSurname" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputPhone">{{ 'user.phone'|trans }}</label>
-
                         <div class="col-lg-9">
-                            <input type="text" name="inputPhone" placeholder="{{ 'user.label.phone'|trans }}"
-                                   id="inputPhone" class="form-control">
+                            <input type="text" name="inputPhone" placeholder="{{ 'user.label.phone'|trans }}" id="inputPhone" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputEmail">{{ 'generic.email'|trans }}</label>
-
                         <div class="col-lg-9">
-                            <input type="email" name="inputEmail" placeholder="{{ 'generic.label.email'|trans }}"
-                                   id="inputEmail" class="form-control">
+                            <input type="email" name="inputEmail" placeholder="{{ 'generic.label.email'|trans }}" id="inputEmail" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputPassword">{{ 'generic.password'|trans }}</label>
-
                         <div class="col-lg-9">
-                            <input type="password" name="inputPassword" placeholder="{{ 'user.new_password'|trans }}"
-                                   id="inputPassword" class="form-control">
+                            <input type="password" name="inputPassword" placeholder="{{ 'user.new_password'|trans }}" id="inputPassword" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputYear">{{ 'user.birth_year'|trans }}</label>
-
                         <div class="col-lg-3">
                             <select id="inputYear" class="form-control">
                                 <option value="1981">1981</option>
@@ -68,7 +57,6 @@
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputAbout">{{ 'user.about_me'|trans }}</label>
-
                         <div class="col-lg-9">
                             <textarea id="inputAbout" rows="3" class="form-control"></textarea>
                             <span class="help-block">{{ 'user.short_about_me_desc'|trans }}</span>
@@ -82,7 +70,7 @@
                                     <input type="checkbox" name="sutinku"> {{ 'help.i_agree_to_help'|trans }}
                                 </label>
                             </div>
-                            <br/>
+                            <br />
                             <button class="btn btn-primary" type="submit">{{ 'generic.save'|trans }}</button>
                         </div>
                     </div>
