@@ -1,3 +1,0 @@
-reg:
-    path:     /registracija
-    defaults: { _controller: NFQHomeBundle:Home:signup }
