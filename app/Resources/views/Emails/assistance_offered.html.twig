@@ -1,0 +1,17 @@
+<p>Sveiki, {{ owner.getFirstName() }}</p>
+
+<p>Atsiliepta į jūsų pagalbos prašymą:</p>
+<blockquote>{{ request.getShortDescription() }}</blockquote>
+<br>
+
+<p>Padėjėjo kontaktiniai duomenys</p>
+<ul>
+    <li>Vardas - {{ helper.getFirstName() }}</li>
+    <li>Telefono nr. - {{ helper.getPhone() }}</li>
+    <li>Trumpas pristatymas. - {{ helper.getDescription() }}</li>
+</ul>
+
+<p>Prašome susisiekti su šiuo žmogumi</p>
+
+<p>Pagarbiai,<br>
+Padedam.lt</p>

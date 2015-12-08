@@ -1,4 +1,0 @@
-
-home:
-    path:     /
-    defaults: { _controller: NFQHomeBundle:Home:home }

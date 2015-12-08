@@ -1,0 +1,3 @@
+nfq_review_create:
+    path:     /createReview/{arid}
+    defaults: { _controller: NFQReviewsBundle:Review:createReview }

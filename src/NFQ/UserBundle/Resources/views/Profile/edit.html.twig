@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+    <span>{{ attr['data-help']|trans }} </span>
+{%- endblock textarea_widget %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@NFQFrontendBundle/Resources/public/css/select2.css'
+        '@NFQFrontendBundle/Resources/public/css/select2-bootstrap.css' %}
+        <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
+    {% endstylesheets %}
+
+{% endblock %}
+
+
+
+{% block body %}
+{% include "NFQUserBundle:Profile:edit_content.html.twig" %}
+{% endblock body %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@NFQFrontendBundle/Resources/public/js/select2.js'
+        '@NFQFrontendBundle/Resources/public/js/select2_locale_lt.js'
+        '@NFQFrontendBundle/Resources/public/js/userCompetences.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

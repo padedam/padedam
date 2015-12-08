@@ -1,0 +1,26 @@
+services:
+    nfq_assistance.assistance_manager:
+        class: NFQ\AssistanceBundle\Service\AssistanceManager
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage",  "@knp_paginator"]
+
+    nfq_assistance.review_manager:
+        class: NFQ\AssistanceBundle\Service\ReviewManager
+        arguments: ["@doctrine.orm.default_entity_manager", "@request_stack", "@security.authorization_checker", "@security.token_storage"]
+
+    nfq_assitance.twig.assistance_extension:
+        class: NFQ\AssistanceBundle\Twig\AssitanceExtension
+        arguments: ["@nfq_assistance.assistance_manager"]
+        tags:
+            - { name: twig.extension }
+
+    nfq_assitance.twig.review_extension:
+        class: NFQ\AssistanceBundle\Twig\ReviewExtension
+        arguments: ["@nfq_assistance.review_manager"]
+        tags:
+            - { name: twig.extension }
+
+    nfq_assitance.entity_listener.register_event:
+        class: NFQ\AssistanceBundle\EventListener\Doctrine\AsistanceRequestListener
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postPersist }
+            - { name: doctrine.orm.entity_listener, entity: NFQ\AssistanceBundle\Entity\AssistanceRequest, event: postUpdate }

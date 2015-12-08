@@ -1,0 +1,60 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    '@NFQFrontendBundle/Resources/public/css/select2.css'
+    '@NFQFrontendBundle/Resources/public/css/select2-bootstrap.css' %}
+    <link href="{{ asset_url }}" rel="stylesheet" media="all"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="control-group">
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block body %}
+    <h1 class="text-center">{{ 'generic.ask_assistance'|trans }}</h1>
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="well bs-component">
+            <legend>{{ 'generic.ask_assistance_form'|trans }}</legend>
+            <fieldset>
+                {{ form_start(form) }}
+                    <br>
+                    {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'50' }}) }}
+                    <br>
+                    {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
+                        'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
+                    <br>
+                    {{ form_row(form.tags, {'id': 'competence', 'attr':
+                        {
+                            'class': 'form-control',
+                            'placeholder': 'assistance.field'|trans,
+                            'data-rem' : url('nfq_assistance_remove_tags'),
+                            'data-match' : url('nfq_assistance_match_tags'),
+                            'data-suggest' : url('nfq_assistance_suggest_tag')
+                        }
+                    }) }}
+                    <br>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+            </fieldset>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    '@NFQFrontendBundle/Resources/public/js/select2.js'
+    '@NFQFrontendBundle/Resources/public/js/select2_locale_lt.js'
+    '@NFQFrontendBundle/Resources/public/js/machRequestTags.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

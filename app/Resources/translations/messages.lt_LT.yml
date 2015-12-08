@@ -1,0 +1,136 @@
+generic.email: El paštas
+generic.label.email: Jūsų el. pašto adresas
+generic.password: Slaptažodis
+generic.label.password: Jūsų slaptažodis
+generic.forgot_password: Pamiršau slaptažodį
+generic.close: Uždaryti
+generic.login: Prisijungti
+generic.please_login: Prisijunkite
+generic.logout: Atsijungti
+nav.toggle_nav: Toggle navigation
+generic.website_name: Padedam.lt
+generic.registration: Registracija
+generic.user_registration: Vartotojo registracija
+generic.register: Registruokitės
+generic.profile: Profilis
+generic.submit: Pateikti
+user.wellcome: Sveiki atvykę
+user.my_profile: Mano profilis
+user.user_profile: Vartotojo profilis
+user.name: Vardas
+user.label_name: Jūsų vardas
+user.surname: Pavardė
+user.label_surname: Jūsų pavardė
+user.phone: Telefonas
+user.label.phone: Jūsų telefono numeris
+user.birth_year: Gimimo metai
+user.new_password: Pakeisti slaptažodį nauju
+user.about_me: Apie mane
+user.short_about_me_desc: Trumpas aprašas apie jus (pavyzdžiui: 22 metų studentas, komunikabilus, darbštus, mėgstu krepšinį, savaitgaliais groju vestuvėse)
+user.how_can_i_help: Kaip padėsiu
+help.advice: Patarimu
+help.work: Darbu
+help.heavy: Galiu kelti sunkius daiktus
+help_frequency: Kaip dažnai galėsiu padėti
+help_hour_per_month: "{1} %count% valandą per mėnesį | ]1,Inf] %count% valandas per mėnesį"
+help.no_limit: Neribosiu savęs!
+help.what_cn_i_do: Ką galiu daryti
+help.im_able: Ką moku
+help.choose_or: Pasirinkite tinkamus arba
+help.create_new: sukurkite naują
+help.i_agree_to_help: Sutinku padėti artimui
+generic.save: Išsaugoti
+generic.date: Data
+help.start_writeing: Pradėkite rašyti
+generic.remove: Pašalinti
+
+
+#Assistance form
+generic.ask_assistance: Pagalbos prašymas
+generic.assistance_req_list: Pagalbos prašymų sąrašas
+generic.assistance_cat_list: Pagalbos categorijų sąrašas
+generic.ask_assistance_form: Pagalbos prašymo forma
+generic.ask_assistance_navbar: Prašyti pagalbos
+assistance.label_short_description: Trumpas aprašymas (50 simbolių)
+assistance.short_description_placeholder: Trumpas reikalingos pagalbos aprašymas
+assistance.field: Pagalbos sritis
+assistance.short_desc: Trumpas aprašymas
+assistance.label_long_description: Išsamus prašymo aprašymas
+assistance.long_description_placeholder: Išsamus reikalingos pagalbos aprašymas
+assistance.submit_button: Pateikti prašymą
+assistance.successful_request: Jūsų prašymas priimtas
+assistance.owner_first_name: Prašymo autorius
+assistance.cat_name: Kategorijos pavadinimas
+assistance.parent: Aukštesnė kategorija
+assistance.select_parent: Pasirinkite pagalbos sritį
+
+
+#menu
+menu.help: Pagalba
+menu.req_list: Prašymų sąrašas
+menu.req_cat: Prašymų kategorijos
+
+#review
+review.submit_button: Išsaugoti atsiliepimą
+profile.thanks_number: Padėkų skaičius
+profile.reviews: Atsiliepimai
+profile.view: Peržiūrėti profilio informaciją
+profile.edit: Redaguoti profilio informaciją
+profile.competence: Mano kompetencijos
+review.successful_review: Ačiū už atsiliepimą
+generic.write_review: Atsiliepimas
+generic.write_review_form: Atsiliepimo forma
+review.review_textarea_placeholder: Atsiliepimas, padėka
+review.message_label: Atsiliepimas
+review.checkbox_label: Skiriu padėką
+review.no_reviews: Jūs neturite atsiliepimų
+
+generic.field: Sritis
+generic.field.palceholder: Sritis, kurioje reikalinga pagalba
+generic.assistance_my_req_list: Mano pagalbos prašymų sąrašas
+generic.assistance_taken_req_list: Aš padedu
+assistances.table_actions_label: Veiksmai
+assistances.table_actions_done: Padėjo
+assistances.table_actions_not_done: Nepadėjo
+assistances.table_actions_cancel: Atšaukti
+assistances.table_actions_help: Padėti
+assistance_canceled: Pagalbos prašymas atšauktas
+assistance_helper_cancel: Pagalbos teikimas atšauktas
+assistance_registered: Pagalbos teikimas registruotas
+assistance_not_done: Jūsų pagalbos prašymas atnaujintas
+assistance.atention: Dėmesio
+assistance.choose_tags: Pasirinkite bent vieną sritį, kurioje teiksite pagalbą kitiems registruoriems puslapio vartotojams
+#user
+user.details: Mano informacija
+user.edit_profile: Redaguoti profilį
+
+#front page
+
+fp.they_need_u: Tu jiems gali padėti
+fp.biggest_heroes: Aktyviausiai padedantys nariai
+fp.no_requests_found: Laukiančių užklausų šiuo metu nėra
+fp.no_heroes_found: Kol kas vartotojai padėkų neturi
+
+registration.flash.user_created: Registracija sėkminga
+
+#fosuser
+profile.flash.updated: Jūsų informacija atnaujinta
+"Bad credentials.": Neteisingi prisijungimo duomenys
+user.remind_pass: Slaptažodžio priminimas
+
+
+#errors
+action_denied: Šis veiksmas draudžiamas
+action_disabled: Jūs nebegalite atlikti šio veiksmo dar kartą
+
+assistances.status_label: Būklė
+assistances.status_helper_taken: gavo pranešimą, kad jūs sutikote padėti
+assistances.author_name_label: Prašymo autorius
+assistances.helper_name_label: Padėjėjas
+assistances.my_status_canceled: Prašymas atšauktas
+assistances.my_status_done: Jums padėjo
+assistances.my_status_waiting: Laukiama padėjėjo
+assistances.my_status_taken: Jums padės
+assistances.helper_profile: Informacija apie padėjėją
+user.short_desc: Trumpas aprašymas
+assistances.no_wating_requests: Pagalbos prašymų, atitinkančių jūsų nurodytas kompetencijas nerasta

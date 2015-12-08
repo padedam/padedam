@@ -8,18 +8,24 @@
     },
     "require": {
         "php": ">=5.3.9",
-        "symfony/symfony": "2.7.*",
-        "doctrine/orm": "^2.4.8",
+        "symfony/symfony": "~2.7",
+        "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "~1.4",
+	    "doctrine/dbal":"2.5.*",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/user-bundle": "~1.3",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "javiereguiluz/easyadmin-bundle": "^1.7",
+        "knplabs/knp-paginator-bundle": "^2.4@dev"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "doctrine/doctrine-fixtures-bundle": "^2.2@dev"
     },
     "scripts": {
         "post-install-cmd": [
@@ -42,6 +48,8 @@
     "config": {
         "bin-dir": "bin"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

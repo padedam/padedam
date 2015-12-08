@@ -1,4 +1,32 @@
-nfq_home:
-    resource: "@NFQHomeBundle/Resources/config/routing.yml"
-    prefix:   /
+nfq_crontask:
+    resource: "@NFQCrontaskBundle/Resources/config/routing.yml"
+    prefix:   /crontask
 
+nfq_reviews:
+    resource: "@NFQReviewsBundle/Resources/config/routing.yml"
+    prefix:   /reviews
+
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+nfq_user:
+    resource: "@NFQUserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
+nfq_home:
+    resource:   "@NFQHomeBundle/Resources/config/routing.yml"
+    prefix:     /
+
+nfq_frontend:
+    resource: "@NFQFrontendBundle/Resources/config/routing.yml"
+    prefix:   /front
+
+home:
+    path:     /
+    defaults: { _controller: NFQHomeBundle:Home:home }
+
+nfq_assistance:
+    resource: "@NFQAssistanceBundle/Resources/config/routing.yml"
+    prefix:   /assistance

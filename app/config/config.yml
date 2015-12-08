@@ -2,15 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: doctrine_extensions.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator: { fallbacks: [ en ] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -35,12 +34,15 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+            #resources: ['bootstrap_3_layout.html.twig']
+            resources: ['bootstrap_3_horizontal_layout.html.twig']
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ 'FOSUserBundle', 'NFQAssistanceBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -59,6 +61,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -69,7 +73,14 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
+        metadata_cache_driver: array
         auto_mapping: true
+        mappings:
+            translatable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -78,3 +89,61 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_user:
+    from_email:
+            address:        info@padedam.lt
+            sender_name:    Padedam.lt administracija
+    service:
+            mailer: fos_user.mailer.twig_swift
+    db_driver: orm
+    firewall_name: main
+    user_class: NFQ\UserBundle\Entity\User
+    registration:
+            confirmation:
+                enabled: false
+            form:
+                type: nfq_user_registration
+                validation_groups: [NFQRegistration]
+    profile:
+            form:
+                type: nfq_user_profile
+                validation_groups: [NFQProfile]
+easy_admin:
+    site_name: 'Padedam.lt'
+    entities:
+      Users:
+        class: NFQ\UserBundle\Entity\User
+        label: Users
+        list:
+          fields: ['id', 'First name', 'Last name', 'email', 'enabled', 'locked']
+        show:
+          fields: ['First name', 'Last name', 'email', 'phone', 'birthday','description', 'enabled', 'locked', 'lastLogin']
+        edit:
+          fields: [{property: 'first_name', label:'First Name' }, {property: 'last_name', label:'Last Name' }, 'email', 'phone', {property: 'birthday', label:'Birthday', type: 'birthday' },'description', 'enabled', 'locked']
+        disabled_actions: ['new']
+      AssistanceRequest:
+        class: NFQ\AssistanceBundle\Entity\AssistanceRequest
+        label: Assistance requests
+      Tags:
+        class: NFQ\AssistanceBundle\Entity\Tags
+        label: Request tags
+        list:
+          fields: ['title', 'parent']
+        show:
+          fields: ['title', 'parent']
+        edit:
+          fields: ['title', 'parent']
+        new:
+          fields: ['title', 'parent']
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig    # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template

@@ -1,0 +1,10 @@
+<div>
+    <p>{{ 'profile.thanks_number'|trans }}: {{ number }}</p>
+
+    <p>{{ 'profile.reviews'|trans }}:</p>
+
+    {% for review in reviews %}
+        {{ review.helpGetter.firstName }}
+        {{ review.reviewMessage }} <br>
+    {% endfor %}
+</div>

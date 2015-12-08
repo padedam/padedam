@@ -1,0 +1,3 @@
+nfq_crontask_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: NFQCrontaskBundle:Default:index }
