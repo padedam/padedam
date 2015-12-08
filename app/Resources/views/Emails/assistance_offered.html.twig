@@ -1,7 +1,10 @@
-<h3>Atsiliepta į jūsų pagalbos prašymą</h3>
+<p>Sveiki, {{ owner.getFirstName() }}</p>
 
+<p>Atsiliepta į jūsų pagalbos prašymą:</p>
+<blockquote>{{ request.getShortDescription() }}</blockquote>
+<br>
 
-<p>Kontaktiniai duomenys</p>
+<p>Padėjėjo kontaktiniai duomenys</p>
 <ul>
     <li>Vardas - {{ helper.getFirstName() }}</li>
     <li>Telefono nr. - {{ helper.getPhone() }}</li>
@@ -10,4 +13,5 @@
 
 <p>Prašome susisiekti su šiuo žmogumi</p>
 
-<p>Sėkmės!</p>
+<p>Pagarbiai,<br>
+Padedam.lt</p>

@@ -21,11 +21,14 @@ class CronTasksRunCommand  extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $logger = $this->getContainer()->get('logger');
+        $logger->addNotice('Starting email sending');
         $output->writeln('<comment>Starting email sending...</comment>');
         $this->output = $output;
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $events = $em->getRepository('NFQAssistanceBundle:AssistanceEvent')->findLatest();
         if(empty($events)){
+            $logger->addNotice('No requests found!');
             return $output->writeln('<info>No requests found!</info>');
         }
         foreach ($events as $event) {
@@ -34,17 +37,23 @@ class CronTasksRunCommand  extends ContainerAwareCommand
             $owner = $request->getOwner();
             $helper = $event->getUser();
             if($request->getStatus() != $request::STATUS_TAKEN){
-                $output->writeln(sprintf('skipping assistance request <info>#%s</info> with status <info>%s</info> ', $request->getId(), $request->getStatus()));
+                $msg = sprintf('skipping assistance request <info>#%s</info> with status <info>%s</info> ', $request->getId(), $request->getStatus());
+                $output->writeln($msg);
+                $logger->addNotice($msg);
                 continue;
             }
 
             try {
                 //send the email
-                $output->writeln(sprintf('Sending email to assistance request <info>#%s</info> asker email <info>%s</info>, helper email <info>%s</info>', $request->getId(), $owner->getEmail(), $helper->getEmail()));
+                $msg = sprintf('Sending email to assistance request <info>#%s</info> asker email <info>%s</info>, helper email <info>%s</info>', $request->getId(), $owner->getEmail(), $helper->getEmail());
+                $output->writeln($msg);
+                $logger->addNotice($msg);
                 $this->sendEmail($event);
                 $output->writeln('<info>SUCCESS</info>');
+                $logger->addNotice('success');
             } catch (\Exception $e) {
                 $output->writeln('<error>'.$e->getMessage().'</error>');
+                $logger->addNotice($e->getMessage());
             }
         }
         $output->writeln('<comment>Done!</comment>');
@@ -74,11 +83,11 @@ class CronTasksRunCommand  extends ContainerAwareCommand
             ->setBody(
                 $this->getContainer()->get('templating')->render(
                     'Emails/assistance_offered.html.twig',
-                    ['helper' => $helper, 'request'=>$request]
+                    ['helper' => $helper, 'request'=>$request, 'owner'=>$owner]
                 ),
                 'text/html'
             );
-        $this->getContainer()->get('mailer')->send($message);
+        return $this->getContainer()->get('mailer')->send($message);
 
     }
 }

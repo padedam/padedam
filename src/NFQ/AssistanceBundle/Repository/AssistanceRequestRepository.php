@@ -45,17 +45,13 @@ class AssistanceRequestRepository extends EntityRepository
         $qb->select('ar')
             ->from('NFQAssistanceBundle:AssistanceRequest', 'ar')
             ->leftJoin('ar.tags', 't')
-            //->leftJoin('ar.events', 'e'/*, Expr\Join::ON, 'e.user <> :user'*/)
             ->where('ar.owner != :user')
             ->andWhere('t.id IN (:myTags)')
             ->andWhere('ar.status = :status')
-          //  ->andWhere('e.user NOT IN (:parent)')
-         //   ->groupBy('ar.id')
             ->setParameter('status', AssistanceRequest::STATUS_WAITING)
             ->setParameter('myTags', $myTags)
             ->setParameter('user', $user);
 
-        //dump($qb->getQuery()->getSQL());exit;
         return $qb->getQuery()->setMaxResults($limit)->getResult();
     }
 
