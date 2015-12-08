@@ -1,12 +1,11 @@
 <h1 class="text-center">{{ 'generic.register'|trans }}</h1>
 <div class="col-lg-6 col-lg-offset-3">
     <div class="well bs-component">
-        <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST"
-              class="form-horizontal fos_user_registration_register ">
+        <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal fos_user_registration_register ">
             <fieldset>
                 {{ form_widget(form) }}
                 <div>
-                    <input class="btn btn-primary" type="submit" value="{{ 'generic.save'|trans }}"/>
+                    <input class="btn btn-primary" type="submit" value="{{ 'generic.save'|trans }}" />
                 </div>
             </fieldset>
         </form>

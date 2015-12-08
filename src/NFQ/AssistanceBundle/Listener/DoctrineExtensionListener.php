@@ -2,9 +2,9 @@
 
 namespace NFQ\AssistanceBundle\Listener;
 
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class DoctrineExtensionListener implements ContainerAwareInterface
 {

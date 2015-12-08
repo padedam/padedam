@@ -12,8 +12,7 @@ use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
-class RegistrationController extends BaseController
-{
+class RegistrationController extends BaseController{
 
     public function confirmedAction()
     {

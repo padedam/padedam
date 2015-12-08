@@ -7,7 +7,7 @@ nfq_reviews:
     prefix:   /reviews
 
 easy_admin_bundle:
-    resource: "@NFQAdminBundle/Controller/AdminController.php"
+    resource: "@EasyAdminBundle/Controller/"
     type:     annotation
     prefix:   /admin
 

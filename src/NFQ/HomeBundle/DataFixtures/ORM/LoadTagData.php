@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use NFQ\AssistanceBundle\Entity\Tags;
 
-class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTagData  extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -16,7 +16,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $tags = [
-            'statybos' => [
+            'statybos'=>[
                 'tinkas',
                 'glaistas',
                 'cementas',
@@ -25,14 +25,14 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
                 'namas',
                 'remontas'
             ],
-            'elektra' => [
+            'elektra'=>[
                 'rozetė',
                 'lemputė',
                 'lituoti',
                 'laidas',
                 'kabelis'
             ],
-            'kompiuteriai' => [
+            'kompiuteriai'=>[
                 'diskas',
                 'windows',
                 'linux',
@@ -41,7 +41,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
                 'pelytė',
                 'monitorius'
             ],
-            'kulinarija' => [
+            'kulinarija'=>[
                 'maistas',
                 'valgyti',
                 'kalorijos',
@@ -60,14 +60,14 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
                 'patiekalas',
                 'košė'
             ],
-            'buitis' => [
+            'buitis'=>[
                 'televizorius',
                 'indaplovė',
                 'šaldytuvas',
                 'atnešti',
                 'nupirkti'
             ],
-            'automobiliai' => [
+            'automobiliai'=>[
                 'akumuliatorius',
                 'variklis',
                 'sėdynės',
@@ -76,7 +76,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
                 'sankaba',
                 'žibintai'
             ],
-            'santechnika' => [
+            'santechnika'=>[
                 'kranas',
                 'čiaupas',
                 'vamzdynas',
@@ -92,23 +92,23 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $randomTags_admin = array_rand($tags, $a);
         $randomTags_info = array_rand($tags, $i);
 
-        foreach ($tags as $p => $c) {
+        foreach($tags as $p=>$c){
             $parent = new Tags();
             $parent->setTitle($p);
             $parent->setIsEnabled(true);
 
-            if (in_array($p, $randomTags_admin)) {
-                $this->addReference('tags_admin' . $a, $parent);
+            if( in_array($p, $randomTags_admin) ){
+                $this->addReference('tags_admin'.$a, $parent);
                 $a--;
             }
-            if (in_array($p, $randomTags_info)) {
-                $this->addReference('tags_info' . $i, $parent);
+            if( in_array($p, $randomTags_info) ){
+                $this->addReference('tags_info'.$i, $parent);
                 $i--;
             }
 
             $manager->persist($parent);
-            foreach ($c as $child) {
-                if (empty($child)) {
+            foreach($c as $child){
+                if(empty($child)){
                     continue;
                 }
                 $tag = new Tags();

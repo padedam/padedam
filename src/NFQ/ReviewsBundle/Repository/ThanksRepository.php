@@ -27,15 +27,14 @@ class ThanksRepository extends EntityRepository
         return $qb->getQuery()->setMaxResults(5)->getResult();
     }
 
-    public function findOneByUser(User $user)
-    {
+    public function findOneByUser(User $user){
         $result = $this->createQueryBuilder('t')
-            ->leftJoin('t.helper', 'h')
-            ->where('h.id=' . $user->getId())
+            ->leftJoin('t.helper','h')
+            ->where('h.id='.$user->getId())
             ->getQuery()
             ->getResult();
 
-        if (count($result) < 1) {
+        if(count($result)<1){
             return null;
         }
         return $result[0];

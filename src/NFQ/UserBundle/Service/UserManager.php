@@ -3,6 +3,7 @@
 namespace NFQ\UserBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 class UserManager
 {
