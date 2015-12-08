@@ -209,13 +209,15 @@ class TagManager
             $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
             $parent = $tagRepo->findOneById($parent_id);
 
-
-
-            $tags = [['id'=>$param, 'text'=>$param.' (Sukurti)']];
-            if($tag and $tag != $param) {
-                $tags[] = ['id'=>$tag, 'text'=>$tag.' (Sukurti)'];
-            }
             $fetched = $tagRepo->matchEnteredTags([$tag, $param], $parent);
+
+            $tags = [];
+            if(!$this->check_in_array($fetched, $param)) {
+                $tags[] = ['id' => $param, 'text' => $param . ' (Sukurti)'];
+            }
+            if($tag and $tag != $param and !$this->check_in_array($fetched, $tag)) {
+                $tags[] = ['id' => $tag, 'text' => $tag.' (Sukurti)'];
+            }
 
             $response ['status'] = 'success';
             $response['tags'] = array_merge($tags, $fetched);
@@ -225,6 +227,21 @@ class TagManager
         }
         return $response;
     }
+
+
+    /**
+     * @param $arr
+     * @param $value
+     * @param string $type
+     * @return bool
+     */
+    private function check_in_array($arr, $value, $type = "text") {
+        return count(array_filter($arr, function($var) use ($type, $value) {
+            return $var[$type] === $value;
+        })) !== 0;
+    }
+
+
 
     /**
      * removes tags assigned to user
