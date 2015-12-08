@@ -25,7 +25,7 @@ class AppKernel extends Kernel
             new NFQ\UserBundle\NFQUserBundle(),
             new NFQ\AdminBundle\NFQAdminBundle(),
             new NFQ\ReviewsBundle\NFQReviewsBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle()
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new NFQ\CrontaskBundle\NFQCrontaskBundle(),
         );
 
