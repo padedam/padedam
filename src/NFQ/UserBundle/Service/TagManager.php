@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use NFQ\AssistanceBundle\Entity\Tags;
-use NFQ\AssistanceBundle\Entity\Tag2User;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TagManager
