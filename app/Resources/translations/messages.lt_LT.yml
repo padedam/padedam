@@ -99,6 +99,7 @@ assistance_helper_cancel: Pagalbos teikimas atšauktas
 assistance_registered: Pagalbos teikimas registruotas
 assistance_not_done: Jūsų pagalbos prašymas atnaujintas
 review_added: Jūsų atsiliepimas išsiųstas
+assistance_done: Prašymas įvykdytas
 assistance_not_registered: Atsiprašome, bet vienu metu jūs galite padėti tik trims žmonėms
 assistance.atention: Dėmesio
 assistance.choose_tags: Pasirinkite bent vieną sritį, kurioje teiksite pagalbą kitiems registruoriems puslapio vartotojams
@@ -131,3 +132,7 @@ assistances.my_status_taken: Jums padės
 assistances.helper_profile: Informacija apie padėjėją
 user.short_desc: Trumpas aprašymas
 assistances.no_wating_requests: Pagalbos prašymų, atitinkančių jūsų nurodytas kompetencijas nerasta
+
+#knp paginator
+Next: Kitas
+Previous: Ankstesnis

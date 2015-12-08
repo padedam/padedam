@@ -11,10 +11,10 @@ class HomeController extends Controller
 {
     public function signupAction()
     {
-        return $this->render('NFQHomeBundle:Home:signup.html.twig', array(
-                // ...
-            ));
+        return $this->render('NFQHomeBundle:Home:signup.html.twig', array(// ...
+        ));
     }
+
     public function homeAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -35,8 +35,8 @@ class HomeController extends Controller
     }
 
     /**
-    * @return \NFQ\AssistanceBundle\Service\AssistanceManager
-    */
+     * @return \NFQ\AssistanceBundle\Service\AssistanceManager
+     */
     private function getAssistanceManager()
     {
         return $this->container->get('nfq_assistance.assistance_manager');

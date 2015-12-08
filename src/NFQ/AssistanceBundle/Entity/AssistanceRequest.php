@@ -5,7 +5,6 @@ namespace NFQ\AssistanceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
-use NFQ\AssistanceBundle\Entity\Tags;
 
 /**
  * AssistanceRequest
@@ -87,7 +86,7 @@ class AssistanceRequest
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -110,7 +109,7 @@ class AssistanceRequest
     /**
      * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
@@ -133,7 +132,7 @@ class AssistanceRequest
     /**
      * Get longDescription
      *
-     * @return string 
+     * @return string
      */
     public function getLongDescription()
     {

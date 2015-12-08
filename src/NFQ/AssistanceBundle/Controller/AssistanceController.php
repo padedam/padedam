@@ -2,14 +2,14 @@
 
 namespace NFQ\AssistanceBundle\Controller;
 
-use NFQ\AssistanceBundle\Form\AssistanceRequestType;
+use Doctrine\ORM\Query;
 use NFQ\AssistanceBundle\Entity\AssistanceRequest;
+use NFQ\AssistanceBundle\Form\AssistanceRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\Query;
 
 class AssistanceController extends Controller
 {
@@ -20,7 +20,7 @@ class AssistanceController extends Controller
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
-        $form = $this->createForm(new AssistanceRequestType(), $assistanceRequest, array('method'=>'POST'));
+        $form = $this->createForm(new AssistanceRequestType(), $assistanceRequest, array('method' => 'POST'));
 
         $form->handleRequest($request);
 
@@ -42,7 +42,8 @@ class AssistanceController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function requestSubmittedAction(){
+    public function requestSubmittedAction()
+    {
         return $this->render('NFQAssistanceBundle:Assistance:requestSubmitted.html.twig');
     }
 
@@ -57,7 +58,8 @@ class AssistanceController extends Controller
     /**
      * @return \NFQ\UserBundle\Service\TagManager
      */
-    private function getTagManager(){
+    private function getTagManager()
+    {
         return $this->container->get('nfq_user.tag_manager');
     }
 
@@ -116,8 +118,9 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if($assistanceRequest->getOwner()!=$currentUser ||
-            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+        if ($assistanceRequest->getOwner() != $currentUser ||
+            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_TAKEN
+        ) {
             throw new Exception('problems');
         }
 
@@ -144,12 +147,13 @@ class AssistanceController extends Controller
         $repo = $em->getRepository('NFQAssistanceBundle:AssistanceRequest');
         $assistanceRequest = $repo->find($arid);
 
-        if($assistanceRequest->getOwner()==$currentUser ||
-            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
+        if ($assistanceRequest->getOwner() == $currentUser ||
+            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_WAITING
+        ) {
             throw new Exception('problems');
         }
 
-        if(count($repo->getMyTakenRequests($this->getUser()))==3){
+        if (count($repo->getMyTakenRequests($this->getUser())) == 3) {
             $this->get('session')->getFlashBag()->add('danger', 'assistance_not_registered');
             return new RedirectResponse($request->server->get('HTTP_REFERER'));
         }
@@ -174,8 +178,9 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if($assistanceRequest->getHelper()!=$currentUser ||
-            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
+        if ($assistanceRequest->getHelper() != $currentUser ||
+            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_TAKEN
+        ) {
             throw new Exception('problems');
         }
 
@@ -199,7 +204,7 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if($assistanceRequest->getOwner()!=$currentUser){
+        if ($assistanceRequest->getOwner() != $currentUser) {
             throw new Exception('problems');
         }
 

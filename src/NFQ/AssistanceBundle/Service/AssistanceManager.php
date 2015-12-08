@@ -70,7 +70,7 @@ class AssistanceManager
     public function getMyRequests()
     {
         $response = [];
-        try{
+        try {
             $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
             $results = $repo->getMyRequests($this->getUser());
             $response['status'] = 'success';
@@ -82,7 +82,7 @@ class AssistanceManager
             ]);
 
             $response['data'] = $pagination;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['data'] = $e->getMessage();
         }
@@ -95,17 +95,17 @@ class AssistanceManager
     public function getRequestsForMe()
     {
         $response = [];
-        try{
+        try {
             $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
 
             //get all my tags
             $tagsRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
             $myTags = $tagsRepo->getMyRootTags($this->getUser());
             $tagAr = [];
-            foreach($myTags as $tag){
+            foreach ($myTags as $tag) {
                 $tagAr[] = $tag['id'];
             }
-            if( empty($tagAr) ){
+            if (empty($tagAr)) {
                 throw new \Exception ('you have not defined any tags');
             }
 
@@ -119,7 +119,7 @@ class AssistanceManager
 
             $response['status'] = 'success';
             $response['data'] = $pagination;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['data'] = $e->getMessage();
         }
@@ -132,7 +132,7 @@ class AssistanceManager
     public function getMyTakenRequests()
     {
         $response = [];
-        try{
+        try {
 
             $repo = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest');
 
@@ -140,7 +140,7 @@ class AssistanceManager
 
             $response['status'] = 'success';
             $response['data'] = $results;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['message'] = $e->getMessage();
         }
@@ -161,9 +161,9 @@ class AssistanceManager
      */
     private function getUser()
     {
-        if ( !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
-        }else {
+        } else {
             return $this->tokenStorage->getToken()->getUser();
         }
     }
