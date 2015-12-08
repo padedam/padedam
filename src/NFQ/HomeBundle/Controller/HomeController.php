@@ -4,6 +4,7 @@ namespace NFQ\HomeBundle\Controller;
 
 use Chencha\Pspell\Config;
 use Chencha\Pspell\Pspell;
+use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -21,6 +22,12 @@ class HomeController extends Controller
             return new RedirectResponse($this->container->get('router')->generate('nfq_assistance_request_list', []));
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository("NFQAssistanceBundle:AssistanceRequest");
+        $e = $rep->findOneBy([]);
+        $e->setStatus(AssistanceRequest::STATUS_WAITING);
+        $em->flush();
+        dump($e);
         return $this->render('NFQHomeBundle:Home:home.html.twig', [
             'lastUsers' => $this->getUserManager()->getLastUsers(),
         ]);
