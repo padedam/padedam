@@ -121,6 +121,11 @@ profile.flash.updated: Jūsų informacija atnaujinta
 "Bad credentials.": Neteisingi prisijungimo duomenys
 user.remind_pass: Slaptažodžio priminimas
 
+
+#errors
+action_denied: Šis veiksmas draudžiamas
+action_disabled: Jūs nebegalite atlikti šio veiksmo dar kartą
+
 assistances.status_label: Būklė
 assistances.status_helper_taken: gavo pranešimą, kad jūs sutikote padėti
 assistances.author_name_label: Prašymo autorius

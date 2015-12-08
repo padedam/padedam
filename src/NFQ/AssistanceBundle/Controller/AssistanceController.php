@@ -20,7 +20,7 @@ class AssistanceController extends Controller
     public function requestFormAction(Request $request)
     {
         $assistanceRequest = new AssistanceRequest();
-        $form = $this->createForm(new AssistanceRequestType(), $assistanceRequest, array('method' => 'POST'));
+        $form = $this->createForm(new AssistanceRequestType(), $assistanceRequest, array('method'=>'POST'));
 
         $form->handleRequest($request);
 
@@ -61,6 +61,11 @@ class AssistanceController extends Controller
     private function getTagManager()
     {
         return $this->container->get('nfq_user.tag_manager');
+    }
+
+    private function getAssistanceManager()
+    {
+        return $this->container->get('nfq_assistance.assistance_manager');
     }
 
     /**
@@ -118,9 +123,8 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if ($assistanceRequest->getOwner() != $currentUser ||
-            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_TAKEN
-        ) {
+        if($assistanceRequest->getOwner()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
             throw new Exception('problems');
         }
 
@@ -142,29 +146,10 @@ class AssistanceController extends Controller
      */
     public function helpAction(Request $request, $arid)
     {
-        $em = $this->getDoctrine()->getManager();
-        $currentUser = $this->getUser();
-        $repo = $em->getRepository('NFQAssistanceBundle:AssistanceRequest');
-        $assistanceRequest = $repo->find($arid);
-
-        if ($assistanceRequest->getOwner() == $currentUser ||
-            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_WAITING
-        ) {
-            throw new Exception('problems');
-        }
-
-        if (count($repo->getMyTakenRequests($this->getUser())) == 3) {
-            $this->get('session')->getFlashBag()->add('danger', 'assistance_not_registered');
-            return new RedirectResponse($request->server->get('HTTP_REFERER'));
-        }
-
-        $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);
-        $assistanceRequest->setHelper($currentUser);
-
-        $em->persist($assistanceRequest);
-        $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'assistance_registered');
+        $response = $this->getAssistanceManager()->registerHelper($arid);
+        $this->get('session')->getFlashBag()->add('success', $response['message']);
         return new RedirectResponse($request->server->get('HTTP_REFERER'));
+
     }
 
     /**
@@ -178,9 +163,8 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if ($assistanceRequest->getHelper() != $currentUser ||
-            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_TAKEN
-        ) {
+        if($assistanceRequest->getHelper()!=$currentUser ||
+            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN){
             throw new Exception('problems');
         }
 
@@ -204,7 +188,7 @@ class AssistanceController extends Controller
         $currentUser = $this->getUser();
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if ($assistanceRequest->getOwner() != $currentUser) {
+        if($assistanceRequest->getOwner()!=$currentUser){
             throw new Exception('problems');
         }
 

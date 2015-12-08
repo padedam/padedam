@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use NFQ\AssistanceBundle\Entity\Tag2User;
 use NFQ\AssistanceBundle\Entity\Tags;
 use NFQ\UserBundle\Entity\User;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -150,9 +151,9 @@ class TagManager
                 throw new \InvalidArgumentException('Tags are missing');
             }
 
-            if (!is_numeric($tag_ar['id'])) {
-                $tag_id = $this->suggestSpelling($tag_ar['id']);
-            } else {
+            if (!is_numeric($tag_ar['id'])){
+                $tag_id =  $this->suggestSpelling($tag_ar['id']);
+            }else{
                 $tag_id = $tag_ar['id'];
             }
             if (!is_numeric($tag_id) and !$tag = $tagRepo->findOneBy(['title' => $tag_id, 'parent' => $parent])) {
@@ -200,7 +201,7 @@ class TagManager
         try {
             $param = $this->getRequest()->get('tag', '');
             $parent_id = $this->getRequest()->get('parent_id', '');
-            if (mb_strlen($param) < 4 or !$parent_id) {
+            if( mb_strlen($param) < 4 or !$parent_id ){
                 return;
             }
             $tag = $this->suggestSpelling($param);
@@ -208,12 +209,15 @@ class TagManager
             $tagRepo = $this->em->getRepository('NFQAssistanceBundle:Tags');
             $parent = $tagRepo->findOneById($parent_id);
 
-
-            $tags = [['id' => $param, 'text' => $param . ' (Sukurti)']];
-            if ($tag and $tag != $param) {
-                $tags[] = ['id' => $tag, 'text' => $tag . ' (Sukurti)'];
-            }
             $fetched = $tagRepo->matchEnteredTags([$tag, $param], $parent);
+
+            $tags = [];
+            if(!$this->check_in_array($fetched, $param)) {
+                $tags[] = ['id' => $param, 'text' => $param . ' (Sukurti)'];
+            }
+            if($tag and $tag != $param and !$this->check_in_array($fetched, $tag)) {
+                $tags[] = ['id' => $tag, 'text' => $tag.' (Sukurti)'];
+            }
 
             $response ['status'] = 'success';
             $response['tags'] = array_merge($tags, $fetched);
@@ -223,6 +227,21 @@ class TagManager
         }
         return $response;
     }
+
+
+    /**
+     * @param $arr
+     * @param $value
+     * @param string $type
+     * @return bool
+     */
+    private function check_in_array($arr, $value, $type = "text") {
+        return count(array_filter($arr, function($var) use ($type, $value) {
+            return $var[$type] === $value;
+        })) !== 0;
+    }
+
+
 
     /**
      * removes tags assigned to user
@@ -290,7 +309,7 @@ class TagManager
         $response = [];
         try {
             $tags = $this->suggestWordstart($this->getRequest()->get('tag', null));
-            if (empty($tags)) {
+            if ( empty($tags) ) {
                 throw new \Exception('no tags');
             }
             $tagsRepo = $this->em->getRepository("NFQAssistanceBundle:Tags");
@@ -309,13 +328,12 @@ class TagManager
         return $response;
     }
 
-    private function processTag($tag)
-    {
-        $result = [];
-        if (isset($tag['parent']) and !empty($tag['parent'])) {
+    private function processTag($tag){
+        $result= [];
+        if ( isset( $tag['parent'] ) and !empty( $tag['parent'] ) ) {
             $result['id'] = $tag['parent']['id'];
             $result['text'] = $tag['parent']['title'];
-        } elseif (isset($tag['id']) and is_numeric($tag['id'])) {
+        } elseif ( isset( $tag['id'] ) and is_numeric( $tag['id'] ) ) {
             $result['id'] = $tag['id'];
             $result['text'] = $tag['title'];
         }
@@ -359,23 +377,22 @@ class TagManager
      * @param string $word
      * @return string|void
      */
-    private function suggestWordstart($word)
-    {
+    private function suggestWordstart($word){
 
         //check if not more than 1 word
         $words = explode(' ', $word);
         $results = [];
-        foreach ($words as $w) {
+        foreach($words as $w){
             $w = $this->remAppendix(trim($w));
-            if (mb_strlen($w) < 4 or $this->removeWords($w)) {
+            if( mb_strlen($w) < 4 or $this->removeWords($w)){
                 continue;
             }
             $suggestions = $this->pspell_suggest($w);
             $first_suggested = mb_strtolower(reset($suggestions));
-            $result = mb_substr($first_suggested, 0, mb_strlen($w) / 2);
-            if (mb_strlen($result) > 3 and !in_array($result, $results)) {
+            $result = mb_substr($first_suggested, 0, mb_strlen($w)/2);
+            if( mb_strlen($result) > 3 and !in_array($result, $results) ) {
                 $results[] = $result;
-            } elseif (!in_array($first_suggested, $results)) {
+            }elseif(!in_array($first_suggested, $results)){
                 $results[] = $first_suggested;
             }
             $myentry = mb_substr($w, 0, mb_strlen($w) / 2);
@@ -390,6 +407,7 @@ class TagManager
 
     /**
      * @param $word
+     * @return string
      */
     private function remAppendix($word)
     {

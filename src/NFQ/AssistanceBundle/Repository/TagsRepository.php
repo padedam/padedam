@@ -76,13 +76,13 @@ class TagsRepository extends NestedTreeRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t.id AS id, t.title as text')
             ->from('NFQAssistanceBundle:Tags', 't');
-        for ($i = 0; $i < count($tags); $i++) {
-            if (strlen($tags[$i]) > 4) {
-                $qb->orWhere('t.title LIKE :title' . $i)
-                    ->setParameter('title' . $i, $tags[$i] . '%');
+            for($i=0; $i<count($tags); $i++){
+                if(strlen($tags[$i]) > 4) {
+                    $qb -> orWhere('t.title LIKE :title' . $i)
+                        ->setParameter('title' . $i, $tags[$i] . '%');
+                }
             }
-        }
-        if (isset($parent)) {
+        if( isset( $parent ) ) {
             $qb->andWhere('t.parent = :parent')
                 ->setParameter(':parent', $parent);
         }
@@ -96,7 +96,7 @@ class TagsRepository extends NestedTreeRepository
      * @param User $user
      * @return mixed
      */
-    public function getTagChildsByParent(Tags $parent, User $user)
+   public function getTagChildsByParent(Tags $parent, User $user)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t2u')
@@ -104,8 +104,8 @@ class TagsRepository extends NestedTreeRepository
             ->innerJoin('t2u.tag', 't')
             ->where('t2u.user = :user')
             ->andWhere('t.parent = :parent')
-            ->setParameter(':user', $user)
-            ->setParameter(':parent', $parent);
+            ->setParameter(':user', $user )
+            ->setParameter(':parent', $parent );
 
         return $qb->getQuery()->execute();
     }
@@ -116,29 +116,33 @@ class TagsRepository extends NestedTreeRepository
      */
     public function suggestTag($tag)
     {
-        if (!$tag) {
+        if( ! $tag ){
             return false;
         }
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t, p')
             ->from('NFQAssistanceBundle:Tags', 't')
             ->leftJoin('t.parent', 'p');
-        if (is_array($tag)) {
-            $i = 1;
-            foreach ($tag as $t) {
-                if (mb_strlen($t) < 4) {
-                    continue;
-                }
-                $i++;
-                $qb->orWhere('t.title LIKE :title' . $i)
-                    ->setParameter('title' . $i, $t . '%');
-            }
-        } else {
-            $qb->where('t.title LIKE :title')
-                ->setParameter('title', $tag . '%');
-        }
-        //$qb->groupBy('t.id');
-
+           if( is_array($tag) ) {
+               $i = 1;
+               foreach($tag as $t){
+                   if(mb_strlen($t)<4){
+                       continue;
+                   }
+                   $i++;
+                   $qb->orWhere('t.title LIKE :title'.$i)
+                       ->setParameter('title'.$i, $t . '%');
+               }
+               $qb ->andWhere('t.isEnabled = :enabled')
+                ->setParameter('enabled', 1);
+           }elseif(mb_strlen($tag) > 3){
+               $qb->where('t.title LIKE :title')
+                    ->setParameter('title', $tag . '%');
+               $qb ->andWhere('t.isEnabled = :enabled')
+                   ->setParameter('enabled', 1);
+           }else{
+               return;
+           }
         return $qb->getQuery()->getArrayResult();
     }
 

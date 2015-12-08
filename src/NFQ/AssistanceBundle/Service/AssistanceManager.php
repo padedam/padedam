@@ -5,6 +5,7 @@ namespace NFQ\AssistanceBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use NFQ\UserBundle\Entity\User;
+use Proxies\__CG__\NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -166,6 +167,40 @@ class AssistanceManager
         } else {
             return $this->tokenStorage->getToken()->getUser();
         }
+    }
+
+
+    public function registerHelper($arid)
+    {
+        $response = [];
+        try{
+            $currentUser = $this->getUser();
+            $assistanceRequest = $this->em->getRepository('NFQAssistanceBundle:AssistanceRequest')->findOneById($arid);
+
+            if($assistanceRequest->getOwner()==$currentUser ||
+                $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_WAITING){
+                throw new \Exception('action_denied');
+            }
+
+            //check if i am not involved in this request yet
+            $assistanceEvent = $this->em->getRepository('NFQAssistanceBundle:AssistanceEvent')->findOneBy(array('assistanceRequest'=>$assistanceRequest, 'user'=>$currentUser));
+            if( !is_null($assistanceEvent) ) {
+                throw new \Exception('action_disabled');
+            }
+
+            $assistanceRequest->setStatus(AssistanceRequest::STATUS_TAKEN);
+            $assistanceRequest->setHelper($currentUser);
+
+            $this->em->persist($assistanceRequest);
+            $this->em->flush();
+
+            $response['message'] = 'assistance_registered';
+        }catch (\Exception $e){
+            $response['message'] = $e->getMessage();
+        }
+
+        return $response;
+
     }
 
 
