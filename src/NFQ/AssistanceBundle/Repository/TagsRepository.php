@@ -139,6 +139,8 @@ class TagsRepository extends NestedTreeRepository
                     ->setParameter('title', $tag . '%');
                $qb ->andWhere('t.isEnabled = :enabled')
                    ->setParameter('enabled', 1);
+           }else{
+               return;
            }
         return $qb->getQuery()->getArrayResult();
     }
