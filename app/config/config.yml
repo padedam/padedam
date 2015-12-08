@@ -137,13 +137,13 @@ easy_admin:
         class: NFQ\AssistanceBundle\Entity\Tags
         label: Request tags
         list:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         show:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         edit:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         new:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
