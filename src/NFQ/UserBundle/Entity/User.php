@@ -239,7 +239,8 @@ class User extends BaseUser
      * @param \NFQ\UserBundle\Entity\Tag2User $taglist
      * @return User
      */
-    public function addTaglist(/*\NFQ\UserBundle\Entity\Tag2User */$taglist)
+    public function addTaglist(/*\NFQ\UserBundle\Entity\Tag2User */
+        $taglist)
     {
         $this->taglist[] = $taglist;
 
@@ -251,7 +252,8 @@ class User extends BaseUser
      *
      * @param \NFQ\UserBundle\Entity\Tag2User $taglist
      */
-    public function removeTaglist(/*\NFQ\UserBundle\Entity\Tag2User */$taglist)
+    public function removeTaglist(/*\NFQ\UserBundle\Entity\Tag2User */
+        $taglist)
     {
         $this->taglist->removeElement($taglist);
     }

@@ -26,23 +26,23 @@
             <legend>{{ 'generic.ask_assistance_form'|trans }}</legend>
             <fieldset>
                 {{ form_start(form) }}
-                    <br>
-                    {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'50' }}) }}
-                    <br>
-                    {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
-                        'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
-                    <br>
-                    {{ form_row(form.tags, {'id': 'competence', 'attr':
-                        {
-                            'class': 'form-control',
-                            'placeholder': 'assistance.field'|trans,
-                            'data-rem' : url('nfq_assistance_remove_tags'),
-                            'data-match' : url('nfq_assistance_match_tags'),
-                            'data-suggest' : url('nfq_assistance_suggest_tag')
-                        }
-                    }) }}
-                    <br>
-                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                <br>
+                {{ form_row(form.shortDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.short_description_placeholder'|trans, 'maxlength':'50' }}) }}
+                <br>
+                {{ form_row(form.longDescription, {'attr': {'class': 'form-control', 'placeholder': 'assistance.long_description_placeholder'|trans,
+                    'maxlength':'2000', 'rows':'16', 'style':'resize:none'}}) }}
+                <br>
+                {{ form_row(form.tags, {'id': 'competence', 'attr':
+                    {
+                        'class': 'form-control',
+                        'placeholder': 'assistance.field'|trans,
+                        'data-rem' : url('nfq_assistance_remove_tags'),
+                        'data-match' : url('nfq_assistance_match_tags'),
+                        'data-suggest' : url('nfq_assistance_suggest_tag')
+                    }
+                }) }}
+                <br>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                 {{ form_end(form) }}
             </fieldset>
         </div>

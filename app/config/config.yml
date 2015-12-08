@@ -125,17 +125,27 @@ easy_admin:
       AssistanceRequest:
         class: NFQ\AssistanceBundle\Entity\AssistanceRequest
         label: Assistance requests
+        form:
+          fields:
+            - { property: 'status', type: 'NFQ\AssistanceBundle\Form\RequestStatusType'}
+            - { property: 'shortDescription' }
+            - { property: 'longDescription' }
+            - { property: 'owner' }
+            - { property: 'helper' }
+            - { property: 'tags' }
+        list:
+          fields: ['id', 'date', 'shortDescription', 'owner', 'helper', 'tags', {property: 'status', template: 'field_status'}]
       Tags:
         class: NFQ\AssistanceBundle\Entity\Tags
         label: Request tags
         list:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         show:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         edit:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
         new:
-          fields: ['title', 'parent']
+          fields: ['title', 'parent', 'isEnabled']
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

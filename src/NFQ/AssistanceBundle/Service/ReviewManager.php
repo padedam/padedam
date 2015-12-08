@@ -3,6 +3,7 @@
 namespace NFQ\AssistanceBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -31,22 +32,30 @@ class ReviewManager
     private $tokenStorage;
 
     /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    /**
      * ReviewManager constructor.
      * @param EntityManagerInterface $em
      * @param RequestStack $requestStack
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TokenStorageInterface $tokenStorage
+     * @param PaginatorInterface $paginator
      */
     public function __construct(EntityManagerInterface $em,
                                 RequestStack $requestStack,
                                 AuthorizationCheckerInterface $authorizationChecker,
-                                TokenStorageInterface $tokenStorage)
+                                TokenStorageInterface $tokenStorage,
+                                PaginatorInterface $paginator)
     {
 
         $this->em = $em;
         $this->requestStack = $requestStack;
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -54,7 +63,7 @@ class ReviewManager
      */
     public function getReviewList()
     {
-        $currentUser  = $this->getUser();
+        $currentUser = $this->getUser();
         $thank = $this->em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($currentUser);
 
         if (!$thank) {
@@ -62,6 +71,15 @@ class ReviewManager
         } else {
             $result = ['number' => $thank->getNumber(), 'reviews' => $currentUser->getGReviews()->toArray()];
         }
+
+        $page = $this->requestStack->getCurrentRequest()->query->get('my_reviews_page', 1);
+
+        $pagination = $this->paginator->paginate($result['reviews'], $page, 5, [
+            'pageParameterName' => 'my_reviews_page'
+        ]);
+
+        $result['reviews'] = $pagination;
+
         return $result;
     }
 
@@ -80,12 +98,12 @@ class ReviewManager
      */
     private function getUser()
     {
-        if ( !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
-        }else {
+        } else {
             return $this->tokenStorage->getToken()->getUser();
         }
     }
-    
-    
+
+
 }

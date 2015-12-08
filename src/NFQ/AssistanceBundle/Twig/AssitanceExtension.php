@@ -2,6 +2,7 @@
 
 namespace NFQ\AssistanceBundle\Twig;
 
+use NFQ\AssistanceBundle\Entity\AssistanceRequest;
 use NFQ\AssistanceBundle\Service\AssistanceManager;
 
 /**
@@ -46,7 +47,15 @@ class AssitanceExtension extends \Twig_Extension
             new \Twig_SimpleFunction(
                 'front_page_requests',
                 [$this, 'getRequestsFrontPage']
-            )
+            ),
+        ];
+    }
+    public function getFilters(){
+        return [
+            new \Twig_SimpleFunction(
+                'status',
+                [$this, 'statusFilter']
+            ),
         ];
     }
 
@@ -74,6 +83,7 @@ class AssitanceExtension extends \Twig_Extension
     {
         return $this->manager->getReviewList();
     }
+
     /**
      * @return array
      */
@@ -85,6 +95,23 @@ class AssitanceExtension extends \Twig_Extension
     public function getRequestsFrontPage()
     {
         return $this->manager->getRequestsFrontPage();
+    }
+
+    /**
+     * @param $status
+     * @return string
+     */
+    public function statusFilter($status){
+        $values = [
+            AssistanceRequest::STATUS_WAITING => "WAITING",
+            AssistanceRequest::STATUS_DONE => "DONE",
+            AssistanceRequest::STATUS_CANCELED => "CANCELED",
+            AssistanceRequest::STATUS_TAKEN => "TAKEN",
+        ];
+        if (isset($values[$status])){
+            return $values[$status];
+        }
+        return "-";
     }
 
     /**

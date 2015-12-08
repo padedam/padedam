@@ -6,17 +6,20 @@
  * Time: 15:23
  */
 namespace NFQ\UserBundle\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
+
 use FOS\UserBundle\Controller\SecurityController as BaseController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class SecurityController extends BaseController{
+class SecurityController extends BaseController
+{
 
-    public function loginAction(){
+    public function loginAction()
+    {
         $request = $this->container->get('request');
 
         $ajax = $request->query->get('ajax', false);
-        if ($ajax === false){
+        if ($ajax === false) {
             $response = parent::loginAction();
             return $response;
         }
@@ -47,13 +50,15 @@ class SecurityController extends BaseController{
         $response = new JsonResponse();
         $response->setData(array(
             'last_username' => $lastUsername,
-            'error'         => $error,
-            'csrf_token' =>  $csrfToken,
+            'error' => $error,
+            'csrf_token' => $csrfToken,
         ));
 
         return $response;
     }
-    public function modal_loginAction(){
+
+    public function modal_loginAction()
+    {
         $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
 
         return $this->container->get('templating')->renderResponse('NFQUserBundle:Security:modal_login.html.twig', ['csrf_token' => $csrfToken]);
