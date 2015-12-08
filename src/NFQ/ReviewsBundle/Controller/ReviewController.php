@@ -38,14 +38,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * @return Response
-     */
-    public function reviewSubmittedAction()
-    {
-        return $this->render('NFQReviewsBundle:Review:reviewSubmitted.html.twig');
-    }
-
-    /**
      * @param Request $request
      * @param $arid
      * @return RedirectResponse|Response
@@ -58,6 +50,7 @@ class ReviewController extends Controller
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
         if ($assistanceRequest->getOwner()!=$currentUser ||
+            $assistanceRequest->getHelper()==$currentUser ||
             $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN) {
             throw new Exception('problems');
         }
@@ -94,7 +87,9 @@ class ReviewController extends Controller
             $em->persist($review);
             $em->flush();
 
-            return $this->redirectToRoute('nfq_reviews_review_submitted');
+            $this->get('session')->getFlashBag()->add('success', 'review_added');
+
+            return new RedirectResponse($request->server->get('HTTP_REFERER'));
         }
 
         return $this->render('NFQReviewsBundle:Review:createReview.html.twig', array('form' => $form->createView()));
