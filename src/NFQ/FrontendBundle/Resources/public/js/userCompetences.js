@@ -91,7 +91,7 @@ var bindRemcat = function(){
                     el.parents('.form-group').hide('slow');
                     //add removed element to select list
                     $('#new_competence').append($('<option />', { value : el.data('id'), text: el.data('text') }));
-                    $('#new_competence').select2("destroy").select2().on('select2-selecting', function (e) {
+                    $('#new_competence').select2("destroy").select2().off('select2-selecting').on('select2-selecting', function (e) {
                         var _data = e.choice;
                         createParentElement(e);
                     });
@@ -160,8 +160,7 @@ function createParentElement (e){
 
                 //remove selected element from select list and reset selection
                 $("#new_competence option[value="+selval+"]").remove();
-                $("#new_competence").select2("destroy").select2().on('select2-selecting', function (e) {
-                    var _data = e.choice;
+                $("#new_competence").select2("destroy").select2().off('select2-selecting').on('select2-selecting', function (e) {
                     createParentElement(e);
                 });
                 //enable remove category button
@@ -185,8 +184,7 @@ $(function(){
     /** make #new_competence select 2 **/
     var new_competence = $("#new_competence").select2({
         placeholder: "Pasirinkite sritį"
-    }).on('select2-selecting', function (e) {
-        var _data = e.choice;
+    }).off('select2-selecting').on('select2-selecting', function (e) {
         createParentElement(e);
     });
 
@@ -207,7 +205,8 @@ function showMessage(message, type){
             'class': 'alert alert-dismissible text-center alert-'+type,
         });
 
-        $('.alert-dismissible').hide('slow', function(){$(this.remove())});
+        $('.alert-dismissible').remove();
+
         var obj = message.append(remlink);
         $(document.body).prepend(obj.hide().slideDown( 300 ).delay( 3000 ).fadeOut( 400 , function(){$(obj.remove())}));
 
