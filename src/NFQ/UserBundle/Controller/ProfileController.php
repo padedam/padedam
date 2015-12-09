@@ -3,10 +3,9 @@
 namespace NFQ\UserBundle\Controller;
 
 use FOS\UserBundle\Controller\ProfileController as BaseController;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class ProfileController
@@ -41,8 +40,8 @@ class ProfileController extends BaseController
         $tags = $this->container->get('nfq_user.tag_manager')->getMyTags();
 
         return $this->container->get('templating')->renderResponse(
-            'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
-            array('form' => $form->createView(), 'tags'=>$tags)
+            'FOSUserBundle:Profile:edit.html.' . $this->container->getParameter('fos_user.template.engine'),
+            array('form' => $form->createView(), 'tags' => $tags)
         );
     }
 }

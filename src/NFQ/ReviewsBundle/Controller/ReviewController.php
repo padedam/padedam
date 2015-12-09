@@ -49,9 +49,10 @@ class ReviewController extends Controller
 
         $assistanceRequest = $em->getRepository('NFQAssistanceBundle:AssistanceRequest')->find($arid);
 
-        if ($assistanceRequest->getOwner()!=$currentUser ||
-            $assistanceRequest->getHelper()==$currentUser ||
-            $assistanceRequest->getStatus()!=AssistanceRequest::STATUS_TAKEN) {
+        if ($assistanceRequest->getOwner() != $currentUser ||
+            $assistanceRequest->getHelper() == $currentUser ||
+            $assistanceRequest->getStatus() != AssistanceRequest::STATUS_TAKEN
+        ) {
             throw new Exception('problems');
         }
 
@@ -75,7 +76,7 @@ class ReviewController extends Controller
             if ($form->get('thank')->getData()) {
                 $thank = $em->getRepository('NFQReviewsBundle:Thanks')->findOneByUser($assistanceRequest->getHelper());
 
-                if ($thank==null) {
+                if ($thank == null) {
                     $thank = new Thanks();
                     $thank->setHelper($assistanceRequest->getHelper());
                 }
@@ -84,12 +85,17 @@ class ReviewController extends Controller
                 $em->persist($thank);
             }
 
-            $em->persist($review);
+            if (!$form->get('reviewMessage')->getData()) {
+                $this->get('session')->getFlashBag()->add('success', 'assistance_done');
+            } else {
+                $em->persist($review);
+
+                $this->get('session')->getFlashBag()->add('success', 'review_added');
+            }
+
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'review_added');
-
-            return new RedirectResponse($request->server->get('HTTP_REFERER'));
+            return $this->redirectToRoute('nfq_assistance_request_list');
         }
 
         return $this->render('NFQReviewsBundle:Review:createReview.html.twig', array('form' => $form->createView()));

@@ -27,7 +27,7 @@ class Thanks
      *
      * @ORM\Column(name="number", type="integer")
      */
-    private $number=0;
+    private $number = 0;
 
     /**
      * @var User
@@ -40,7 +40,7 @@ class Thanks
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,14 +63,15 @@ class Thanks
     /**
      * Get number
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumber()
     {
         return $this->number;
     }
 
-    public function  incrementNumber(){
+    public function  incrementNumber()
+    {
         $this->number++;
     }
 
